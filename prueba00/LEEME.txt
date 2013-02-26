@@ -1,0 +1,3 @@
+Ejemplo de como instalar nuestro propio UIProvider en lugar de utilizar el proveedor
+por defecto de Vaadin que se configura especificando la clase del UI en el fichero
+web.xml
