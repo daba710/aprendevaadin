@@ -1,4 +1,6 @@
-package aprendevaadin.prueba02;
+package aprendevaadin.prueba02.view;
+
+import aprendevaadin.prueba02.Prueba02UI;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;

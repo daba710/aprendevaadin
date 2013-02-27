@@ -1,5 +1,7 @@
 package aprendevaadin.prueba02;
 
+import aprendevaadin.prueba02.view.MainView;
+
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
 import com.vaadin.server.VaadinRequest;
@@ -13,7 +15,7 @@ public class Prueba02UI extends UI {
 
 	private Navigator navigator;
 
-	protected static final String MAINVIEW = "main";
+	public static final String MAINVIEW = "main";
 	
 	static public Prueba02UI getInstance() {
 		return (Prueba02UI) UI.getCurrent();
