@@ -11,7 +11,7 @@ import com.vaadin.ui.Button.ClickEvent;
 /**
  * Esta vista sera la utilizada para mostrarse al inicio de entrar en la aplicación.
  * 
- * Preenta un unico boton que al pulsarse nos da acceso a la siguiente vista (vista principal).
+ * Presenta un unico boton que al pulsarse nos da acceso a la siguiente vista (vista principal).
  */
 public class StartView extends VerticalLayout implements View {
 
