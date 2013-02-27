@@ -10,12 +10,12 @@
 	</context-param>
 	
 	<servlet>
-		<servlet-name>myservlet</servlet-name>
+		<servlet-name>prueba00</servlet-name>
 		<servlet-class>aprendevaadin.prueba00.server.MyVaadinServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>myservlet</servlet-name>
+		<servlet-name>prueba00</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	
