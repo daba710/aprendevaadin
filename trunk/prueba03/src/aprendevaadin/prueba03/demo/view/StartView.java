@@ -1,14 +1,14 @@
 package aprendevaadin.prueba03.demo.view;
 
-import aprendevaadin.prueba02.Prueba02UI;
+import aprendevaadin.prueba03.demo.ui.INavigation;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * Esta vista sera la utilizada para mostrarse al inicio de entrar en la aplicación.
@@ -19,7 +19,12 @@ public class StartView extends VerticalLayout implements View {
 
 	private static final long serialVersionUID = -546686842331920059L;
 
-	public StartView() {
+	final private INavigation navigation;
+
+	public StartView(INavigation navigation) {
+		
+		this.navigation = navigation;
+		
 		setSizeFull();
 
 		Button button = new Button("Go to Main View",
@@ -29,7 +34,7 @@ public class StartView extends VerticalLayout implements View {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						Prueba02UI.getInstance().getNavigator().navigateTo(Prueba02UI.MAINVIEW);
+						StartView.this.navigation.navigateTo(INavigation.MAINVIEW);
 					}
 				});
 		addComponent(button);

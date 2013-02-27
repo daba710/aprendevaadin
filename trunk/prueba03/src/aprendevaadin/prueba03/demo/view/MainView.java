@@ -1,6 +1,6 @@
 package aprendevaadin.prueba03.demo.view;
 
-import aprendevaadin.prueba02.Prueba02UI;
+import aprendevaadin.prueba03.demo.ui.INavigation;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -22,6 +22,8 @@ public class MainView extends VerticalLayout implements View {
 	private static final long serialVersionUID = -1120551521269904569L;
 
 	private Panel panel;
+	
+	private INavigation navigation;
 
 	class ButtonListener implements Button.ClickListener {
 		
@@ -36,12 +38,15 @@ public class MainView extends VerticalLayout implements View {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			// Se navega a un estado especifico.
-			Prueba02UI.getInstance().getNavigator().navigateTo(Prueba02UI.MAINVIEW + "/" + menuitem);
+			MainView.this.navigation.navigateTo(INavigation.MAINVIEW + "/" + menuitem);
 		}
 		
 	}
 
-	public MainView() {
+	public MainView(INavigation navigation) {
+		
+		this.navigation = navigation;
+		
 		setSizeFull();
 
 		// La disposicion es con el menu a la izquierda y el area de la vista a la derecha.
@@ -84,7 +89,7 @@ public class MainView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Prueba02UI.getInstance().getNavigator().navigateTo("");
+				MainView.this.navigation.navigateTo("");
 			}
 		});
 		addComponent(logout);
