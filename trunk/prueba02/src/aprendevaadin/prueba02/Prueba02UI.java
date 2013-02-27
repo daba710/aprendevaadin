@@ -1,6 +1,7 @@
 package aprendevaadin.prueba02;
 
 import aprendevaadin.prueba02.view.MainView;
+import aprendevaadin.prueba02.view.StartView;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
