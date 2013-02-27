@@ -15,13 +15,16 @@ public class DemoUIProvider extends ScopedUIProvider {
 	private static final long serialVersionUID = -8996081483974304448L;
 	
 	@Inject
+	protected Class<? extends UI> uiClass;
+	
+	@Inject
 	protected DemoUIProvider(UIKeyProvider uiKeyProvider, Injector injector) {
 		super(uiKeyProvider, injector);
 	}
 
 	@Override
 	public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
-		return DemoUI.class;
+		return uiClass;
 	}
 
 }
