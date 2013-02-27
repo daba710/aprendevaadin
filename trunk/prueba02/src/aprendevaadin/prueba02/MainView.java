@@ -117,5 +117,6 @@ public class MainView extends VerticalLayout implements View {
 		panelContent.addComponent(back);
 		panelContent.setComponentAlignment(back, Alignment.MIDDLE_CENTER);
 	}
+	
 }
 
