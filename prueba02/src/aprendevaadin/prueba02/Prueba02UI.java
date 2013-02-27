@@ -45,6 +45,7 @@ public class Prueba02UI extends UI {
 		// Create and register the views
 		navigator.addView("", new StartView());
 		navigator.addView(MAINVIEW, new MainView());
+		
 	}
 	
 }
