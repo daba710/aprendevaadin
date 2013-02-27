@@ -4,12 +4,10 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -20,18 +18,30 @@ import com.vaadin.ui.VerticalLayout;
 
 public class Prueba02UI extends UI {
 	
+	private static final long serialVersionUID = 8760773662009662550L;
+
 	private Navigator navigator;
 	private Panel panel;
 
 	protected static final String MAINVIEW = "main";
 
-	/** A start view for navigating to the main view */
+	/**
+	 * Esta vista sera la utilizada para mostrarse al inicio de entrar en la aplicación.
+	 * 
+	 * Preenta un unico boton que al pulsarse nos da acceso a la siguiente vista (vista principal).
+	 */
 	public class StartView extends VerticalLayout implements View {
+
+		private static final long serialVersionUID = -546686842331920059L;
+
 		public StartView() {
 			setSizeFull();
 
 			Button button = new Button("Go to Main View",
 					new Button.ClickListener() {
+
+						private static final long serialVersionUID = 551692033844237260L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							navigator.navigateTo(MAINVIEW);
@@ -47,12 +57,20 @@ public class Prueba02UI extends UI {
 		}
 	}
 
-	/** Main view with a menu */
+	/**
+	 * 
+	 * Vista principal. 
+	 *
+	 */
 	public class MainView extends VerticalLayout implements View {
 
-		// Menu navigation button listener
+		private static final long serialVersionUID = -1120551521269904569L;
+
 		class ButtonListener implements Button.ClickListener {
-			String menuitem;
+			
+			private static final long serialVersionUID = 2714879925049012696L;
+
+			private String menuitem;
 
 			public ButtonListener(String menuitem) {
 				this.menuitem = menuitem;
@@ -60,7 +78,7 @@ public class Prueba02UI extends UI {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// Navigate to a specific state
+				// Se navega a un estado especifico.
 				navigator.navigateTo(MAINVIEW + "/" + menuitem);
 			}
 			
@@ -69,11 +87,11 @@ public class Prueba02UI extends UI {
 		public MainView() {
 			setSizeFull();
 
-			// Layout with menu on left and view area on right
+			// La disposicion es con el menu a la izquierda y el area de la vista a la derecha.
 			HorizontalLayout hLayout = new HorizontalLayout();
 			hLayout.setSizeFull();
 
-			// Have a menu on the left side of the screen
+			// El crea el menu 
 			Panel menu = new Panel("List of Equals");
 			menu.setHeight("100%");
 			menu.setWidth(null);
@@ -87,19 +105,26 @@ public class Prueba02UI extends UI {
 			menuContent.setWidth(null);
 			menuContent.setMargin(true);
 			menu.setContent(menuContent);
+			// Se instala en el lado irquierdo.
 			hLayout.addComponent(menu);
 
-			// A panel that contains a content area on right
+			// Se crea el panel
 			panel = new Panel("An Equal");
 			panel.setSizeFull();
+			// Se instala en el espacio que que queda a la derecha
 			hLayout.addComponent(panel);
 			hLayout.setExpandRatio(panel, 1.0f);
 
+			// El layout horizontal donde ensamblamos el meni y el panel se incluye
+			// en el layout vertical de la vista.
 			addComponent(hLayout);
 			setExpandRatio(hLayout, 1.0f);
 
-			// Allow going back to the start
+			// Se incluye un boton que nos permite pasar a la vista de entrada
 			Button logout = new Button("Logout", new Button.ClickListener() {
+
+				private static final long serialVersionUID = 5762055829904017025L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					navigator.navigateTo("");
