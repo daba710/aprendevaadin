@@ -90,28 +90,34 @@ public class MainView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		
+		// Crea y configura un nuevo contenido para el panel.
 		VerticalLayout panelContent = new VerticalLayout();
 		panelContent.setSizeFull();
 		panelContent.setMargin(true);
-		panel.setContent(panelContent); // Also clears
+		
+		// Asigna el nuevo contenido al panel
+		panel.setContent(panelContent);
 
+		// Tiene que haber algun parametro en el fragmento
 		if (event.getParameters() == null || event.getParameters().isEmpty()) {
 			panelContent.addComponent(new Label("Nothing to see here, just pass along."));
 			return;
 		}
 
-		// Display the fragment parameters
+		// Muestra cabecera con los parametros del fragmento
 		Label watching = new Label("You are currently watching a " + event.getParameters());
 		watching.setSizeUndefined();
 		panelContent.addComponent(watching);
 		panelContent.setComponentAlignment(watching, Alignment.MIDDLE_CENTER);
 
-		// Some other content
+		// Muestra el cuerpo del fragmento.
 		Label label = new Label(event.getParameters());
 		panelContent.addComponent(label);
 		panelContent.setExpandRatio(label, 1.0f);
 		panelContent.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
 		
+		// Muestra el pie del framgmento.
 		Label back = new Label("And the " + event.getParameters() + " is watching you");
 		back.setSizeUndefined();
 		panelContent.addComponent(back);
