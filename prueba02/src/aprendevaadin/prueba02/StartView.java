@@ -38,5 +38,6 @@ public class StartView extends VerticalLayout implements View {
 	public void enter(ViewChangeEvent event) {
 		Notification.show("Welcome to the Animal Farm");
 	}
+	
 }
 
