@@ -4,7 +4,6 @@ package aprendevaadin.prueba01.ui;
 import aprendevaadin.prueba01.guice.uiscope.UIKey;
 import aprendevaadin.prueba01.guice.uiscope.UIKeyProvider;
 import aprendevaadin.prueba01.guice.uiscope.UIScope;
-import aprendevaadin.prueba01.guice.uiscope.UIScoped;
 
 import com.google.inject.Injector;
 import com.vaadin.server.UICreateEvent;
@@ -13,10 +12,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.util.CurrentInstance;
 
 /**
- * A Vaadin UI provider which supports the use of Guice scoped UI (see {@link UIScoped}). If you do not need UIScope,
- * then just extend from UIProvider directly
- * 
- * Subclasses should implement getUIClass(UIClassSelectionEvent event) to provide logic for selecting the UI class.
+ * Subclases deberan de implementar {@link #getUIClass(com.vaadin.server.UIClassSelectionEvent)} para proporcinar 
+ * la logica de selección del UI.
  */
 public abstract class ScopedUIProvider extends UIProvider {
 	
