@@ -41,7 +41,7 @@ public abstract class ScopedUIProvider extends UIProvider {
 		CurrentInstance.set(UIKey.class, uiKey);
 		
 		// Y instala un nuevo scope
-		UIScope.getCurrent().startScope(uiKey);
+		UIScope.DEFAULT.startScope(uiKey);
 		
 		// Se obtiene la clase correspondiente al UI
 		Class<? extends UI> uiClass = event.getUIClass();
