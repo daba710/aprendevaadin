@@ -1,11 +1,9 @@
 package aprendevaadin.prueba03.demo.ui;
 
-
 import aprendevaadin.prueba03.conf.A;
 import aprendevaadin.prueba03.ui.ScopedUI;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
@@ -23,9 +21,6 @@ public class DemoUI extends ScopedUI {
 	@Inject
 	@Named(A.text)
 	protected String displayText;
-	
-	@Inject
-	protected Injector injector;
 	
 	@Override
 	protected void init(VaadinRequest request) {
