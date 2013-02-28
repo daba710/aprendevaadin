@@ -30,7 +30,7 @@ public class UIScopeModule extends AbstractModule {
 		bindScope(UIScoped.class, uiScope);
 
 		// make our scope instance injectable
-		bind(UIScope.class).annotatedWith(Names.named("UIScope")).toInstance(uiScope);
+//		bind(UIScope.class).annotatedWith(Names.named("UIScope")).toInstance(uiScope);
 
 	}
 
