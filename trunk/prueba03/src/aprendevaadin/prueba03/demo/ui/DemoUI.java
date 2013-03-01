@@ -5,6 +5,7 @@ import java.util.Map;
 import aprendevaadin.prueba03.conf.A;
 import aprendevaadin.prueba03.demo.navigator.IViewNavigatorListener;
 import aprendevaadin.prueba03.demo.navigator.IViewNavigatorService;
+import aprendevaadin.prueba03.ui.ScopedUI;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -16,7 +17,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class DemoUI extends UI implements IViewNavigatorListener {
+public class DemoUI extends ScopedUI implements IViewNavigatorListener {
 	
 	private static final long serialVersionUID = 8760773662009662550L;
 
