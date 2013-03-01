@@ -1,0 +1,4 @@
+
+Ejemplo de como utilizar View y Navigador mediante inyeccion de dependencias Guice.
+
+Revisando a la vez que el UIScope funciona como se espera.
