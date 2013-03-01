@@ -18,7 +18,7 @@ public class StartView extends VerticalLayout implements View {
 
 	private static final long serialVersionUID = -546686842331920059L;
 
-	public static final String VIEW_KEY = "START";
+	public static final String VIEW_KEY = "";
 
 	final private IViewNavigatorService viewNavigator;
 
@@ -36,7 +36,7 @@ public class StartView extends VerticalLayout implements View {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						StartView.this.viewNavigator.navigateTo(IViewNavigatorService.MAINVIEW);
+						StartView.this.viewNavigator.navigateTo(MainView.VIEW_KEY);
 					}
 				});
 		addComponent(button);

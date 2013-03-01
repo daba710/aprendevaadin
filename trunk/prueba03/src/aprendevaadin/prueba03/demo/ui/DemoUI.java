@@ -55,7 +55,7 @@ public class DemoUI extends ScopedUI implements IViewNavigatorListener {
 			navigator.addView(entry.getKey(), entry.getValue());
 		}
 		
-		// Se instsla el listener del navegador
+		// Se instala el listener del navegador
 		viewNavigatorService.addListener(this);
 	}
 
