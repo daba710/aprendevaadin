@@ -2,7 +2,7 @@ package aprendevaadin.prueba03.demo.view;
 
 import javax.inject.Inject;
 
-import aprendevaadin.prueba03.demo.ui.IViewNavigator;
+import aprendevaadin.prueba03.demo.navigator.IViewNavigatorService;
 import aprendevaadin.prueba03.guice.uiscope.UIScoped;
 
 import com.vaadin.navigator.View;
@@ -17,12 +17,14 @@ import com.vaadin.ui.VerticalLayout;
 
 @UIScoped
 public class MainView extends VerticalLayout implements View {
-
+	
 	private static final long serialVersionUID = -1120551521269904569L;
+
+	public static final String VIEW_KEY = "MAIN";
 
 	private Panel panel;
 	
-	private IViewNavigator navigation;
+	private IViewNavigatorService viewNavigator;
 
 	class ButtonListener implements Button.ClickListener {
 		
@@ -37,15 +39,15 @@ public class MainView extends VerticalLayout implements View {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			// Se navega a un estado especifico.
-			MainView.this.navigation.navigateTo(IViewNavigator.MAINVIEW + "/" + menuitem);
+			MainView.this.viewNavigator.navigateTo(IViewNavigatorService.MAINVIEW + "/" + menuitem);
 		}
 		
 	}
 
 	@Inject
-	public MainView(IViewNavigator navigation) {
+	public MainView(IViewNavigatorService viewNavigation) {
 		
-		this.navigation = navigation;
+		this.viewNavigator = viewNavigation;
 		
 		setSizeFull();
 
@@ -89,7 +91,7 @@ public class MainView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				MainView.this.navigation.navigateTo("");
+				MainView.this.viewNavigator.navigateTo("");
 			}
 		});
 		addComponent(logout);
