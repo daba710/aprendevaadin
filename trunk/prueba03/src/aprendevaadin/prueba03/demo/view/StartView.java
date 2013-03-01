@@ -1,6 +1,9 @@
 package aprendevaadin.prueba03.demo.view;
 
-import aprendevaadin.prueba03.demo.ui.INavigation;
+import javax.inject.Inject;
+
+import aprendevaadin.prueba03.demo.ui.IViewNavigator;
+import aprendevaadin.prueba03.guice.uiscope.UIScoped;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -10,18 +13,15 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- * Esta vista sera la utilizada para mostrarse al inicio de entrar en la aplicación.
- * 
- * Presenta un unico boton que al pulsarse nos da acceso a la siguiente vista (vista principal).
- */
+@UIScoped
 public class StartView extends VerticalLayout implements View {
 
 	private static final long serialVersionUID = -546686842331920059L;
 
-	final private INavigation navigation;
+	final private IViewNavigator navigation;
 
-	public StartView(INavigation navigation) {
+	@Inject
+	public StartView(IViewNavigator navigation) {
 		
 		this.navigation = navigation;
 		
@@ -34,7 +34,7 @@ public class StartView extends VerticalLayout implements View {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						StartView.this.navigation.navigateTo(INavigation.MAINVIEW);
+						StartView.this.navigation.navigateTo(IViewNavigator.MAINVIEW);
 					}
 				});
 		addComponent(button);
