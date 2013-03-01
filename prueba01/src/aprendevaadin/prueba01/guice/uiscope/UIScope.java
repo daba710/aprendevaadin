@@ -7,7 +7,6 @@ import java.util.TreeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import aprendevaadin.prueba01.ui.ScopedUI;
 
 import com.google.inject.Key;
@@ -17,16 +16,15 @@ import com.vaadin.ui.UI;
 import com.vaadin.util.CurrentInstance;
 
 public class UIScope implements Scope {
+	
+	public static UIScope DEFAULT = new UIScope();
 
 	private static final Logger log = LoggerFactory.getLogger(UIScope.class);
 	private static final String MSG = "Este error no deberia de haber aparecido.";
 
-	private static UIScope current;
-
 	private final Map<UIKey, Map<Key<?>, Object>> cache = new TreeMap<UIKey, Map<Key<?>, Object>>();
 
-	public UIScope() {
-		log.debug("creating UIScope " + this);
+	private UIScope() {
 	}
 
 	@Override
@@ -114,13 +112,5 @@ public class UIScope implements Scope {
 	public void releaseScope(UIKey uiKey) {
 		cache.remove(uiKey);
 	}
-
-	public static UIScope getCurrent() {
-		if (current == null) {
-			current = new UIScope();
-		}
-		return current;
-	}
-
 
 }
