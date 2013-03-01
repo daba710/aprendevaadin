@@ -2,7 +2,7 @@ package aprendevaadin.prueba03.demo.view;
 
 import javax.inject.Inject;
 
-import aprendevaadin.prueba03.demo.ui.IViewNavigator;
+import aprendevaadin.prueba03.demo.navigator.IViewNavigatorService;
 import aprendevaadin.prueba03.guice.uiscope.UIScoped;
 
 import com.vaadin.navigator.View;
@@ -18,12 +18,14 @@ public class StartView extends VerticalLayout implements View {
 
 	private static final long serialVersionUID = -546686842331920059L;
 
-	final private IViewNavigator navigation;
+	public static final String VIEW_KEY = "START";
+
+	final private IViewNavigatorService viewNavigator;
 
 	@Inject
-	public StartView(IViewNavigator navigation) {
+	public StartView(IViewNavigatorService viewNavigation) {
 		
-		this.navigation = navigation;
+		this.viewNavigator = viewNavigation;
 		
 		setSizeFull();
 
@@ -34,7 +36,7 @@ public class StartView extends VerticalLayout implements View {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						StartView.this.navigation.navigateTo(IViewNavigator.MAINVIEW);
+						StartView.this.viewNavigator.navigateTo(IViewNavigatorService.MAINVIEW);
 					}
 				});
 		addComponent(button);
