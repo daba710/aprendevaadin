@@ -21,10 +21,10 @@ public class GuiceServletInjector extends GuiceServletContextListener {
 	@Override
 	protected Injector getInjector() {
 		injector = Guice.createInjector(
+				new DemoConfModule(),
 				new BaseModule(),
 				new UIScopeModule(),
-				new DemoUIModule(),
-				new DemoConfModule()
+				new DemoUIModule()
 			);
 		return injector;
 	}
