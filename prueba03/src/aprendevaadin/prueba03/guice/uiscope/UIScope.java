@@ -25,10 +25,6 @@ public class UIScope implements Scope {
 
 	private final Map<UIKey, Map<Key<?>, Object>> cache = new TreeMap<UIKey, Map<Key<?>, Object>>();
 
-	public UIScope() {
-		log.debug("creating UIScope " + this);
-	}
-
 	@Override
 	public <T> Provider<T> scope(final Key<T> key, final Provider<T> unscoped) {
 		return new Provider<T>() {
