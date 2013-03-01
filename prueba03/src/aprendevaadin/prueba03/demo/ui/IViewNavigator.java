@@ -1,6 +1,6 @@
 package aprendevaadin.prueba03.demo.ui;
 
-public interface INavigation {
+public interface IViewNavigator {
 	
 	public static final String MAINVIEW = "main";
 

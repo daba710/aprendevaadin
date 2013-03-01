@@ -7,8 +7,7 @@ public class DemoConfModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(String.class).annotatedWith(Names.named(A.button)).toInstance("Pulsar aqui");
-		bind(String.class).annotatedWith(Names.named(A.text)).toInstance("Texto a mostrar");
+		bind(String.class).annotatedWith(Names.named(A.title)).toInstance("Navigation Example");
 	}
 
 }
