@@ -39,7 +39,7 @@ public class MainView extends VerticalLayout implements View {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			// Se navega a un estado especifico.
-			MainView.this.viewNavigator.navigateTo(IViewNavigatorService.MAINVIEW + "/" + menuitem);
+			MainView.this.viewNavigator.navigateTo(VIEW_KEY + "/" + menuitem);
 		}
 		
 	}
@@ -91,7 +91,7 @@ public class MainView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				MainView.this.viewNavigator.navigateTo("");
+				MainView.this.viewNavigator.navigateTo(StartView.VIEW_KEY);
 			}
 		});
 		addComponent(logout);
