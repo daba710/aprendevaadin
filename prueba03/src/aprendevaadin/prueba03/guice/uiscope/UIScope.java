@@ -31,42 +31,9 @@ public class UIScope implements Scope {
 		return new Provider<T>() {
 			@Override
 			public T get() {
-				// Obtiene la UIKey que corresponde al UI actual.
-				// (esta UIKey fue creada por el ScopedUIProvider justo antes de instanciar el ScopedUI y esta asociado a el).  
-				UIKey uiKey = CurrentInstance.get(UIKey.class);
 				
-				// El UI puede estar a null si estamos en el proceso de construccion.
-				ScopedUI currentUI = (ScopedUI) UI.getCurrent();
+				UIKey uiKey = getUI();
 				
-				// Verificamos que la clave del UI obtenida via 'current instancia' este informada.
-				if (uiKey == null) {
-					
-					// Si no esta informada se intenta obtener via 'current UI'.
-					if (currentUI == null) {
-						// Si ademas de via 'current instance' tampoco se puede obtener via 'current ui' no hay solución.
-						throw new UIScopeException(String.format("UI and uiKey are null (%s).",  MSG));
-					} else {
-						// Esto puede ocurrir cuando el framework conmuta UIs
-						uiKey = currentUI.getInstanceKey();
-						if (uiKey == null) {
-							throw new UIScopeException(String.format("uiKey is null and cannot be obtained from the UI (%s).", MSG));
-						}
-					}
-				}
-				
-				// Interesado en saber si puede ocurrir que 'current UI' puede ser null.
-				if (currentUI == null) {
-//					log.debug("**************** currentUI is null  *************");
-				}
-
-				// 'currentUI' puede ser null si estamos en el proceso de contruccion del UI,
-				// si no es null simplemente nos aseguramos de que no ha perdido la sincronizacion con su 'uiKey'
-				if (currentUI != null) {
-					if (!uiKey.equals(currentUI.getInstanceKey())) {
-						throw new UIScopeException(String.format("The UI and its UIKey have got out of sync (Results are unpredictable - %s).", MSG));
-					}
-				}
-
 				// Damos una pista de que es lo que se esta pidiendo.
 				log.debug("{}-{} -> {} SOLICITADO", UIScope.this.toString(), uiKey.toString(), key.toString());
 
@@ -90,6 +57,47 @@ public class UIScope implements Scope {
 		};
 	}
 
+	private UIKey getUI() {
+		
+		// Obtiene la UIKey que corresponde al UI actual.
+		// (esta UIKey fue creada por el ScopedUIProvider justo antes de instanciar el ScopedUI y esta asociado a el).  
+		UIKey uiKey = CurrentInstance.get(UIKey.class);
+		
+		// El UI puede estar a null si estamos en el proceso de construccion.
+		ScopedUI currentUI = (ScopedUI) UI.getCurrent();
+		
+		// Verificamos que la clave del UI obtenida via 'current instancia' este informada.
+		if (uiKey == null) {
+			
+			// Si no esta informada se intenta obtener via 'current UI'.
+			if (currentUI == null) {
+				// Si ademas de via 'current instance' tampoco se puede obtener via 'current ui' no hay solución.
+				throw new UIScopeException(String.format("UI and uiKey are null (%s).",  MSG));
+			} else {
+				// Esto puede ocurrir cuando el framework conmuta UIs
+				uiKey = currentUI.getInstanceKey();
+				if (uiKey == null) {
+					throw new UIScopeException(String.format("uiKey is null and cannot be obtained from the UI (%s).", MSG));
+				}
+			}
+		}
+		
+		// Interesado en saber si puede ocurrir que 'current UI' puede ser null.
+		if (currentUI == null) {
+//			log.debug("**************** currentUI is null  *************");
+		}
+
+		// 'currentUI' puede ser null si estamos en el proceso de contruccion del UI,
+		// si no es null simplemente nos aseguramos de que no ha perdido la sincronizacion con su 'uiKey'
+		if (currentUI != null) {
+			if (!uiKey.equals(currentUI.getInstanceKey())) {
+				throw new UIScopeException(String.format("The UI and its UIKey have got out of sync (Results are unpredictable - %s).", MSG));
+			}
+		}
+		
+		return uiKey;
+	}
+	
 	private <T> Map<Key<?>, Object> getScopedObjectMap(UIKey uiKey) {
 		// return an existing cache instance
 		if (cache.containsKey(uiKey)) {
