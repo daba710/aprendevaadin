@@ -19,7 +19,7 @@ import com.vaadin.util.CurrentInstance;
 public class UIScope implements Scope {
 	
 	public static UIScope DEFAULT = new UIScope();
-
+	
 	private static final Logger log = LoggerFactory.getLogger(UIScope.class);
 	private static final String MSG = "Este error no deberia de haber aparecido.";
 
@@ -30,12 +30,13 @@ public class UIScope implements Scope {
 		return new Provider<T>() {
 			@Override
 			public T get() {
-				// 
-				// get the scope cache for the current UI
-				log.debug("looking for a UIScoped instance of {}", key.getClass().getName());
+				// Damos una pista de que es lo que se esta pidiendo.
+				log.debug("buscando una instancia en el ambito {} para la clase {}", UIScope.this.toString(), key.getClass().getName());
 
-				// Obtiene la UIKey actual. Deberia estar siempre disponible ya que se creo antes que el UI.
+				// Obtiene la UIKey que corresponde al UI actual.
+				// Esta UIKey fue creada por el ScopedUIProvider justo antes de instanciar el ScopedUI y esta asociado a el.  
 				UIKey uiKey = CurrentInstance.get(UIKey.class);
+				
 				// El UI puede estar a null si estamos en el proceso de construccion.
 				ScopedUI currentUI = (ScopedUI) UI.getCurrent();
 				if (uiKey == null) {
@@ -109,6 +110,11 @@ public class UIScope implements Scope {
 
 	public void releaseScope(UIKey uiKey) {
 		cache.remove(uiKey);
+	}
+	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + ".DEFAULT";
 	}
 
 }
