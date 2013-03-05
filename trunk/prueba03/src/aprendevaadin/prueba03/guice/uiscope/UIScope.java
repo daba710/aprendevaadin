@@ -31,9 +31,6 @@ public class UIScope implements Scope {
 		return new Provider<T>() {
 			@Override
 			public T get() {
-				// Damos una pista de que es lo que se esta pidiendo.
-				log.debug("buscando una instancia para la clase '{}' en el ambito '{}' ", key.toString(), UIScope.this.toString());
-
 				// Obtiene la UIKey que corresponde al UI actual.
 				// (esta UIKey fue creada por el ScopedUIProvider justo antes de instanciar el ScopedUI y esta asociado a el).  
 				UIKey uiKey = CurrentInstance.get(UIKey.class);
@@ -70,6 +67,9 @@ public class UIScope implements Scope {
 					}
 				}
 
+				// Damos una pista de que es lo que se esta pidiendo.
+				log.debug("{}-{} -> {} SOLICITADO", UIScope.this.toString(), uiKey.toString(), key.toString());
+
 				Map<Key<?>, Object> scopedObjects = getScopedObjectMap(uiKey);
 
 				// Se recupera la instancia existente si es posible,
@@ -77,13 +77,13 @@ public class UIScope implements Scope {
 				T current = (T) scopedObjects.get(key);
 				if (current != null) {
 					// Se retorna la instancia existente
-					log.debug("{}-{} -> Recuperado {}", UIScope.this.toString(), uiKey.toString(), key.toString());
+					log.debug("{}-{} -> {} RECUPERADO", UIScope.this.toString(), uiKey.toString(), key.toString());
 					return current;
 				} else {
 					// o se create, se almacena en la cache y se retorna la primera instancia.
 					current = unscoped.get();
 					scopedObjects.put(key, current);
-					log.debug("{}-{} -> Creado {}", UIScope.this.toString(), uiKey.toString(), key.toString());
+					log.debug("{}-{} -> {} CREADO", UIScope.this.toString(), uiKey.toString(), key.toString());
 					return current;
 				}
 			}
@@ -94,7 +94,6 @@ public class UIScope implements Scope {
 		// return an existing cache instance
 		if (cache.containsKey(uiKey)) {
 			Map<Key<?>, Object> scopedObjects = cache.get(uiKey);
-			log.debug("Se ha recuperado la entrada desde la cache para la clave '{}' en el ambito '{}' ", uiKey.toString(), UIScope.this.toString());
 			return scopedObjects;
 		} else {
 			return createCacheEntry(uiKey);
@@ -103,6 +102,7 @@ public class UIScope implements Scope {
 
 	public void startScope(UIKey uiKey) {
 		if (!cacheHasEntryFor(uiKey)) {
+			log.debug("{}-{} -> Inicializando ambito.", UIScope.this.toString(), uiKey.toString());
 			createCacheEntry(uiKey);
 		}
 	}
@@ -120,7 +120,7 @@ public class UIScope implements Scope {
 
 	public void releaseScope(UIKey uiKey) {
 		cache.remove(uiKey);
-		log.debug("{}-{} -> Destruido mapa de cache.", UIScope.this.toString(), uiKey.toString());
+		log.debug("{}-{} -> Reseteando ambito y destruyendo mapa de cache.", UIScope.this.toString(), uiKey.toString());
 	}
 	
 	@Override
