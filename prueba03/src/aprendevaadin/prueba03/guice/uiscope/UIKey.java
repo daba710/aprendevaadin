@@ -30,7 +30,7 @@ public class UIKey implements Comparable<UIKey>, Serializable {
 
 	@Override
 	public String toString() {
-		return "UIKey:" + counter;
+		return "UI" + counter;
 	}
 
 	@Override
