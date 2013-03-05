@@ -27,20 +27,26 @@ public class UIScope implements Scope {
 
 	@Override
 	public <T> Provider<T> scope(final Key<T> key, final Provider<T> unscoped) {
+		
 		return new Provider<T>() {
 			@Override
 			public T get() {
 				// Damos una pista de que es lo que se esta pidiendo.
-				log.debug("buscando una instancia en el ambito {} para la clase {}", UIScope.this.toString(), key.getClass().getName());
+				log.debug("buscando una instancia para la clase '{}' en el ambito '{}' ", key.toString(), UIScope.this.toString());
 
 				// Obtiene la UIKey que corresponde al UI actual.
-				// Esta UIKey fue creada por el ScopedUIProvider justo antes de instanciar el ScopedUI y esta asociado a el.  
+				// (esta UIKey fue creada por el ScopedUIProvider justo antes de instanciar el ScopedUI y esta asociado a el).  
 				UIKey uiKey = CurrentInstance.get(UIKey.class);
 				
 				// El UI puede estar a null si estamos en el proceso de construccion.
 				ScopedUI currentUI = (ScopedUI) UI.getCurrent();
+				
+				// Verificamos que la clave del UI obtenida via 'current instancia' este informada.
 				if (uiKey == null) {
+					
+					// Si no esta informada se intenta obtener via 'current UI'.
 					if (currentUI == null) {
+						// Si ademas de via 'current instance' tampoco se puede obtener via 'current ui' no hay solución.
 						throw new UIScopeException(String.format("UI and uiKey are null (%s).",  MSG));
 					} else {
 						// Esto puede ocurrir cuando el framework conmuta UIs
@@ -49,6 +55,11 @@ public class UIScope implements Scope {
 							throw new UIScopeException(String.format("uiKey is null and cannot be obtained from the UI (%s).", MSG));
 						}
 					}
+				}
+				
+				// Interesado en saber si puede ocurrir que 'current UI' puede ser null.
+				if (currentUI == null) {
+//					log.debug("**************** currentUI is null  *************");
 				}
 
 				// 'currentUI' puede ser null si estamos en el proceso de contruccion del UI,
@@ -59,7 +70,6 @@ public class UIScope implements Scope {
 					}
 				}
 
-				log.debug("looking for cache for key: " + uiKey);
 				Map<Key<?>, Object> scopedObjects = getScopedObjectMap(uiKey);
 
 				// Se recupera la instancia existente si es posible,
@@ -67,13 +77,13 @@ public class UIScope implements Scope {
 				T current = (T) scopedObjects.get(key);
 				if (current != null) {
 					// Se retorna la instancia existente
-					log.debug("returning existing instance of " + current.getClass().getSimpleName());
+					log.debug("{}-{} -> Recuperado {}", UIScope.this.toString(), uiKey.toString(), key.toString());
 					return current;
 				} else {
 					// o se create, se almacena en la cache y se retorna la primera instancia.
 					current = unscoped.get();
 					scopedObjects.put(key, current);
-					log.debug("new instance of " + current.getClass().getSimpleName() + " created, as none in cache");
+					log.debug("{}-{} -> Creado {}", UIScope.this.toString(), uiKey.toString(), key.toString());
 					return current;
 				}
 			}
@@ -84,7 +94,7 @@ public class UIScope implements Scope {
 		// return an existing cache instance
 		if (cache.containsKey(uiKey)) {
 			Map<Key<?>, Object> scopedObjects = cache.get(uiKey);
-			log.debug("scope cache retrieved for UI key: " + uiKey);
+			log.debug("Se ha recuperado la entrada desde la cache para la clave '{}' en el ambito '{}' ", uiKey.toString(), UIScope.this.toString());
 			return scopedObjects;
 		} else {
 			return createCacheEntry(uiKey);
@@ -104,12 +114,13 @@ public class UIScope implements Scope {
 	private HashMap<Key<?>, Object> createCacheEntry(UIKey uiKey) {
 		HashMap<Key<?>, Object> uiEntry = new HashMap<Key<?>, Object>();
 		cache.put(uiKey, uiEntry);
-		log.debug("created a scope cache for UIScope with key: " + uiKey);
+		log.debug("{}-{} -> Creado mapa de cache.", UIScope.this.toString(), uiKey.toString());
 		return uiEntry;
 	}
 
 	public void releaseScope(UIKey uiKey) {
 		cache.remove(uiKey);
+		log.debug("{}-{} -> Destruido mapa de cache.", UIScope.this.toString(), uiKey.toString());
 	}
 	
 	@Override
