@@ -14,7 +14,6 @@ import com.vaadin.navigator.Navigator.ComponentContainerViewDisplay;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class DemoUI extends ScopedUI implements IViewNavigatorListener {
@@ -48,7 +47,7 @@ public class DemoUI extends ScopedUI implements IViewNavigatorListener {
 		ComponentContainerViewDisplay viewDisplay = new ComponentContainerViewDisplay(content);
 
 		// Se crea el navegador
-		navigator = new Navigator(UI.getCurrent(), viewDisplay);
+		navigator = new Navigator(this, viewDisplay);
 
 		// Se carga en el navegador las vistas inyectadas
 		for (Map.Entry<String,View> entry : views.entrySet()) {
