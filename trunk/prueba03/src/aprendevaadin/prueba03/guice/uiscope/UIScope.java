@@ -104,13 +104,6 @@ public class UIScope implements Scope {
 		}
 	}
 
-	public void startScope(UIKey uiKey) {
-		if (!cacheHasEntryFor(uiKey)) {
-			log.debug("{}-{} -> Inicializando ambito.", UIScope.this.toString(), uiKey.toString());
-			createCacheEntry(uiKey);
-		}
-	}
-
 	private boolean cacheHasEntryFor(UIKey uiKey) {
 		return cache.containsKey(uiKey);
 	}
@@ -120,6 +113,13 @@ public class UIScope implements Scope {
 		cache.put(uiKey, uiEntry);
 		log.debug("{}-{} -> Creado mapa de cache.", UIScope.this.toString(), uiKey.toString());
 		return uiEntry;
+	}
+
+	public void startScope(UIKey uiKey) {
+		if (!cacheHasEntryFor(uiKey)) {
+			log.debug("{}-{} -> Inicializando ambito.", UIScope.this.toString(), uiKey.toString());
+			createCacheEntry(uiKey);
+		}
 	}
 
 	public void releaseScope(UIKey uiKey) {
