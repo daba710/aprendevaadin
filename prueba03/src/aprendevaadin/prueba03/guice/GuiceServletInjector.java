@@ -3,13 +3,6 @@ package aprendevaadin.prueba03.guice;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
-
-import aprendevaadin.prueba03.conf.DemoConfModule;
-import aprendevaadin.prueba03.demo.navigator.NavigatorModule;
-import aprendevaadin.prueba03.demo.ui.DemoUIModule;
-import aprendevaadin.prueba03.demo.view.ViewModule;
-import aprendevaadin.prueba03.guice.uiscope.UIScopeModule;
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -22,14 +15,7 @@ public class GuiceServletInjector extends GuiceServletContextListener {
 
 	@Override
 	protected Injector getInjector() {
-		injector = Guice.createInjector(
-				new BaseModule(),
-				new UIScopeModule(),
-				new NavigatorModule(),
-				new ViewModule(),
-				new DemoUIModule(),
-				new DemoConfModule()
-			);
+		injector = Guice.createInjector(new AppModule());
 		return injector;
 	}
 

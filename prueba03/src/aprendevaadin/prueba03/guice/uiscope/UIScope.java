@@ -83,7 +83,7 @@ public class UIScope implements Scope {
 		
 		// Interesado en saber si puede ocurrir que 'current UI' puede ser null.
 		if (currentUI == null) {
-			log.debug("{}-{} -> UI es null", UIScope.this.toString(), uiKey.toString());
+//			log.debug("{}-{} -> UI es null", UIScope.this.toString(), uiKey.toString());
 		} else {
 			// Nos aseguramos que no se haya perdido la sincronización del 'current instance' con el 'current UI'.
 			if (!uiKey.equals(currentUI.getInstanceKey())) {
