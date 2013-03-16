@@ -5,6 +5,8 @@ import java.util.Map;
 import aprendevaadin.prueba04.conf.A;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorListener;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
+import aprendevaadin.prueba04.demo.view.MainView;
+import aprendevaadin.prueba04.demo.view.StartView;
 import aprendevaadin.prueba04.ui.ScopedUI;
 
 import com.google.inject.Inject;
@@ -53,6 +55,9 @@ public class DemoUI extends ScopedUI implements IViewNavigatorListener {
 		for (Map.Entry<String,View> entry : views.entrySet()) {
 			navigator.addView(entry.getKey(), entry.getValue());
 		}
+		
+		// Se selecciona la vista inicial.
+		navigator.navigateTo(StartView.VIEW_KEY);
 		
 		// Se instala el listener del navegador
 		viewNavigatorService.addListener(this);
