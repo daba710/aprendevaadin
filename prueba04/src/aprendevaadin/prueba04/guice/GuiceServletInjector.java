@@ -3,6 +3,8 @@ package aprendevaadin.prueba04.guice;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
+import aprendevaadin.prueba04.demo.jaas.DemoConfiguration;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -21,6 +23,7 @@ public class GuiceServletInjector extends GuiceServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		DemoConfiguration.install();
 		final ServletContext servletContext = servletContextEvent.getServletContext();
 		ctx.set(servletContext);
 		super.contextInitialized(servletContextEvent);
