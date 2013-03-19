@@ -18,7 +18,9 @@ public class DemoLogin implements LoginModule {
 	private CallbackHandler callbackHandler;
 	private Map<String, ?> sharedState;
 	private Map<String, ?> options;
-
+	
+	private DemoUsers.UserEntry userEntry;
+	
 	@Override
 	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options) {
 		this.subject = subject;
@@ -29,15 +31,31 @@ public class DemoLogin implements LoginModule {
 
 	@Override
 	public boolean login() throws LoginException {
+		
+		// Se utiliza el callback handler para recolectar las credenciales.
 		NameCallback nameCallback = new NameCallback("user");
 		PasswordCallback passwordCallback = new PasswordCallback("password", false);
 		Callback[] callbacks = new Callback[] { nameCallback, passwordCallback };
 		try {
 			callbackHandler.handle(callbacks);
 		} catch (IOException ioEx) {
+			LoginException loginEx = new LoginException("IOException logging in.");
+			loginEx.initCause(ioEx);
+			throw loginEx;
 		} catch (UnsupportedCallbackException ucbEx) {
+			String className = ucbEx.getCallback().getClass().getName();
+			LoginException loginEx = new LoginException(className + " is not a supported Callback");
+			loginEx.initCause(ucbEx);
+			throw loginEx;
 		}
-		return false;
+		String userName = nameCallback.getName();
+		String userPassword = String.valueOf(passwordCallback.getPassword());
+		
+		// Se verifican las credenciales
+		userEntry = DemoUsers.getUser(userName, userPassword);
+		
+		// Se retorna el resultado de la verificacion.
+		return userEntry != null;
 	}
 
 	@Override
