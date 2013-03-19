@@ -2,14 +2,14 @@ package aprendevaadin.prueba04.demo.jaas;
 
 import java.util.UUID;
 
-public class DemoUsers {
+public class UsersDAO {
 	
 	static private UserEntry[] users = new UserEntry[] {
 		new UserEntry("admin", "adminpass"),
 		new UserEntry("user", "userpass")
 	};
 	
-	static public class UserEntry {
+	static private class UserEntry implements IUserCredentials {
 		
 		private UUID id;
 		private String name;
@@ -35,7 +35,7 @@ public class DemoUsers {
 		
 	}
 	
-	static public UserEntry getUser(String name, String password) {
+	static public IUserCredentials getUser(String name, String password) {
 		for (UserEntry entry : users) {
 			if (entry.getName().equals(name) && entry.getPassword().equals(password)) {
 				return entry;
