@@ -19,7 +19,7 @@ public class DemoLogin implements LoginModule {
 	private Map<String, ?> sharedState;
 	private Map<String, ?> options;
 	
-	private DemoUsers.UserEntry userEntry;
+	private IUserCredentials userCredentials;
 	
 	@Override
 	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options) {
@@ -52,10 +52,10 @@ public class DemoLogin implements LoginModule {
 		String userPassword = String.valueOf(passwordCallback.getPassword());
 		
 		// Se verifican las credenciales
-		userEntry = DemoUsers.getUser(userName, userPassword);
+		userCredentials = UsersDAO.getUser(userName, userPassword);
 		
 		// Se retorna el resultado de la verificacion.
-		return userEntry != null;
+		return userCredentials != null;
 	}
 
 	@Override
