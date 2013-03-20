@@ -42,5 +42,10 @@ public class AdminGroupPrincipal implements Principal {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "AdminGroupPrincipal [id=" + id + ", name=" + name + "]";
+	}
 	
 }

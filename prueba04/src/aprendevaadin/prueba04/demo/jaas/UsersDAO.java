@@ -32,6 +32,11 @@ public class UsersDAO {
 		private String getPassword() {
 			return password;
 		}
+
+		@Override
+		public String toString() {
+			return "UserEntry [id=" + id + ", name=" + name + "]";
+		}
 		
 	}
 	

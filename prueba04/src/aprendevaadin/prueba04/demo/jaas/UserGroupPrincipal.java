@@ -43,4 +43,9 @@ public class UserGroupPrincipal implements Principal {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "UserGroupPrincipal [id=" + id + ", name=" + name + "]";
+	}
+
 }
