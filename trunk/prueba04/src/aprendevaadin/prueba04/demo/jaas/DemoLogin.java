@@ -54,7 +54,7 @@ public class DemoLogin implements LoginModule {
 		String userPassword = String.valueOf(passwordCallback.getPassword());
 		
 		// Se verifican las credenciales
-		userCredentials = UsersDAO.getUser(userName, userPassword);
+		userCredentials = UsersDAO.getInstance().getUserByCredentials(userName, userPassword);
 		
 		// Se retorna el resultado de la verificacion.
 		return userCredentials != null;
