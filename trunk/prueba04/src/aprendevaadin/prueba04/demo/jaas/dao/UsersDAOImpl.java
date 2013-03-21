@@ -66,7 +66,6 @@ class UsersDAOImpl extends UsersDAO {
 		return null;
 	}
 	
-	
 	public Set<Principal> getPrincipals(IUserCredentials userCredential) {
 		
 		// Se prepara el contenedor de los Principales
