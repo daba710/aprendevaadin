@@ -2,59 +2,22 @@ package aprendevaadin.prueba04.demo.jaas.dao;
 
 import java.security.Principal;
 import java.util.Set;
-import java.util.UUID;
 
 import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
 
-public class UsersDAO {
+abstract public class UsersDAO {
 	
-	static private UserEntry[] users = new UserEntry[] {
-		new UserEntry("admin", "adminpass"),
-		new UserEntry("user", "userpass")
-	};
+	static private UsersDAO instance = null;
 	
-	static private class UserEntry implements IUserCredentials {
-		
-		private UUID id;
-		private String name;
-		private String password;
-		
-		private UserEntry(String name, String password) {
-			this.id = UUID.fromString(name);
-			this.name = name;
-			this.password = password;
-		}
-		
-		public UUID getId() {
-			return id;
-		}
-		
-		public String getName() {
-			return name;
-		}
-		
-		private String getPassword() {
-			return password;
-		}
-
-		@Override
-		public String toString() {
-			return "UserEntry [id=" + id + ", name=" + name + "]";
-		}
-		
-	}
-	
-	static public IUserCredentials getUser(String name, String password) {
-		for (UserEntry entry : users) {
-			if (entry.getName().equals(name) && entry.getPassword().equals(password)) {
-				return entry;
+	static public UsersDAO getInstance() {
+		synchronized (UsersDAO.class) {
+			if (instance == null) {
+				instance = new UsersDAOImpl();
 			}
 		}
-		return null;
+		return instance;
 	}
 	
-	static public Set<Principal> getPrincipals() {
-		return null;
-	}
-	
+	abstract public IUserCredentials getUserByCredentials(String name, String password);
+	abstract public Set<Principal> getPrincipals(IUserCredentials userCredential);
 }
