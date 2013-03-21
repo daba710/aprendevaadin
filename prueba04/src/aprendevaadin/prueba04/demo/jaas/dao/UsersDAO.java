@@ -20,4 +20,5 @@ abstract public class UsersDAO {
 	
 	abstract public IUserCredentials getUserByCredentials(String name, String password);
 	abstract public Set<Principal> getPrincipals(IUserCredentials userCredential);
+	
 }
