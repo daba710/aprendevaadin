@@ -2,6 +2,7 @@ package aprendevaadin.prueba04.demo.jaas;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
@@ -62,17 +63,38 @@ public class DemoLogin implements LoginModule {
 
 	@Override
 	public boolean commit() throws LoginException {
-		return false;
+		if (userCredentials == null) {
+			return false;
+		} else {
+			subject.getPublicCredentials().add(userCredentials);
+			subject.getPrincipals().addAll(UsersDAO.getInstance().getPrincipals(userCredentials));
+			return true;
+		}
 	}
 
 	@Override
 	public boolean abort() throws LoginException {
+		
+		logout();
+		
 		return false;
 	}
 
 	@Override
 	public boolean logout() throws LoginException {
-		return false;
+		
+		userCredentials = null;
+		
+		Set<UserGroupPrincipal> userPrincipals = subject.getPrincipals(UserGroupPrincipal.class);
+		subject.getPrincipals().removeAll(userPrincipals);
+		
+		Set<AdminGroupPrincipal> adminPrincipals = subject.getPrincipals(AdminGroupPrincipal.class);
+		subject.getPrincipals().removeAll(adminPrincipals);
+		
+		Set<IUserCredentials> userCredentials = subject.getPublicCredentials(IUserCredentials.class);
+		subject.getPublicCredentials().removeAll(userCredentials);
+		
+		return true;
 	}
 
 }
