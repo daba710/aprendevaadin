@@ -1,5 +1,7 @@
 package aprendevaadin.prueba04.demo.jaas;
 
+import java.security.Principal;
+import java.util.Set;
 import java.util.UUID;
 
 public class UsersDAO {
@@ -46,6 +48,10 @@ public class UsersDAO {
 				return entry;
 			}
 		}
+		return null;
+	}
+	
+	static public Set<Principal> getPrincipals() {
 		return null;
 	}
 	
