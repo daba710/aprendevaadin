@@ -1,8 +1,10 @@
-package aprendevaadin.prueba04.demo.jaas;
+package aprendevaadin.prueba04.demo.jaas.dao;
 
 import java.security.Principal;
 import java.util.Set;
 import java.util.UUID;
+
+import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
 
 public class UsersDAO {
 	
