@@ -79,9 +79,9 @@ class UsersDAOImpl extends UsersDAO {
 		// En funcion del usuario se incorporan los principales.
 		if (userName != null) {
 			switch (userName) {
-			case "user":
-				set.add(new UserGroupPrincipal());
 			case "admin":
+				set.add(new UserGroupPrincipal());
+			case "user":
 				set.add(new AdminGroupPrincipal());
 				break;
 			default:
