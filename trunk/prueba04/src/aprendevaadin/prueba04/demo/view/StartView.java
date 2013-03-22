@@ -1,7 +1,13 @@
 package aprendevaadin.prueba04.demo.view;
 
 import javax.inject.Inject;
+import javax.security.auth.Subject;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
 
+import aprendevaadin.prueba04.demo.jaas.DemoCallbackHandler;
+import aprendevaadin.prueba04.demo.jaas.DemoConfiguration;
+import aprendevaadin.prueba04.demo.jaas.DemoLogin;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
 import aprendevaadin.prueba04.guice.uiscope.UIScoped;
 
@@ -59,10 +65,25 @@ public class StartView extends VerticalLayout implements View {
             new ClickListener() {
                 private static final long serialVersionUID = -5577423546946890721L;
                 public void buttonClick(ClickEvent event) {
+                	
                     // Try to log in the user when the button is clicked
                     String username = (String) usernameField.getValue();
                     String password = (String) passwordField.getValue();
-                    StartView.this.viewNavigator.navigateTo(MainView.VIEW_KEY);
+                    
+                    // Verificacion JASS
+                    DemoCallbackHandler callbackHandler = new DemoCallbackHandler(username, password);
+                    LoginContext loginContext = null;
+                    try {
+						loginContext = new LoginContext(DemoConfiguration.APP_NAME, callbackHandler);
+						loginContext.login();
+						Subject subject = loginContext.getSubject();
+	                    StartView.this.viewNavigator.navigateTo(MainView.VIEW_KEY);
+	                    DemoLogin.dump(subject);
+					} catch (LoginException e) {
+						loginContext = null;
+						e.printStackTrace();
+						Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
+					}
                 }
             });
 
