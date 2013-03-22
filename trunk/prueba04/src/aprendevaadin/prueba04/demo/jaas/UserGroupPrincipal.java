@@ -2,7 +2,7 @@ package aprendevaadin.prueba04.demo.jaas;
 
 import java.security.Principal;
 
-public class UserGroupPrincipal implements Principal {
+public class UserGroupPrincipal implements Principal, Comparable<UserGroupPrincipal> {
 	
 	private String name;
 	
@@ -38,6 +38,13 @@ public class UserGroupPrincipal implements Principal {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(UserGroupPrincipal other) {
+		if (other == null) 
+			throw new NullPointerException();
+		return getName().compareTo(other.getName());
 	}
 
 	@Override
