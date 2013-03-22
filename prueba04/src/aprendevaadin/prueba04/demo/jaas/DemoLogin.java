@@ -13,7 +13,7 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
-import aprendevaadin.prueba04.demo.jaas.dao.UsersDAO;
+import aprendevaadin.prueba04.demo.principal.dao.UsersDAO;
 
 public class DemoLogin implements LoginModule {
 	
