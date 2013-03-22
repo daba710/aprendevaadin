@@ -3,7 +3,7 @@ package aprendevaadin.prueba04.demo.principal.dao;
 import java.security.Principal;
 import java.util.Set;
 
-import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
+import aprendevaadin.prueba04.demo.principal.jaas.IUserCredentials;
 
 abstract public class UsersDAO {
 	

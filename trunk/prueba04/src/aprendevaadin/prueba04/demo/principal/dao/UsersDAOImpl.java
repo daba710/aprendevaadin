@@ -6,9 +6,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import aprendevaadin.prueba04.demo.jaas.AdminGroupPrincipal;
-import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
-import aprendevaadin.prueba04.demo.jaas.UserGroupPrincipal;
+import aprendevaadin.prueba04.demo.principal.jaas.AdminGroupPrincipal;
+import aprendevaadin.prueba04.demo.principal.jaas.IUserCredentials;
+import aprendevaadin.prueba04.demo.principal.jaas.UserGroupPrincipal;
 
 class UsersDAOImpl extends UsersDAO {
 	
