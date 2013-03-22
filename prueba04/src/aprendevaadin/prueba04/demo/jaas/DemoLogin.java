@@ -99,6 +99,8 @@ public class DemoLogin implements LoginModule {
 	
 	static public void dump(Subject subject) {
 		
+		System.out.println("-------------------------------");
+		
 		System.out.println(UserGroupPrincipal.class.getName() + ":");
 		Set<UserGroupPrincipal> userPrincipals = subject.getPrincipals(UserGroupPrincipal.class);
 		if (userPrincipals != null) {

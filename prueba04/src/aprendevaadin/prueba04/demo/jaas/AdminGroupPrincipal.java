@@ -2,7 +2,7 @@ package aprendevaadin.prueba04.demo.jaas;
 
 import java.security.Principal;
 
-public class AdminGroupPrincipal implements Principal, Comparable<AdminGroupPrincipal> {
+public class AdminGroupPrincipal implements Principal, Comparable<Principal> {
 
 	private String name;
 	
@@ -41,7 +41,7 @@ public class AdminGroupPrincipal implements Principal, Comparable<AdminGroupPrin
 	}
 
 	@Override
-	public int compareTo(AdminGroupPrincipal other) {
+	public int compareTo(Principal other) {
 		if (other == null) 
 			throw new NullPointerException();
 		return getName().compareTo(other.getName());

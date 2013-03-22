@@ -77,6 +77,9 @@ public class StartView extends VerticalLayout implements View {
 						loginContext = new LoginContext(DemoConfiguration.APP_NAME, callbackHandler);
 						loginContext.login();
 						Subject subject = loginContext.getSubject();
+						
+						usernameField.setValue("");
+						passwordField.setValue("");
 	                    StartView.this.viewNavigator.navigateTo(MainView.VIEW_KEY);
 	                    DemoLogin.dump(subject);
 					} catch (LoginException e) {
