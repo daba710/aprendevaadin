@@ -19,7 +19,9 @@ public class DemoLogin implements LoginModule {
 	
 	private Subject subject;
 	private CallbackHandler callbackHandler;
+	@SuppressWarnings("unused")
 	private Map<String, ?> sharedState;
+	@SuppressWarnings("unused")
 	private Map<String, ?> options;
 	
 	private IUserCredentials userCredentials;
@@ -77,7 +79,7 @@ public class DemoLogin implements LoginModule {
 		
 		logout();
 		
-		return false;
+		return true;
 	}
 
 	@Override
