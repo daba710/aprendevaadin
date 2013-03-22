@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ViewNavigatorImpl implements IViewNavigatorService {
+class ViewNavigatorImpl implements IViewNavigatorService {
 	
 	private List<IViewNavigatorListener> listeners = new ArrayList<IViewNavigatorListener>();
 
