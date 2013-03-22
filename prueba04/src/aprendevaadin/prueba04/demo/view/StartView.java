@@ -84,9 +84,7 @@ public class StartView extends VerticalLayout implements View {
 	                    DemoLogin.dump(subject);
 					} catch (LoginException e) {
 						loginContext = null;
-						String msg = "Imposible ingresar en el sistema.";
-						System.out.println(String.format("[%s]", msg));
-						e.printStackTrace();
+						String msg = e.getMessage();
 						Notification.show(msg, Notification.Type.ERROR_MESSAGE);
 					}
                 }
