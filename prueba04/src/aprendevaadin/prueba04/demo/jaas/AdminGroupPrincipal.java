@@ -2,7 +2,7 @@ package aprendevaadin.prueba04.demo.jaas;
 
 import java.security.Principal;
 
-public class AdminGroupPrincipal implements Principal {
+public class AdminGroupPrincipal implements Principal, Comparable<AdminGroupPrincipal> {
 
 	private String name;
 	
@@ -41,8 +41,16 @@ public class AdminGroupPrincipal implements Principal {
 	}
 
 	@Override
+	public int compareTo(AdminGroupPrincipal other) {
+		if (other == null) 
+			throw new NullPointerException();
+		return getName().compareTo(other.getName());
+	}
+
+	
+	@Override
 	public String toString() {
 		return "AdminGroupPrincipal [name=" + name + "]";
 	}
-	
+
 }
