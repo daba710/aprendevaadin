@@ -80,9 +80,11 @@ class UsersDAOImpl extends UsersDAO {
 		if (userName != null) {
 			switch (userName) {
 			case "admin":
-				set.add(new UserGroupPrincipal());
-			case "user":
 				set.add(new AdminGroupPrincipal());
+				set.add(new UserGroupPrincipal());
+				break;
+			case "user":
+				set.add(new UserGroupPrincipal());
 				break;
 			default:
 				break;
