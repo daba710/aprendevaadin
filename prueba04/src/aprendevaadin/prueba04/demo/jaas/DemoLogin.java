@@ -76,9 +76,7 @@ public class DemoLogin implements LoginModule {
 
 	@Override
 	public boolean abort() throws LoginException {
-		
 		logout();
-		
 		return true;
 	}
 
@@ -97,6 +95,34 @@ public class DemoLogin implements LoginModule {
 		subject.getPublicCredentials().removeAll(userCredentials);
 		
 		return true;
+	}
+	
+	static public void dump(Subject subject) {
+		
+		System.out.println(UserGroupPrincipal.class.getName() + ":");
+		Set<UserGroupPrincipal> userPrincipals = subject.getPrincipals(UserGroupPrincipal.class);
+		if (userPrincipals != null) {
+			for (UserGroupPrincipal userGroupPrincipal : userPrincipals) {
+				System.out.println(userGroupPrincipal.toString());
+			}
+		}
+		
+		System.out.println(AdminGroupPrincipal.class.getName() + ":");
+		Set<AdminGroupPrincipal> adminPrincipals = subject.getPrincipals(AdminGroupPrincipal.class);
+		if (adminPrincipals != null) {
+			for (AdminGroupPrincipal adminGroupPrincipal : adminPrincipals) {
+				System.out.println(adminGroupPrincipal.toString());
+			}
+		}
+		
+		System.out.println(IUserCredentials.class.getName() + ":");
+		Set<IUserCredentials> userCredentials = subject.getPublicCredentials(IUserCredentials.class);
+		if (userCredentials != null) {
+			for (IUserCredentials userCredential : userCredentials) {
+				System.out.println(userCredential.toString());
+			}
+		}
+
 	}
 
 }
