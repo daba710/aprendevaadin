@@ -13,26 +13,28 @@ import aprendevaadin.prueba04.demo.jaas.UserGroupPrincipal;
 class UsersDAOImpl extends UsersDAO {
 	
 	private UserEntry[] users = new UserEntry[] {
-		new UserEntry("admin", "adminpass"),
-		new UserEntry("user", "userpass")
+		new UserEntry(0, "admin", "adminpass"),
+		new UserEntry(1, "user", "userpass")
 	};
 	
 	private class UserEntry implements IUserCredentials {
 		
-		private UUID id;
+		private UUID uuid;
 		private String name;
 		private String password;
 		
-		private UserEntry(String name, String password) {
-			this.id = UUID.fromString(name);
+		private UserEntry(long id, String name, String password) {
+			this.uuid = new UUID(0, id);
 			this.name = name;
 			this.password = password;
 		}
 		
-		public UUID getId() {
-			return id;
+		@Override
+		public UUID getUUID() {
+			return uuid;
 		}
 		
+		@Override
 		public String getName() {
 			return name;
 		}
@@ -43,7 +45,7 @@ class UsersDAOImpl extends UsersDAO {
 
 		@Override
 		public String toString() {
-			return "UserEntry [id=" + id + ", name=" + name + "]";
+			return "UserEntry [id=" + uuid + ", name=" + name + "]";
 		}
 		
 	}
@@ -57,9 +59,9 @@ class UsersDAOImpl extends UsersDAO {
 		return null;
 	}
 	
-	private String getUserNameByID(UUID id) {
+	private String getUserNameByID(UUID uuid) {
 		for (UserEntry entry : users) {
-			if (entry.getId().equals(id)) {
+			if (entry.getUUID().equals(uuid)) {
 				return entry.getName();
 			}
 		}
@@ -72,7 +74,7 @@ class UsersDAOImpl extends UsersDAO {
 		TreeSet<Principal> set = new TreeSet<Principal>();
 		
 		// Se busca el usuario
-		String userName = getUserNameByID(userCredential.getId());
+		String userName = getUserNameByID(userCredential.getUUID());
 		
 		// En funcion del usuario se incorporan los principales.
 		if (userName != null) {
