@@ -5,10 +5,10 @@ import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
-import aprendevaadin.prueba04.demo.jaas.DemoCallbackHandler;
-import aprendevaadin.prueba04.demo.jaas.DemoConfiguration;
-import aprendevaadin.prueba04.demo.jaas.DemoLogin;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
+import aprendevaadin.prueba04.demo.principal.jaas.DemoCallbackHandler;
+import aprendevaadin.prueba04.demo.principal.jaas.DemoConfiguration;
+import aprendevaadin.prueba04.demo.principal.jaas.DemoLogin;
 import aprendevaadin.prueba04.guice.uiscope.UIScoped;
 
 import com.vaadin.navigator.View;
