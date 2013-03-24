@@ -4,7 +4,7 @@ import aprendevaadin.prueba04.guice.uiscope.UIScoped;
 
 import com.google.inject.AbstractModule;
 
-public class PrincipalModule extends AbstractModule {
+public class SubjectModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
@@ -12,7 +12,7 @@ public class PrincipalModule extends AbstractModule {
 	}
 
 	protected void bindPrincipal() {
-		bind(IPrincipalService.class).to(PrincipalImpl.class).in(UIScoped.class);
+		bind(ISubjectService.class).to(SubjectImpl.class).in(UIScoped.class);
 	}
 
 }
