@@ -2,6 +2,7 @@ package aprendevaadin.prueba04.guice;
 
 import aprendevaadin.prueba04.conf.DemoConfModule;
 import aprendevaadin.prueba04.demo.navigator.NavigatorModule;
+import aprendevaadin.prueba04.demo.subject.SubjectModule;
 import aprendevaadin.prueba04.demo.ui.DemoUIModule;
 import aprendevaadin.prueba04.demo.view.ViewModule;
 import aprendevaadin.prueba04.guice.uiscope.UIScopeModule;
@@ -16,6 +17,7 @@ public class AppModule extends AbstractModule {
 		install(new UIScopeModule());
 		install(new NavigatorModule());
 		install(new ViewModule());
+		install(new SubjectModule());
 		install(new DemoUIModule());
 		install(new DemoConfModule());
 	}
