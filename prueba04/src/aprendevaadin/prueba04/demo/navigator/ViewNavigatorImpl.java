@@ -25,8 +25,23 @@ class ViewNavigatorImpl implements IViewNavigatorService {
 	
 	private void fireNewViewSelected(String viewKey) {
 		for (IViewNavigatorListener listener : listeners.toArray(new IViewNavigatorListener[] {})) {
-			listener.newViewSelected(viewKey);
+			listener.newViewSelected(new ViewNavigatorEventImpl(viewKey));
 		}
+	}
+	
+	private class ViewNavigatorEventImpl implements IViewNavigatorEvent {
+		
+		final private String navigatorEventKey;
+		
+		private ViewNavigatorEventImpl(String navigatorEventKey) {
+			this.navigatorEventKey = navigatorEventKey;
+		}
+
+		@Override
+		public String getViewKey() {
+			return navigatorEventKey;
+		}
+		
 	}
 
 }
