@@ -3,6 +3,9 @@ package aprendevaadin.prueba04.demo.view;
 import javax.inject.Inject;
 
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
+import aprendevaadin.prueba04.demo.subject.ISubjectService;
+import aprendevaadin.prueba04.demo.subject.SubjectSeriviceException;
+import aprendevaadin.prueba04.demo.subject.jaas.DemoLogin;
 import aprendevaadin.prueba04.guice.uiscope.UIScoped;
 
 import com.vaadin.navigator.View;
@@ -12,6 +15,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -24,7 +28,8 @@ public class MainView extends VerticalLayout implements View {
 
 	private Panel panel;
 	
-	private IViewNavigatorService viewNavigator;
+	final private IViewNavigatorService viewNavigator;
+	final private ISubjectService subjectService;
 
 	class ButtonListener implements Button.ClickListener {
 		
@@ -45,9 +50,10 @@ public class MainView extends VerticalLayout implements View {
 	}
 
 	@Inject
-	public MainView(IViewNavigatorService viewNavigation) {
+	public MainView(IViewNavigatorService viewNavigation, ISubjectService subjectService) {
 		
 		this.viewNavigator = viewNavigation;
+		this.subjectService = subjectService;
 		
 		setSizeFull();
 
@@ -90,8 +96,17 @@ public class MainView extends VerticalLayout implements View {
 			private static final long serialVersionUID = 5762055829904017025L;
 
 			@Override
+			
 			public void buttonClick(ClickEvent event) {
-				MainView.this.viewNavigator.navigateTo(StartView.VIEW_KEY);
+                // Logout del sistema
+                try {
+					MainView.this.subjectService.logout();
+                    DemoLogin.dump(MainView.this.subjectService.getSubject());
+					MainView.this.viewNavigator.navigateTo(StartView.VIEW_KEY);
+				} catch (SubjectSeriviceException e) {
+					String msg = e.getMessage();
+					Notification.show(msg, Notification.Type.ERROR_MESSAGE);
+				}
 			}
 		});
 		addComponent(logout);
