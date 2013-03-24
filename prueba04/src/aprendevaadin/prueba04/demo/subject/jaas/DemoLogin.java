@@ -101,28 +101,36 @@ public class DemoLogin implements LoginModule {
 		
 		System.out.println("-------------------------------");
 		
-		System.out.println(UserGroupPrincipal.class.getName() + ":");
-		Set<UserGroupPrincipal> userPrincipals = subject.getPrincipals(UserGroupPrincipal.class);
-		if (userPrincipals != null) {
-			for (UserGroupPrincipal userGroupPrincipal : userPrincipals) {
-				System.out.println(userGroupPrincipal.toString());
-			}
-		}
+		if (subject != null) {
 		
-		System.out.println(AdminGroupPrincipal.class.getName() + ":");
-		Set<AdminGroupPrincipal> adminPrincipals = subject.getPrincipals(AdminGroupPrincipal.class);
-		if (adminPrincipals != null) {
-			for (AdminGroupPrincipal adminGroupPrincipal : adminPrincipals) {
-				System.out.println(adminGroupPrincipal.toString());
+			System.out.println(UserGroupPrincipal.class.getName() + ":");
+			Set<UserGroupPrincipal> userPrincipals = subject.getPrincipals(UserGroupPrincipal.class);
+			if (userPrincipals != null) {
+				for (UserGroupPrincipal userGroupPrincipal : userPrincipals) {
+					System.out.println(userGroupPrincipal.toString());
+				}
 			}
-		}
-		
-		System.out.println(IUserCredentials.class.getName() + ":");
-		Set<IUserCredentials> userCredentials = subject.getPublicCredentials(IUserCredentials.class);
-		if (userCredentials != null) {
-			for (IUserCredentials userCredential : userCredentials) {
-				System.out.println(userCredential.toString());
+			
+			System.out.println(AdminGroupPrincipal.class.getName() + ":");
+			Set<AdminGroupPrincipal> adminPrincipals = subject.getPrincipals(AdminGroupPrincipal.class);
+			if (adminPrincipals != null) {
+				for (AdminGroupPrincipal adminGroupPrincipal : adminPrincipals) {
+					System.out.println(adminGroupPrincipal.toString());
+				}
 			}
+			
+			System.out.println(IUserCredentials.class.getName() + ":");
+			Set<IUserCredentials> userCredentials = subject.getPublicCredentials(IUserCredentials.class);
+			if (userCredentials != null) {
+				for (IUserCredentials userCredential : userCredentials) {
+					System.out.println(userCredential.toString());
+				}
+			}
+			
+		} else {
+			
+			System.out.println("Subject is null.");
+			
 		}
 
 	}
