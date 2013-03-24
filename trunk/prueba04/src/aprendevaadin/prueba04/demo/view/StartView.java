@@ -78,6 +78,7 @@ public class StartView extends VerticalLayout implements View {
 					} catch (SubjectSeriviceException e) {
 						String msg = e.getMessage();
 						Notification.show(msg, Notification.Type.ERROR_MESSAGE);
+						passwordField.setValue("");
 					}
                 }
             });
