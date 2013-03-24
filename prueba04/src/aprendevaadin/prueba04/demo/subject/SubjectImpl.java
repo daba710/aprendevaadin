@@ -4,21 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.Subject;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
+
+import aprendevaadin.prueba04.demo.subject.jaas.DemoCallbackHandler;
+import aprendevaadin.prueba04.demo.subject.jaas.DemoConfiguration;
 
 class SubjectImpl implements ISubjectService {
 	
 	private List<ISubjectListener> listeners = new ArrayList<ISubjectListener>();
+	
+	private Subject subject;
 
 	public Subject getSubject() {
-		return null;
+		return subject;
 	}
 	
-	public void login(String user, String password) {
-		
+	private void setSubject(Subject subject) {
+		this.subject = subject;
+		fireSubjectUpdated();
 	}
 	
-	public void logout() {
-		
+	public void login(String user, String password) throws SubjectSeriviceException {
+        DemoCallbackHandler callbackHandler = new DemoCallbackHandler(user, password);
+        try {
+        	LoginContext loginContext = new LoginContext(DemoConfiguration.APP_NAME, callbackHandler);
+			loginContext.login();
+			setSubject(loginContext.getSubject());
+		} catch (LoginException e) {
+			throw new SubjectSeriviceException("No se puede obtener acceso al sistema", e);
+		}
+	}
+	
+	public void logout() throws SubjectSeriviceException {
+        try {
+			LoginContext loginContext = new LoginContext(DemoConfiguration.APP_NAME, getSubject());
+			loginContext.logout();
+			setSubject(null);
+		} catch (LoginException e) {
+			throw new SubjectSeriviceException("No se puede abandonar el acceso al sistema de forma ordenada", e);
+		}
 	}
 
 	@Override
@@ -31,9 +56,9 @@ class SubjectImpl implements ISubjectService {
 		listeners.remove(listener);
 	}
 	
-	private void firePrincipalUpdated(Subject subject) {
+	private void fireSubjectUpdated() {
 		for (ISubjectListener listener : listeners.toArray(new ISubjectListener[] {})) {
-			listener.subjectUpdated(new SubjectEventImpl(subject));
+			listener.subjectUpdated(new SubjectEventImpl(getSubject()));
 		}
 	}
 	
