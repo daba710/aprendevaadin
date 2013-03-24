@@ -9,9 +9,9 @@ import javax.security.auth.Subject;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorEvent;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorListener;
 
-class PrincipalImpl implements IPrincipalService {
+class SubjectImpl implements ISubjectService {
 	
-	private List<IPrincipalListener> listeners = new ArrayList<IPrincipalListener>();
+	private List<ISubjectListener> listeners = new ArrayList<ISubjectListener>();
 
 	public Subject getSubject() {
 		return null;
@@ -26,22 +26,22 @@ class PrincipalImpl implements IPrincipalService {
 	}
 
 	@Override
-	public void addListener(IPrincipalListener listener) {
+	public void addListener(ISubjectListener listener) {
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeListener(IPrincipalListener listener) {
+	public void removeListener(ISubjectListener listener) {
 		listeners.remove(listener);
 	}
 	
 	private void firePrincipalUpdated(Principal principal) {
-		for (IPrincipalListener listener : listeners.toArray(new IPrincipalListener[] {})) {
+		for (ISubjectListener listener : listeners.toArray(new ISubjectListener[] {})) {
 			listener.principalUpdated(new ViewNavigatorEventImpl(viewKey));
 		}
 	}
 	
-	private class PrincipalEventImpl implements IPrincipalEvent {
+	private class PrincipalEventImpl implements ISubjectEvent {
 		
 		final private Principal principal;
 		
