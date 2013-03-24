@@ -3,9 +3,9 @@ package aprendevaadin.prueba04.demo.ui;
 import java.util.Map;
 
 import aprendevaadin.prueba04.conf.A;
+import aprendevaadin.prueba04.demo.navigator.IViewNavigatorEvent;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorListener;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
-import aprendevaadin.prueba04.demo.view.MainView;
 import aprendevaadin.prueba04.demo.view.StartView;
 import aprendevaadin.prueba04.ui.ScopedUI;
 
@@ -64,8 +64,8 @@ public class DemoUI extends ScopedUI implements IViewNavigatorListener {
 	}
 
 	@Override
-	public void newViewSelected(String viewKey) {
-		navigator.navigateTo(viewKey);
+	public void newViewSelected(IViewNavigatorEvent event) {
+		navigator.navigateTo(event.getViewKey());
 	}
 	
 }
