@@ -7,8 +7,8 @@ import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
-import aprendevaadin.prueba04.demo.subject.jaas.DemoCallbackHandler;
-import aprendevaadin.prueba04.demo.subject.jaas.DemoConfiguration;
+import aprendevaadin.prueba04.demo.jaas.DemoCallbackHandler;
+import aprendevaadin.prueba04.demo.jaas.DemoConfiguration;
 
 class SubjectImpl implements ISubjectService {
 	
