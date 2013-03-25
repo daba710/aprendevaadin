@@ -1,4 +1,4 @@
-package aprendevaadin.prueba04.demo.jaas.dao;
+package aprendevaadin.prueba04.demo.jaas.dao.impl;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -9,8 +9,9 @@ import java.util.UUID;
 import aprendevaadin.prueba04.demo.jaas.AdminGroupPrincipal;
 import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
 import aprendevaadin.prueba04.demo.jaas.UserGroupPrincipal;
+import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
 
-class UsersDAOImpl extends UsersDAO {
+public class JassDaoImpl extends JassDao {
 	
 	private UserEntry[] users = new UserEntry[] {
 		new UserEntry(0, "admin", "adminpass"),
