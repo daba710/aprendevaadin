@@ -15,4 +15,9 @@ public class SubjectData implements ISubjectData {
 		return name;
 	}
 
+	@Override
+	public String toString() {
+		return "SubjectData [name=" + name + "]";
+	}
+	
 }
