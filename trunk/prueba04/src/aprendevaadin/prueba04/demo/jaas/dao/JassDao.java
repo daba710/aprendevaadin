@@ -4,15 +4,16 @@ import java.security.Principal;
 import java.util.Set;
 
 import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
+import aprendevaadin.prueba04.demo.jaas.dao.impl.JassDaoImpl;
 
-abstract public class UsersDAO {
+abstract public class JassDao implements IJassDao {
 	
-	static private UsersDAO instance = null;
+	static private IJassDao instance = null;
 	
-	static public UsersDAO getInstance() {
-		synchronized (UsersDAO.class) {
+	static public IJassDao getInstance() {
+		synchronized (JassDao.class) {
 			if (instance == null) {
-				instance = new UsersDAOImpl();
+				instance = new JassDaoImpl();
 			}
 		}
 		return instance;

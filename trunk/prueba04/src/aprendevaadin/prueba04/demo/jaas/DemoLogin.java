@@ -13,7 +13,7 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
-import aprendevaadin.prueba04.demo.jaas.dao.UsersDAO;
+import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
 
 public class DemoLogin implements LoginModule {
 	
@@ -57,7 +57,7 @@ public class DemoLogin implements LoginModule {
 		String userPassword = String.valueOf(passwordCallback.getPassword());
 		
 		// Se verifican las credenciales
-		userCredentials = UsersDAO.getInstance().getUserByCredentials(userName, userPassword);
+		userCredentials = JassDao.getInstance().getUserByCredentials(userName, userPassword);
 		
 		// Se retorna el resultado de la verificacion.
 		return userCredentials != null;
@@ -69,7 +69,7 @@ public class DemoLogin implements LoginModule {
 			return false;
 		} else {
 			subject.getPublicCredentials().add(userCredentials);
-			subject.getPrincipals().addAll(UsersDAO.getInstance().getPrincipals(userCredentials));
+			subject.getPrincipals().addAll(JassDao.getInstance().getPrincipals(userCredentials));
 			return true;
 		}
 	}
