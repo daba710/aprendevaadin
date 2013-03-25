@@ -2,10 +2,10 @@ package aprendevaadin.prueba04.demo.view;
 
 import javax.inject.Inject;
 
+import aprendevaadin.prueba04.demo.jaas.DemoLogin;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
 import aprendevaadin.prueba04.demo.subject.ISubjectService;
 import aprendevaadin.prueba04.demo.subject.SubjectSeriviceException;
-import aprendevaadin.prueba04.demo.subject.jaas.DemoLogin;
 import aprendevaadin.prueba04.guice.uiscope.UIScoped;
 
 import com.vaadin.navigator.View;
