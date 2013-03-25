@@ -3,7 +3,7 @@ package aprendevaadin.prueba04.guice;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
-import aprendevaadin.prueba04.demo.subject.jaas.DemoConfiguration;
+import aprendevaadin.prueba04.demo.jaas.DemoConfiguration;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
