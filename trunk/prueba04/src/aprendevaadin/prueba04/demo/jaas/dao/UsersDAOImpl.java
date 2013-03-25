@@ -1,4 +1,4 @@
-package aprendevaadin.prueba04.demo.subject.dao;
+package aprendevaadin.prueba04.demo.jaas.dao;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -6,9 +6,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import aprendevaadin.prueba04.demo.subject.jaas.AdminGroupPrincipal;
-import aprendevaadin.prueba04.demo.subject.jaas.IUserCredentials;
-import aprendevaadin.prueba04.demo.subject.jaas.UserGroupPrincipal;
+import aprendevaadin.prueba04.demo.jaas.AdminGroupPrincipal;
+import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
+import aprendevaadin.prueba04.demo.jaas.UserGroupPrincipal;
 
 class UsersDAOImpl extends UsersDAO {
 	
