@@ -1,7 +1,10 @@
 package aprendevaadin.prueba04.demo.jaas.dao.impl;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
 import aprendevaadin.prueba04.demo.jaas.dao.IPermissionData;
@@ -14,24 +17,41 @@ import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
 
 public class JassDaoImpl extends JassDao {
 	
+	private Map<ISubjectIdentifier, ISubjectData> subjects;
+	
+	public JassDaoImpl() {
+		installSubjects();
+	}
+	
+	private void installSubjects() {
+		subjects.put(new SubjectIdentifier(1), new SubjectData("user", "userpass"));
+		subjects.put(new SubjectIdentifier(2), new SubjectData("admin", "adminpass"));
+	}
 	
 
 	@Override
 	public Set<ISubjectIdentifier> getAllSubjects() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.unmodifiableSet(new TreeSet<ISubjectIdentifier>(subjects.keySet()));
 	}
 
 	@Override
 	public ISubjectIdentifier getSubjectByName(String name) {
-		// TODO Auto-generated method stub
+		for (ISubjectIdentifier subjectIdentifier : getAllSubjects()) {
+			ISubjectData subjectData = subjects.get(subjectIdentifier);
+			if (subjectData.getName().equals(name)) {
+				return subjectIdentifier;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public ISubjectData getSubject(ISubjectIdentifier subjectIdentifier) {
-		// TODO Auto-generated method stub
-		return null;
+		ISubjectData subjectData = subjects.get(subjectIdentifier);
+		if (subjectData == null) {
+			throw new IllegalArgumentException("El identificador no es valido.");
+		}
+		return subjectData;
 	}
 
 	@Override
