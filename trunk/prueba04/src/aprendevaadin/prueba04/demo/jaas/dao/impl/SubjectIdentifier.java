@@ -2,7 +2,7 @@ package aprendevaadin.prueba04.demo.jaas.dao.impl;
 
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectIdentifier;
 
-public class SubjectIdentifier implements ISubjectIdentifier {
+public class SubjectIdentifier implements ISubjectIdentifier, Comparable<SubjectIdentifier> {
 	
 	private long id;
 	
@@ -38,8 +38,13 @@ public class SubjectIdentifier implements ISubjectIdentifier {
 	}
 
 	@Override
+	public int compareTo(SubjectIdentifier o) {
+		return Long.valueOf(getId()).compareTo(Long.valueOf(o.getId()));
+	}
+	
+	@Override
 	public String toString() {
 		return "SubjectIdentifier [id=" + id + "]";
 	}
-	
+
 }

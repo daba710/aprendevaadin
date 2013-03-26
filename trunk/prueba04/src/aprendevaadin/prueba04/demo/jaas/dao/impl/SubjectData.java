@@ -5,9 +5,11 @@ import aprendevaadin.prueba04.demo.jaas.dao.ISubjectData;
 public class SubjectData implements ISubjectData {
 	
 	private String name;
+	private String password;
 	
-	public SubjectData(String name) {
+	public SubjectData(String name, String password) {
 		this.name = name;
+		this.password = password;
 	}
 
 	@Override
@@ -16,8 +18,13 @@ public class SubjectData implements ISubjectData {
 	}
 
 	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
 	public String toString() {
-		return "SubjectData [name=" + name + "]";
+		return "SubjectData [name=" + name + ", password=" + password + "]";
 	}
 	
 }
