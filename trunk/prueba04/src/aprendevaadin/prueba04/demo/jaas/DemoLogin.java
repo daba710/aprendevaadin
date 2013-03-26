@@ -88,7 +88,7 @@ public class DemoLogin implements LoginModule {
 		Set<UserGroupPrincipal> userPrincipals = subject.getPrincipals(UserGroupPrincipal.class);
 		subject.getPrincipals().removeAll(userPrincipals);
 		
-		Set<AdminGroupPrincipal> adminPrincipals = subject.getPrincipals(AdminGroupPrincipal.class);
+		Set<DemoGroupPrincipal> adminPrincipals = subject.getPrincipals(DemoGroupPrincipal.class);
 		subject.getPrincipals().removeAll(adminPrincipals);
 		
 		Set<IUserCredentials> userCredentials = subject.getPublicCredentials(IUserCredentials.class);
@@ -111,10 +111,10 @@ public class DemoLogin implements LoginModule {
 				}
 			}
 			
-			System.out.println(AdminGroupPrincipal.class.getName() + ":");
-			Set<AdminGroupPrincipal> adminPrincipals = subject.getPrincipals(AdminGroupPrincipal.class);
+			System.out.println(DemoGroupPrincipal.class.getName() + ":");
+			Set<DemoGroupPrincipal> adminPrincipals = subject.getPrincipals(DemoGroupPrincipal.class);
 			if (adminPrincipals != null) {
-				for (AdminGroupPrincipal adminGroupPrincipal : adminPrincipals) {
+				for (DemoGroupPrincipal adminGroupPrincipal : adminPrincipals) {
 					System.out.println(adminGroupPrincipal.toString());
 				}
 			}

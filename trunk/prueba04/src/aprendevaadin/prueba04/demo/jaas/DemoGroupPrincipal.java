@@ -2,24 +2,24 @@ package aprendevaadin.prueba04.demo.jaas;
 
 import java.security.Principal;
 
-public class AdminGroupPrincipal implements Principal, Comparable<Principal> {
+public class DemoGroupPrincipal implements Principal, Comparable<Principal> {
 
-	private String name;
+	private String group;
 	
-	public AdminGroupPrincipal() {
-		this.name = "admin";
+	public DemoGroupPrincipal(String group) {
+		this.group = group;
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return group;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((group == null) ? 0 : group.hashCode());
 		return result;
 	}
 
@@ -31,11 +31,11 @@ public class AdminGroupPrincipal implements Principal, Comparable<Principal> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdminGroupPrincipal other = (AdminGroupPrincipal) obj;
-		if (name == null) {
-			if (other.name != null)
+		DemoGroupPrincipal other = (DemoGroupPrincipal) obj;
+		if (group == null) {
+			if (other.group != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!group.equals(other.group))
 			return false;
 		return true;
 	}
@@ -47,10 +47,9 @@ public class AdminGroupPrincipal implements Principal, Comparable<Principal> {
 		return getName().compareTo(other.getName());
 	}
 
-	
 	@Override
 	public String toString() {
-		return "AdminGroupPrincipal [name=" + name + "]";
+		return "DemoGroupPrincipal [group=" + group + "]";
 	}
-
+	
 }
