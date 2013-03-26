@@ -12,6 +12,7 @@ import aprendevaadin.prueba04.demo.jaas.dao.ISubjectIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
 
 import com.google.gwt.dev.util.collect.HashMap;
+import com.google.gwt.dev.util.collect.HashSet;
 
 public class JassDaoImpl extends JassDao {
 	
@@ -73,14 +74,23 @@ public class JassDaoImpl extends JassDao {
 	}
 	
 	@Override
-	public IDemoGroupPrincipalIdentifier getDemoGroupPrincipalIdentifier(ISubjectIdentifier subjectIdentifier) {
-		
+	public Set<IDemoGroupPrincipalIdentifier> getDemoGroupPrincipalIdentifier(ISubjectIdentifier subjectIdentifier) {
+		HashSet<IDemoGroupPrincipalIdentifier> result = new HashSet<>();
+		for (SubjectDemoGroupPrincipalJoin join : subjectDemoGroupPrincipalJoins) {
+			if (join.getSubjectIdentifier().equals(subjectIdentifier)) {
+				result.add(join.getDemoGroupPrincipalIdentifier());
+			}
+		}
+		return Collections.unmodifiableSet(result);
 	}
 	
 	@Override
 	public IDemoGroupPrincipalData getDemoGroupPrincipalData(IDemoGroupPrincipalIdentifier identifier) {
-		
+		IDemoGroupPrincipalData demoGroupPrincipalData = demoGroupPrincipals.get(identifier);
+		if (demoGroupPrincipalData == null) {
+			throw new IllegalArgumentException("El identificador no es valido.");
+		}
+		return demoGroupPrincipalData;
 	}
-	
 
 }
