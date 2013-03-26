@@ -1,22 +1,17 @@
 package aprendevaadin.prueba04.demo.jaas.dao.impl;
 
-import java.security.Principal;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.google.gwt.dev.util.collect.HashMap;
-
-import aprendevaadin.prueba04.demo.jaas.DemoGroupPrincipal;
-import aprendevaadin.prueba04.demo.jaas.IUserCredentials;
 import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalData;
 import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalIdentifier;
-import aprendevaadin.prueba04.demo.jaas.dao.IPermissionData;
-import aprendevaadin.prueba04.demo.jaas.dao.IPermissionIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectData;
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
+
+import com.google.gwt.dev.util.collect.HashMap;
 
 public class JassDaoImpl extends JassDao {
 	
@@ -27,6 +22,7 @@ public class JassDaoImpl extends JassDao {
 	public JassDaoImpl() {
 		installSubjects();
 		installDemoGroupPrincipals();
+		installSubjectDemoGroupPrincipalJoin();
 	}
 	
 	private void installSubjects() {
@@ -42,14 +38,12 @@ public class JassDaoImpl extends JassDao {
 	}
 	
 	private void installSubjectDemoGroupPrincipalJoin() {
-		
 		subjectDemoGroupPrincipalJoins.add(new SubjectDemoGroupPrincipalJoin(new SubjectIdentifier(0), new DemoGroupPrincipalIdentifier(0)));
 		subjectDemoGroupPrincipalJoins.add(new SubjectDemoGroupPrincipalJoin(new SubjectIdentifier(0), new DemoGroupPrincipalIdentifier(1)));
 		
 		subjectDemoGroupPrincipalJoins.add(new SubjectDemoGroupPrincipalJoin(new SubjectIdentifier(1), new DemoGroupPrincipalIdentifier(1)));
 		subjectDemoGroupPrincipalJoins.add(new SubjectDemoGroupPrincipalJoin(new SubjectIdentifier(2), new DemoGroupPrincipalIdentifier(1)));
 		subjectDemoGroupPrincipalJoins.add(new SubjectDemoGroupPrincipalJoin(new SubjectIdentifier(3), new DemoGroupPrincipalIdentifier(1)));
-		
 	}
 	
 
@@ -77,29 +71,16 @@ public class JassDaoImpl extends JassDao {
 		}
 		return subjectData;
 	}
-
+	
 	@Override
-	public Set<IPermissionIdentifier> getPermissionsByPrincipal(IPrincipalIdentifier principalIdentifier) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IPermissionData getPermission(IPermissionIdentifier permissionIdentifier) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IUserCredentials getUserByCredentials(String name, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<Principal> getPrincipals(IUserCredentials userCredential) {
-		// TODO Auto-generated method stub
-		return null;
+	public IDemoGroupPrincipalIdentifier getDemoGroupPrincipalIdentifier(ISubjectIdentifier subjectIdentifier) {
+		
 	}
 	
+	@Override
+	public IDemoGroupPrincipalData getDemoGroupPrincipalData(IDemoGroupPrincipalIdentifier identifier) {
+		
+	}
+	
+
 }
