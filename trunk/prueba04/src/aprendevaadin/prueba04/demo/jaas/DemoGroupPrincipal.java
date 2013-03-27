@@ -2,17 +2,25 @@ package aprendevaadin.prueba04.demo.jaas;
 
 import java.security.Principal;
 
+import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalIdentifier;
+
 public class DemoGroupPrincipal implements Principal, Comparable<Principal> {
 
 	private String group;
+	private IDemoGroupPrincipalIdentifier identifier;
 	
-	public DemoGroupPrincipal(String group) {
+	public DemoGroupPrincipal(String group, IDemoGroupPrincipalIdentifier identifier) {
 		this.group = group;
+		this.identifier = identifier;
 	}
 
 	@Override
 	public String getName() {
 		return group;
+	}
+	
+	public IDemoGroupPrincipalIdentifier getIdentifier() {
+		return identifier;
 	}
 
 	@Override
@@ -49,7 +57,7 @@ public class DemoGroupPrincipal implements Principal, Comparable<Principal> {
 
 	@Override
 	public String toString() {
-		return "DemoGroupPrincipal [group=" + group + "]";
+		return "DemoGroupPrincipal [group=" + group + ", identifier=" + identifier + "]";
 	}
 	
 }
