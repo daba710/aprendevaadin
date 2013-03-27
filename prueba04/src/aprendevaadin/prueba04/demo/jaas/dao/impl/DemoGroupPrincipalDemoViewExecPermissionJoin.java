@@ -1,41 +1,41 @@
 package aprendevaadin.prueba04.demo.jaas.dao.impl;
 
 import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalIdentifier;
-import aprendevaadin.prueba04.demo.jaas.dao.ISubjectIdentifier;
 
 public class DemoGroupPrincipalDemoViewExecPermissionJoin implements Comparable<DemoGroupPrincipalDemoViewExecPermissionJoin>{
 	
-	private SubjectIdentifier subjectIdentifier;
 	private DemoGroupPrincipalIdentifier demoGroupPrincipalIdentifier;
+	private DemoViewExecPermissionIdentifier demoViewExecPermissionIdentifier;
 	
-	public DemoGroupPrincipalDemoViewExecPermissionJoin(SubjectIdentifier subjectIdentifier, DemoGroupPrincipalIdentifier demoGroupPrincipalIdentifier) {
-		this.subjectIdentifier = subjectIdentifier;
+	public DemoGroupPrincipalDemoViewExecPermissionJoin(DemoGroupPrincipalIdentifier demoGroupPrincipalIdentifier, DemoViewExecPermissionIdentifier demoViewExecPermissionIdentifier) {
 		this.demoGroupPrincipalIdentifier = demoGroupPrincipalIdentifier;
-	}
-
-	public ISubjectIdentifier getSubjectIdentifier() {
-		return subjectIdentifier;
+		this.demoViewExecPermissionIdentifier = demoViewExecPermissionIdentifier;
 	}
 
 	public IDemoGroupPrincipalIdentifier getDemoGroupPrincipalIdentifier() {
 		return demoGroupPrincipalIdentifier;
 	}
 
+	public DemoViewExecPermissionIdentifier getDemoViewExecPermissionIdentifier() {
+		return demoViewExecPermissionIdentifier;
+	}
+
 	@Override
 	public int compareTo(DemoGroupPrincipalDemoViewExecPermissionJoin o) {
-		int result = subjectIdentifier.compareTo(o.subjectIdentifier);
+		int result = demoGroupPrincipalIdentifier.compareTo(o.demoGroupPrincipalIdentifier);
 		if (result == 0) {
-			return demoGroupPrincipalIdentifier.compareTo(o.demoGroupPrincipalIdentifier);
+			return demoViewExecPermissionIdentifier.compareTo(o.demoViewExecPermissionIdentifier);
 		} else {
 			return result;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
-		return "SubjectDemoGroupPrincipalJoin [subjectIdentifier="
-				+ subjectIdentifier + ", demoGroupPrincipalIdentifier="
-				+ demoGroupPrincipalIdentifier + "]";
+		return "DemoGroupPrincipalDemoViewExecPermissionJoin [demoGroupPrincipalIdentifier="
+				+ demoGroupPrincipalIdentifier
+				+ ", demoViewExecPermissionIdentifier="
+				+ demoViewExecPermissionIdentifier + "]";
 	}
-
+	
 }
