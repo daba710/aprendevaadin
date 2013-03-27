@@ -1,6 +1,8 @@
 package aprendevaadin.prueba04.demo.jaas.dao.impl;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -10,9 +12,6 @@ import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectData;
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
-
-import com.google.gwt.dev.util.collect.HashMap;
-import com.google.gwt.dev.util.collect.HashSet;
 
 public class JassDaoImpl extends JassDao {
 	
