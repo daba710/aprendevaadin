@@ -9,20 +9,26 @@ import java.util.TreeSet;
 
 import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalData;
 import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalIdentifier;
+import aprendevaadin.prueba04.demo.jaas.dao.IDemoViewExecPermissionData;
+import aprendevaadin.prueba04.demo.jaas.dao.IDemoViewExecPermissionIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectData;
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
+import aprendevaadin.prueba04.demo.view.MainView;
+import aprendevaadin.prueba04.demo.view.StartView;
 
 public class JassDaoImpl extends JassDao {
 	
 	private Map<ISubjectIdentifier, ISubjectData> subjects = new HashMap<>();
 	private Map<IDemoGroupPrincipalIdentifier, IDemoGroupPrincipalData> demoGroupPrincipals = new HashMap<>();
 	private Set<SubjectDemoGroupPrincipalJoin> subjectDemoGroupPrincipalJoins = new TreeSet<>();
+	private Map<IDemoViewExecPermissionIdentifier, IDemoViewExecPermissionData> demoViewExecPermissions = new HashMap<>();
 	
 	public JassDaoImpl() {
 		installSubjects();
 		installDemoGroupPrincipals();
 		installSubjectDemoGroupPrincipalJoin();
+		installDemoViewExecPermissions();
 	}
 	
 	private void installSubjects() {
@@ -45,6 +51,15 @@ public class JassDaoImpl extends JassDao {
 		subjectDemoGroupPrincipalJoins.add(new SubjectDemoGroupPrincipalJoin(new SubjectIdentifier(2), new DemoGroupPrincipalIdentifier(1)));
 		subjectDemoGroupPrincipalJoins.add(new SubjectDemoGroupPrincipalJoin(new SubjectIdentifier(3), new DemoGroupPrincipalIdentifier(1)));
 	}
+	
+	private void installDemoViewExecPermissions() {
+		demoViewExecPermissions.put(new DemoViewExecPermissionIdentifier(0), new DemoViewExecPermissionData("*"));
+
+		demoViewExecPermissions.put(new DemoViewExecPermissionIdentifier(0), new DemoViewExecPermissionData(MainView.VIEW_KEY));
+		demoViewExecPermissions.put(new DemoViewExecPermissionIdentifier(0), new DemoViewExecPermissionData(StartView.VIEW_KEY));
+	}
+	
+	
 	
 
 	@Override
