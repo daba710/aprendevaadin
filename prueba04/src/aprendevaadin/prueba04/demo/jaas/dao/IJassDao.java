@@ -9,5 +9,6 @@ public interface IJassDao {
 	public ISubjectData getSubject(ISubjectIdentifier subjectIdentifier);
 	public Set<IDemoGroupPrincipalIdentifier> getDemoGroupPrincipalIdentifiers(ISubjectIdentifier subjectIdentifier);
 	public IDemoGroupPrincipalData getDemoGroupPrincipalData(IDemoGroupPrincipalIdentifier identifier);
+	public Set<IDemoViewExecPermissionIdentifier> getDemoViewExecPermission(IDemoGroupPrincipalIdentifier identifier);
 
 }

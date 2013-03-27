@@ -67,8 +67,6 @@ public class JassDaoImpl extends JassDao {
 		emoGroupPrincipalDemoViewExecPermissionJoin.add(new DemoGroupPrincipalDemoViewExecPermissionJoin(new DemoGroupPrincipalIdentifier(1), new DemoViewExecPermissionIdentifier(1)));
 		emoGroupPrincipalDemoViewExecPermissionJoin.add(new DemoGroupPrincipalDemoViewExecPermissionJoin(new DemoGroupPrincipalIdentifier(1), new DemoViewExecPermissionIdentifier(2)));
 	}
-	
-	
 
 	@Override
 	public Set<ISubjectIdentifier> getAllSubjects() {
@@ -113,6 +111,17 @@ public class JassDaoImpl extends JassDao {
 			throw new IllegalArgumentException("El identificador no es valido.");
 		}
 		return demoGroupPrincipalData;
+	}
+
+	@Override
+	public Set<IDemoViewExecPermissionIdentifier> getDemoViewExecPermission(IDemoGroupPrincipalIdentifier identifier) {
+		HashSet<IDemoViewExecPermissionIdentifier> result = new HashSet<>();
+		for (DemoGroupPrincipalDemoViewExecPermissionJoin join : emoGroupPrincipalDemoViewExecPermissionJoin) {
+			if (join.getDemoGroupPrincipalIdentifier().equals(identifier)) {
+				result.add(join.getDemoViewExecPermissionIdentifier());
+			}
+		}
+		return Collections.unmodifiableSet(result);
 	}
 
 }
