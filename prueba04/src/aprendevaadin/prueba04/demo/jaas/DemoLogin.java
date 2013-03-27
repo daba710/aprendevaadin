@@ -90,7 +90,7 @@ public class DemoLogin implements LoginModule {
 			Set<IDemoGroupPrincipalIdentifier> demoGroupPrincipalIdentifiers = JassDao.getInstance().getDemoGroupPrincipalIdentifiers(subjectIdentifier);
 			for (IDemoGroupPrincipalIdentifier identifier : demoGroupPrincipalIdentifiers) {
 				IDemoGroupPrincipalData data = JassDao.getInstance().getDemoGroupPrincipalData(identifier);
-				DemoGroupPrincipal demoGroupPrincipal = new DemoGroupPrincipal(data.getGroup());
+				DemoGroupPrincipal demoGroupPrincipal = new DemoGroupPrincipal(data.getGroup(), identifier);
 				subject.getPrincipals().add(demoGroupPrincipal);
 			}
 			// Ya se han cargado todos los principales.
