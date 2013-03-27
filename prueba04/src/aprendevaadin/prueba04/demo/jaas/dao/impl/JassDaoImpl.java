@@ -74,7 +74,7 @@ public class JassDaoImpl extends JassDao {
 	}
 	
 	@Override
-	public Set<IDemoGroupPrincipalIdentifier> getDemoGroupPrincipalIdentifier(ISubjectIdentifier subjectIdentifier) {
+	public Set<IDemoGroupPrincipalIdentifier> getDemoGroupPrincipalIdentifiers(ISubjectIdentifier subjectIdentifier) {
 		HashSet<IDemoGroupPrincipalIdentifier> result = new HashSet<>();
 		for (SubjectDemoGroupPrincipalJoin join : subjectDemoGroupPrincipalJoins) {
 			if (join.getSubjectIdentifier().equals(subjectIdentifier)) {

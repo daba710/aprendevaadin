@@ -13,6 +13,10 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
+import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalData;
+import aprendevaadin.prueba04.demo.jaas.dao.IDemoGroupPrincipalIdentifier;
+import aprendevaadin.prueba04.demo.jaas.dao.ISubjectData;
+import aprendevaadin.prueba04.demo.jaas.dao.ISubjectIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
 
 public class DemoLogin implements LoginModule {
@@ -24,7 +28,8 @@ public class DemoLogin implements LoginModule {
 	@SuppressWarnings("unused")
 	private Map<String, ?> options;
 	
-	private IUserCredentials userCredentials;
+	private UserNameCredentials userNameCredentials = null;
+	private ISubjectIdentifier subjectIdentifier = null;
 	
 	@Override
 	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options) {
@@ -57,19 +62,38 @@ public class DemoLogin implements LoginModule {
 		String userPassword = String.valueOf(passwordCallback.getPassword());
 		
 		// Se verifican las credenciales
-		userCredentials = JassDao.getInstance().getUserByCredentials(userName, userPassword);
+		ISubjectIdentifier tmpSubjectIdentifier = JassDao.getInstance().getSubjectByName(userName);
+		if (tmpSubjectIdentifier == null) {
+			throw new LoginException("No es posible identificarse con este usuario y este password.");
+		} else {
+			ISubjectData subjectData = JassDao.getInstance().getSubject(tmpSubjectIdentifier);
+			if (subjectData.getPassword().equals(userPassword)) {
+				this.userNameCredentials = new UserNameCredentials(userName);
+				this.subjectIdentifier = tmpSubjectIdentifier;
+			} else {
+				throw new LoginException("No es posible identificarse con este usuario y este password.");
+			}
+		}
 		
-		// Se retorna el resultado de la verificacion.
-		return userCredentials != null;
+		// Se indica si el Login ha resultado satisfactorio..
+		return subjectIdentifier != null;
 	}
 
 	@Override
 	public boolean commit() throws LoginException {
-		if (userCredentials == null) {
+		if (subjectIdentifier == null) {
 			return false;
 		} else {
-			subject.getPublicCredentials().add(userCredentials);
-			subject.getPrincipals().addAll(JassDao.getInstance().getPrincipals(userCredentials));
+			// se incorporan las credenciales al Subject
+			subject.getPublicCredentials().add(userNameCredentials);
+			// Se incorporan los principales de tipo DemoGroup al Subject
+			Set<IDemoGroupPrincipalIdentifier> demoGroupPrincipalIdentifiers = JassDao.getInstance().getDemoGroupPrincipalIdentifiers(subjectIdentifier);
+			for (IDemoGroupPrincipalIdentifier identifier : demoGroupPrincipalIdentifiers) {
+				IDemoGroupPrincipalData data = JassDao.getInstance().getDemoGroupPrincipalData(identifier);
+				DemoGroupPrincipal demoGroupPrincipal = new DemoGroupPrincipal(data.getGroup());
+				subject.getPrincipals().add(demoGroupPrincipal);
+			}
+			// Ya se han cargado todos los principales.
 			return true;
 		}
 	}
@@ -83,15 +107,16 @@ public class DemoLogin implements LoginModule {
 	@Override
 	public boolean logout() throws LoginException {
 		
-		userCredentials = null;
+		// Se inicializan las propiedades que arrastran el estado del Modulo de Login.
+		userNameCredentials = null;
+		subjectIdentifier = null;
 		
-		Set<UserGroupPrincipal> userPrincipals = subject.getPrincipals(UserGroupPrincipal.class);
-		subject.getPrincipals().removeAll(userPrincipals);
+		// Se eliminan los principales de tipo DemoGroup
+		Set<DemoGroupPrincipal> demoGroupPrincipals = subject.getPrincipals(DemoGroupPrincipal.class);
+		subject.getPrincipals().removeAll(demoGroupPrincipals);
 		
-		Set<DemoGroupPrincipal> adminPrincipals = subject.getPrincipals(DemoGroupPrincipal.class);
-		subject.getPrincipals().removeAll(adminPrincipals);
-		
-		Set<IUserCredentials> userCredentials = subject.getPublicCredentials(IUserCredentials.class);
+		// Se eliminan las credenciales.
+		Set<UserNameCredentials> userCredentials = subject.getPublicCredentials(UserNameCredentials.class);
 		subject.getPublicCredentials().removeAll(userCredentials);
 		
 		return true;
@@ -103,14 +128,6 @@ public class DemoLogin implements LoginModule {
 		
 		if (subject != null) {
 		
-			System.out.println(UserGroupPrincipal.class.getName() + ":");
-			Set<UserGroupPrincipal> userPrincipals = subject.getPrincipals(UserGroupPrincipal.class);
-			if (userPrincipals != null) {
-				for (UserGroupPrincipal userGroupPrincipal : userPrincipals) {
-					System.out.println(userGroupPrincipal.toString());
-				}
-			}
-			
 			System.out.println(DemoGroupPrincipal.class.getName() + ":");
 			Set<DemoGroupPrincipal> adminPrincipals = subject.getPrincipals(DemoGroupPrincipal.class);
 			if (adminPrincipals != null) {
@@ -119,10 +136,10 @@ public class DemoLogin implements LoginModule {
 				}
 			}
 			
-			System.out.println(IUserCredentials.class.getName() + ":");
-			Set<IUserCredentials> userCredentials = subject.getPublicCredentials(IUserCredentials.class);
+			System.out.println(UserNameCredentials.class.getName() + ":");
+			Set<UserNameCredentials> userCredentials = subject.getPublicCredentials(UserNameCredentials.class);
 			if (userCredentials != null) {
-				for (IUserCredentials userCredential : userCredentials) {
+				for (UserNameCredentials userCredential : userCredentials) {
 					System.out.println(userCredential.toString());
 				}
 			}
