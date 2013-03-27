@@ -64,14 +64,14 @@ public class DemoLogin implements LoginModule {
 		// Se verifican las credenciales
 		ISubjectIdentifier tmpSubjectIdentifier = JassDao.getInstance().getSubjectByName(userName);
 		if (tmpSubjectIdentifier == null) {
-			throw new LoginException("No es posible identificarse con este usuario y este password.");
+			throw new LoginException("No se puede obtener un identificador de usuario para el nombre indicado.");
 		} else {
 			ISubjectData subjectData = JassDao.getInstance().getSubject(tmpSubjectIdentifier);
 			if (subjectData.getPassword().equals(userPassword)) {
 				this.userNameCredentials = new UserNameCredentials(userName);
 				this.subjectIdentifier = tmpSubjectIdentifier;
 			} else {
-				throw new LoginException("No es posible identificarse con este usuario y este password.");
+				throw new LoginException("El password proporcinado no coincide con el del usuario.");
 			}
 		}
 		
