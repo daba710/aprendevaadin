@@ -122,25 +122,27 @@ public class DemoLogin implements LoginModule {
 		return true;
 	}
 	
-	static public void dump(Subject subject) {
+	static public void dump(String msg, Subject subject) {
 		
-		System.out.println("-------------------------------");
+		System.out.println(String.format("---[ %s ]----------------------------", msg));
 		
 		if (subject != null) {
-		
-			System.out.println(DemoGroupPrincipal.class.getName() + ":");
-			Set<DemoGroupPrincipal> adminPrincipals = subject.getPrincipals(DemoGroupPrincipal.class);
-			if (adminPrincipals != null) {
-				for (DemoGroupPrincipal adminGroupPrincipal : adminPrincipals) {
-					System.out.println(adminGroupPrincipal.toString());
-				}
-			}
 			
+			// Credenciales
 			System.out.println(UserNameCredentials.class.getName() + ":");
 			Set<UserNameCredentials> userCredentials = subject.getPublicCredentials(UserNameCredentials.class);
 			if (userCredentials != null) {
 				for (UserNameCredentials userCredential : userCredentials) {
 					System.out.println(userCredential.toString());
+				}
+			}
+			
+			// DemoGroupPrincipal
+			System.out.println(DemoGroupPrincipal.class.getName() + ":");
+			Set<DemoGroupPrincipal> adminPrincipals = subject.getPrincipals(DemoGroupPrincipal.class);
+			if (adminPrincipals != null) {
+				for (DemoGroupPrincipal adminGroupPrincipal : adminPrincipals) {
+					System.out.println(adminGroupPrincipal.toString());
 				}
 			}
 			
