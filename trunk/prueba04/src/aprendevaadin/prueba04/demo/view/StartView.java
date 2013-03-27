@@ -76,6 +76,7 @@ public class StartView extends VerticalLayout implements View {
 	                    StartView.this.viewNavigator.navigateTo(MainView.VIEW_KEY);
 	                    DemoLogin.dump(subjectService.getSubject());
 					} catch (SubjectSeriviceException e) {
+						e.printStackTrace();
 						String msg = e.getMessage();
 						Notification.show(msg, Notification.Type.ERROR_MESSAGE);
 						passwordField.setValue("");
