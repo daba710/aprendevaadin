@@ -11,5 +11,10 @@ public class UserNameCredentials {
 	public String getName() {
 		return this.name;
 	}
+
+	@Override
+	public String toString() {
+		return "UserNameCredentials [name=" + name + "]";
+	}
 	
 }
