@@ -2,7 +2,6 @@ package aprendevaadin.prueba04.demo.view;
 
 import javax.inject.Inject;
 
-import aprendevaadin.prueba04.demo.jaas.DemoLogin;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
 import aprendevaadin.prueba04.demo.subject.ISubjectService;
 import aprendevaadin.prueba04.demo.subject.SubjectSeriviceException;
@@ -74,7 +73,6 @@ public class StartView extends VerticalLayout implements View {
 						usernameField.setValue("");
 						passwordField.setValue("");
 	                    StartView.this.viewNavigator.navigateTo(MainView.VIEW_KEY);
-	                    DemoLogin.dump(subjectService.getSubject());
 					} catch (SubjectSeriviceException e) {
 						e.printStackTrace();
 						String msg = e.getMessage();

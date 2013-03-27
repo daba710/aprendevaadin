@@ -2,7 +2,6 @@ package aprendevaadin.prueba04.demo.view;
 
 import javax.inject.Inject;
 
-import aprendevaadin.prueba04.demo.jaas.DemoLogin;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
 import aprendevaadin.prueba04.demo.subject.ISubjectService;
 import aprendevaadin.prueba04.demo.subject.SubjectSeriviceException;
@@ -101,7 +100,6 @@ public class MainView extends VerticalLayout implements View {
                 // Logout del sistema
                 try {
 					MainView.this.subjectService.logout();
-                    DemoLogin.dump(MainView.this.subjectService.getSubject());
 					MainView.this.viewNavigator.navigateTo(StartView.VIEW_KEY);
 				} catch (SubjectSeriviceException e) {
 					String msg = e.getMessage();
