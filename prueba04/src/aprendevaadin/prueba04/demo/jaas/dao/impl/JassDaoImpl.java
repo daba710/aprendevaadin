@@ -23,7 +23,7 @@ public class JassDaoImpl extends JassDao {
 	private Map<IDemoGroupPrincipalIdentifier, IDemoGroupPrincipalData> demoGroupPrincipals = new HashMap<>();
 	private Set<SubjectDemoGroupPrincipalJoin> subjectDemoGroupPrincipalJoins = new TreeSet<>();
 	private Map<IDemoViewExecPermissionIdentifier, IDemoViewExecPermissionData> demoViewExecPermissions = new HashMap<>();
-	private Set<DemoGroupPrincipalDemoViewExecPermissionJoin> emoGroupPrincipalDemoViewExecPermissionJoin = new TreeSet<>();
+	private Set<DemoGroupPrincipalDemoViewExecPermissionJoin> demoGroupPrincipalDemoViewExecPermissionJoin = new TreeSet<>();
 	
 	public JassDaoImpl() {
 		installSubjects();
@@ -62,10 +62,10 @@ public class JassDaoImpl extends JassDao {
 	}
 	
 	private void installDemoGroupPrincipalDemoViewExecPermissions() {
-		emoGroupPrincipalDemoViewExecPermissionJoin.add(new DemoGroupPrincipalDemoViewExecPermissionJoin(new DemoGroupPrincipalIdentifier(0), new DemoViewExecPermissionIdentifier(0)));
+		demoGroupPrincipalDemoViewExecPermissionJoin.add(new DemoGroupPrincipalDemoViewExecPermissionJoin(new DemoGroupPrincipalIdentifier(0), new DemoViewExecPermissionIdentifier(0)));
 		
-		emoGroupPrincipalDemoViewExecPermissionJoin.add(new DemoGroupPrincipalDemoViewExecPermissionJoin(new DemoGroupPrincipalIdentifier(1), new DemoViewExecPermissionIdentifier(1)));
-		emoGroupPrincipalDemoViewExecPermissionJoin.add(new DemoGroupPrincipalDemoViewExecPermissionJoin(new DemoGroupPrincipalIdentifier(1), new DemoViewExecPermissionIdentifier(2)));
+		demoGroupPrincipalDemoViewExecPermissionJoin.add(new DemoGroupPrincipalDemoViewExecPermissionJoin(new DemoGroupPrincipalIdentifier(1), new DemoViewExecPermissionIdentifier(1)));
+		demoGroupPrincipalDemoViewExecPermissionJoin.add(new DemoGroupPrincipalDemoViewExecPermissionJoin(new DemoGroupPrincipalIdentifier(1), new DemoViewExecPermissionIdentifier(2)));
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class JassDaoImpl extends JassDao {
 	@Override
 	public Set<IDemoViewExecPermissionIdentifier> getDemoViewExecPermission(IDemoGroupPrincipalIdentifier identifier) {
 		HashSet<IDemoViewExecPermissionIdentifier> result = new HashSet<>();
-		for (DemoGroupPrincipalDemoViewExecPermissionJoin join : emoGroupPrincipalDemoViewExecPermissionJoin) {
+		for (DemoGroupPrincipalDemoViewExecPermissionJoin join : demoGroupPrincipalDemoViewExecPermissionJoin) {
 			if (join.getDemoGroupPrincipalIdentifier().equals(identifier)) {
 				result.add(join.getDemoViewExecPermissionIdentifier());
 			}
@@ -124,4 +124,13 @@ public class JassDaoImpl extends JassDao {
 		return Collections.unmodifiableSet(result);
 	}
 
+	@Override
+	public IDemoViewExecPermissionData getDemoViewExecPermissionData(IDemoViewExecPermissionIdentifier identifier) {
+		IDemoViewExecPermissionData demoViewExecPermissionData = demoViewExecPermissions.get(identifier);
+		if (demoViewExecPermissionData == null) {
+			throw new IllegalArgumentException("El identificador no es valido.");
+		}
+		return demoViewExecPermissionData;
+	}
+	
 }

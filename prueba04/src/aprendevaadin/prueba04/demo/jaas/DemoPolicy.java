@@ -43,10 +43,11 @@ public class DemoPolicy extends Policy {
 			//
 			////////////////////////////////////////////////////////////////////////
 		}
+		return null;
 	}
 	
 	private List<Permission> getDemoGroupPermission() {
-		
+		return null;
 	}
 	
 	@Override
