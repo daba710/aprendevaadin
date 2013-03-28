@@ -1,5 +1,7 @@
 package aprendevaadin.prueba04.demo.jaas;
 
+import java.security.Policy;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.security.auth.login.AppConfigurationEntry;
@@ -10,7 +12,18 @@ public class DemoConfiguration extends Configuration {
 	static final public String APP_NAME = "demo";
 	
 	static public void install() {
+		
+		// Se instala la nueva configuracion de los modulos de Login.
 		Configuration.setConfiguration(new DemoConfiguration());
+		
+		// Se instala la politica de permisos personalizada
+		Policy defaultPolicy = Policy.getPolicy();
+		ArrayList<Policy> policies = new ArrayList<>();
+		if (defaultPolicy != null) {
+			policies.add(defaultPolicy);
+		}
+		policies.add(new DemoPolicy());
+		Policy.setPolicy(new CompositePolicy(policies));
 	}
 	
 	private AppConfigurationEntry[] demoEntries;
