@@ -22,5 +22,5 @@
 	<listener>
 		<listener-class>aprendevaadin.prueba04.guice.GuiceServletInjector</listener-class>
 	</listener>
-	
+
 </web-app>
