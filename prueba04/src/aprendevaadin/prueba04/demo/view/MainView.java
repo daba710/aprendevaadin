@@ -1,7 +1,12 @@
 package aprendevaadin.prueba04.demo.view;
 
-import javax.inject.Inject;
+import java.security.Permission;
+import java.security.PrivilegedAction;
 
+import javax.inject.Inject;
+import javax.security.auth.Subject;
+
+import aprendevaadin.prueba04.demo.jaas.DemoViewExecPermission;
 import aprendevaadin.prueba04.demo.navigator.IViewNavigatorService;
 import aprendevaadin.prueba04.demo.subject.ISubjectService;
 import aprendevaadin.prueba04.demo.subject.SubjectSeriviceException;
@@ -111,7 +116,38 @@ public class MainView extends VerticalLayout implements View {
 	}
 
 	@Override
-	public void enter(ViewChangeEvent event) {
+	public void enter(final ViewChangeEvent event) {
+		
+		final String parameter = event.getParameters();
+		System.out.println(String.format("Parameter: '%s'", String.valueOf(parameter)));
+		
+		// Tiene que haber algun parametro en el fragmento
+		if (event.getParameters() == null || event.getParameters().isEmpty()) {
+			enterInitial();
+		} else {
+			try {
+				Subject.doAsPrivileged(subjectService.getSubject(), new PrivilegedAction<Object>() {
+					@Override
+					public Object run() {
+						SecurityManager sm = System.getSecurityManager();
+						if (sm != null) {
+							Permission perm = new DemoViewExecPermission(parameter);
+							sm.checkPermission(perm);
+							enterOk(event.getParameters());
+						} else {
+							System.err.println("No hay SM instslado.");
+						}
+						return null;
+					}
+				}, null);
+			} catch (SecurityException e) {
+				enterError(event.getParameters());
+			}
+		}
+
+	}
+	
+	private void enterInitial() {
 		
 		// Crea y configura un nuevo contenido para el panel.
 		VerticalLayout panelContent = new VerticalLayout();
@@ -121,26 +157,49 @@ public class MainView extends VerticalLayout implements View {
 		// Asigna el nuevo contenido al panel
 		panel.setContent(panelContent);
 
-		// Tiene que haber algun parametro en el fragmento
-		if (event.getParameters() == null || event.getParameters().isEmpty()) {
-			panelContent.addComponent(new Label("Nothing to see here, just pass along."));
-			return;
-		}
+		// Se muestra la informacion
+		panelContent.addComponent(new Label("No se ha indicado nada para ver."));
+		
+	}
+	
+	private void enterError(String key) {
+		
+		// Crea y configura un nuevo contenido para el panel.
+		VerticalLayout panelContent = new VerticalLayout();
+		panelContent.setSizeFull();
+		panelContent.setMargin(true);
+		
+		// Asigna el nuevo contenido al panel
+		panel.setContent(panelContent);
+
+		// Se muestra la informacion
+		panelContent.addComponent(new Label(String.format("No puede acceder a la seccion '%s'", key)));
+
+	}
+	
+	private void enterOk(String key) {
+		// Crea y configura un nuevo contenido para el panel.
+		VerticalLayout panelContent = new VerticalLayout();
+		panelContent.setSizeFull();
+		panelContent.setMargin(true);
+		
+		// Asigna el nuevo contenido al panel
+		panel.setContent(panelContent);
 
 		// Muestra cabecera con los parametros del fragmento
-		Label watching = new Label("You are currently watching a " + event.getParameters());
+		Label watching = new Label("You are currently watching a " + key);
 		watching.setSizeUndefined();
 		panelContent.addComponent(watching);
 		panelContent.setComponentAlignment(watching, Alignment.MIDDLE_CENTER);
 
 		// Muestra el cuerpo del fragmento.
-		Label label = new Label(event.getParameters());
+		Label label = new Label(key);
 		panelContent.addComponent(label);
 		panelContent.setExpandRatio(label, 1.0f);
 		panelContent.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
 		
 		// Muestra el pie del framgmento.
-		Label back = new Label("And the " + event.getParameters() + " is watching you");
+		Label back = new Label("And the " + key + " is watching you");
 		back.setSizeUndefined();
 		panelContent.addComponent(back);
 		panelContent.setComponentAlignment(back, Alignment.MIDDLE_CENTER);

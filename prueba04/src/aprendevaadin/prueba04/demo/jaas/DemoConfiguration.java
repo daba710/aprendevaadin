@@ -24,6 +24,9 @@ public class DemoConfiguration extends Configuration {
 		}
 		policies.add(new DemoPolicy());
 		Policy.setPolicy(new CompositePolicy(policies));
+		
+		// Se instala el SecurityManager
+		System.setSecurityManager(new SecurityManager());
 	}
 	
 	private AppConfigurationEntry[] demoEntries;
