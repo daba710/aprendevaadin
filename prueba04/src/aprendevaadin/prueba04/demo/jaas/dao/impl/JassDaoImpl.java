@@ -14,8 +14,6 @@ import aprendevaadin.prueba04.demo.jaas.dao.IDemoViewExecPermissionIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectData;
 import aprendevaadin.prueba04.demo.jaas.dao.ISubjectIdentifier;
 import aprendevaadin.prueba04.demo.jaas.dao.JassDao;
-import aprendevaadin.prueba04.demo.view.MainView;
-import aprendevaadin.prueba04.demo.view.StartView;
 
 public class JassDaoImpl extends JassDao {
 	
