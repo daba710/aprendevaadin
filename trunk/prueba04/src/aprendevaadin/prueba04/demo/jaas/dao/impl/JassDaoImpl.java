@@ -57,8 +57,8 @@ public class JassDaoImpl extends JassDao {
 	private void installDemoViewExecPermissions() {
 		demoViewExecPermissions.put(new DemoViewExecPermissionIdentifier(0), new DemoViewExecPermissionData("*"));
 
-		demoViewExecPermissions.put(new DemoViewExecPermissionIdentifier(1), new DemoViewExecPermissionData(MainView.VIEW_KEY));
-		demoViewExecPermissions.put(new DemoViewExecPermissionIdentifier(2), new DemoViewExecPermissionData(StartView.VIEW_KEY));
+		demoViewExecPermissions.put(new DemoViewExecPermissionIdentifier(1), new DemoViewExecPermissionData("cat"));
+		demoViewExecPermissions.put(new DemoViewExecPermissionIdentifier(2), new DemoViewExecPermissionData("dog"));
 	}
 	
 	private void installDemoGroupPrincipalDemoViewExecPermissions() {
