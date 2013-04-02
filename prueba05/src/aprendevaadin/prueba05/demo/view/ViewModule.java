@@ -1,12 +1,14 @@
 package aprendevaadin.prueba05.demo.view;
 
+import aprendevaadin.prueba05.demo.subject.ISubjectService;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.multibindings.MapBinder;
 import com.vaadin.navigator.View;
 
 public class ViewModule extends AbstractModule {
-
+	
 	@Override
 	protected void configure() {
 		MapBinder<String, View> mapbinder = MapBinder.newMapBinder(binder(), String.class, View.class);
@@ -21,7 +23,10 @@ public class ViewModule extends AbstractModule {
 	}
 	
 	protected void installInterceptors() {
-		CheckDemoViewExecPermissionInterceptor checkDemoViewExecPermissionInterceptor = new CheckDemoViewExecPermissionInterceptor();
+		// Se instancia el interceptos
+		CheckDemoViewExecPermissionInterceptor checkDemoViewExecPermissionInterceptor = 
+				new CheckDemoViewExecPermissionInterceptor(getProvider(ISubjectService.class));
+		// Se engancha el interceptor con la lclase y metodo a interceptar.
 		bindInterceptor(Matchers.any(), Matchers.annotatedWith(CheckDemoViewExecPermission.class), checkDemoViewExecPermissionInterceptor);
 	}
 
