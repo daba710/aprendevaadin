@@ -1,0 +1,20 @@
+package aprendevaadin.prueba05.demo.jaas;
+
+public class UserNameCredentials {
+	
+	private String name;
+	
+	public UserNameCredentials(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+
+	@Override
+	public String toString() {
+		return "UserNameCredentials [name=" + name + "]";
+	}
+	
+}
