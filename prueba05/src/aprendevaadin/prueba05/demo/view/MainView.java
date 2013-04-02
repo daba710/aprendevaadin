@@ -1,12 +1,7 @@
 package aprendevaadin.prueba05.demo.view;
 
-import java.security.Permission;
-import java.security.PrivilegedAction;
-
 import javax.inject.Inject;
-import javax.security.auth.Subject;
 
-import aprendevaadin.prueba05.demo.jaas.DemoViewExecPermission;
 import aprendevaadin.prueba05.demo.navigator.IViewNavigatorService;
 import aprendevaadin.prueba05.demo.subject.ISubjectService;
 import aprendevaadin.prueba05.demo.subject.SubjectSeriviceException;
@@ -118,34 +113,11 @@ public class MainView extends VerticalLayout implements View {
 	@CheckDemoViewExecPermission
 	@Override
 	public void enter(final ViewChangeEvent event) {
-		
-		final String parameter = event.getParameters();
-		System.out.println(String.format("Parameter: '%s'", String.valueOf(parameter)));
-		
-		// Tiene que haber algun parametro en el fragmento
 		if (event.getParameters() == null || event.getParameters().isEmpty()) {
 			enterInitial();
 		} else {
-			try {
-				Subject.doAsPrivileged(subjectService.getSubject(), new PrivilegedAction<Object>() {
-					@Override
-					public Object run() {
-						SecurityManager sm = System.getSecurityManager();
-						if (sm != null) {
-							Permission perm = new DemoViewExecPermission(parameter);
-							sm.checkPermission(perm);
-							enterOk(event.getParameters());
-						} else {
-							System.err.println("No hay SM instalado.");
-						}
-						return null;
-					}
-				}, null);
-			} catch (SecurityException e) {
-				enterError(event.getParameters());
-			}
+			enterOk(event.getParameters());
 		}
-
 	}
 	
 	private void enterInitial() {
@@ -161,21 +133,6 @@ public class MainView extends VerticalLayout implements View {
 		// Se muestra la informacion
 		panelContent.addComponent(new Label("No se ha indicado nada para ver."));
 		
-	}
-	
-	private void enterError(String key) {
-		
-		// Crea y configura un nuevo contenido para el panel.
-		VerticalLayout panelContent = new VerticalLayout();
-		panelContent.setSizeFull();
-		panelContent.setMargin(true);
-		
-		// Asigna el nuevo contenido al panel
-		panel.setContent(panelContent);
-
-		// Se muestra la informacion
-		panelContent.addComponent(new Label(String.format("No puede acceder a la seccion '%s'", key)));
-
 	}
 	
 	private void enterOk(String key) {
