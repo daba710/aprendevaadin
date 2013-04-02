@@ -21,8 +21,8 @@ public class ViewModule extends AbstractModule {
 	}
 	
 	protected void installInterceptors() {
-		CheckPermsInterceptor checkPermsInterceptor = new CheckPermsInterceptor();
-		 bindInterceptor(Matchers.any(), Matchers.annotatedWith(CheckPerms.class), checkPermsInterceptor);
+		CheckDemoViewExecPermissionInterceptor checkDemoViewExecPermissionInterceptor = new CheckDemoViewExecPermissionInterceptor();
+		bindInterceptor(Matchers.any(), Matchers.annotatedWith(CheckDemoViewExecPermission.class), checkDemoViewExecPermissionInterceptor);
 	}
 
 }

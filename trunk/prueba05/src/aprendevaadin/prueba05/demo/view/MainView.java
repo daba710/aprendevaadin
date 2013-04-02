@@ -115,7 +115,7 @@ public class MainView extends VerticalLayout implements View {
 		addComponent(logout);
 	}
 
-	@CheckPerms
+	@CheckDemoViewExecPermission
 	@Override
 	public void enter(final ViewChangeEvent event) {
 		
