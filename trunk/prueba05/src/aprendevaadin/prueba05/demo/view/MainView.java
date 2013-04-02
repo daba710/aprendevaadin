@@ -115,6 +115,7 @@ public class MainView extends VerticalLayout implements View {
 		addComponent(logout);
 	}
 
+	@CheckPerms
 	@Override
 	public void enter(final ViewChangeEvent event) {
 		
@@ -135,7 +136,7 @@ public class MainView extends VerticalLayout implements View {
 							sm.checkPermission(perm);
 							enterOk(event.getParameters());
 						} else {
-							System.err.println("No hay SM instslado.");
+							System.err.println("No hay SM instalado.");
 						}
 						return null;
 					}
