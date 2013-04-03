@@ -3,7 +3,6 @@ package aprendevaadin.prueba05.demo.view;
 import java.security.Permission;
 import java.security.PrivilegedAction;
 
-import javax.jms.IllegalStateException;
 import javax.security.auth.Subject;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -14,6 +13,7 @@ import aprendevaadin.prueba05.demo.subject.ISubjectService;
 
 import com.google.inject.Provider;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.ui.Notification;
 
 public class CheckDemoViewExecPermissionInterceptor implements MethodInterceptor {
 	
@@ -54,15 +54,18 @@ public class CheckDemoViewExecPermissionInterceptor implements MethodInterceptor
 					if (hasPermission) {
 						return invocation.proceed();
 					} else {
-						throw new IllegalStateException("No hay un SecurityManager instalado.");
+						Notification.show("No hay un SecurityManager instalado.", Notification.Type.ERROR_MESSAGE);
+						return null;
 					}
 				} catch (SecurityException e) {
-					throw new IllegalStateException("No dispone de permiso para acceder a esta vista.");
+					Notification.show("No dispone de permiso para acceder a esta vista.", Notification.Type.WARNING_MESSAGE);
+					return null;
 				}
 			}
 			
 		} else {
-			throw new IllegalAccessError("El interceptor no ha encontrado los parametos esperados.");
+			Notification.show("El interceptor no ha encontrado los parametos esperados.", Notification.Type.ERROR_MESSAGE);
+			return null;
 		}
 		
 	}
