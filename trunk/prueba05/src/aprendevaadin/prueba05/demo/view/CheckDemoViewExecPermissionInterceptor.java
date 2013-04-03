@@ -34,7 +34,7 @@ public class CheckDemoViewExecPermissionInterceptor implements MethodInterceptor
 		if (args != null && args.length == 1 && args[0] instanceof ViewChangeEvent) {
 			ViewChangeEvent event = (ViewChangeEvent) args[0];
 			if (event.getParameters() == null || event.getParameters().isEmpty()) {
-				return invoke(invocation);
+				return invocation.proceed();
 			} else {
 				try {
 					final String parameter = event.getParameters();
@@ -52,7 +52,7 @@ public class CheckDemoViewExecPermissionInterceptor implements MethodInterceptor
 						}
 					}, null);
 					if (hasPermission) {
-						return invoke(invocation);
+						return invocation.proceed();
 					} else {
 						throw new IllegalStateException("No hay un SecurityManager instalado.");
 					}
