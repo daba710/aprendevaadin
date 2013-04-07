@@ -20,6 +20,7 @@ public class GuideVaadinServlet extends VaadinServlet implements SessionInitList
 	
 	@Override
 	protected void servletInitialized() throws ServletException {
+		super.servletInitialized();
 		getService().addSessionInitListener(this);
 	}
 
