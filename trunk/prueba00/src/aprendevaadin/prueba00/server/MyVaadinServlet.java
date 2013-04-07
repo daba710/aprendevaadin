@@ -19,6 +19,7 @@ public class MyVaadinServlet extends VaadinServlet implements SessionInitListene
 
 	@Override
 	protected void servletInitialized() throws ServletException {
+		super.servletInitialized();
 		getService().addSessionInitListener(this);
 	}
 
