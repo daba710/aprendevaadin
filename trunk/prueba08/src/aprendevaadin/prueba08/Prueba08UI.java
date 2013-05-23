@@ -2,6 +2,7 @@ package aprendevaadin.prueba08;
 
 import aprendevaadin.prueba08.data.MyContainer;
 import aprendevaadin.prueba08.data.MyItem;
+import aprendevaadin.prueba08.model.IMyIdentifier;
 import aprendevaadin.prueba08.model.MyModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -21,7 +22,7 @@ public class Prueba08UI extends UI {
 		layout.setMargin(true);
 		setContent(layout);
 
-		ComboBox comboBox = new ComboBox("Coption");
+		final ComboBox comboBox = new ComboBox("Coption");
 		comboBox.setImmediate(true);
 		comboBox.setTextInputAllowed(false);
 		comboBox.setNewItemsAllowed(false);
@@ -35,7 +36,8 @@ public class Prueba08UI extends UI {
 		comboBox.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				
+				IMyIdentifier identifier = (IMyIdentifier) event.getProperty().getValue();
+				System.out.println(String.format("Id=%d, Description=%s", identifier.getId(), MyModel.INSTANCE.getData(identifier).getDescription()));
 			}
 		});
 		
