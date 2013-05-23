@@ -15,6 +15,8 @@ import com.vaadin.data.Property;
 
 public class MyContainer implements Container {
 	
+	private static final long serialVersionUID = -7259357335150148384L;
+
 	private Map<IMyIdentifier, MyItem> items = new HashMap<>();
 	
 	public static MyContainer instantiate(IMyModel myModel) {
@@ -24,7 +26,6 @@ public class MyContainer implements Container {
 			IMyData data = myModel.getData(identifier);
 			MyItem myItem = MyItem.instantiate(identifier, data);
 			myContainer.items.put(identifier, myItem);
-			System.out.println("++" + myItem.toString());
 		}
 		return myContainer;
 	}
@@ -50,7 +51,7 @@ public class MyContainer implements Container {
 	}
 
 	@Override
-	public Property getContainerProperty(Object itemId, Object propertyId) {
+	public Property<?> getContainerProperty(Object itemId, Object propertyId) {
 		Item item = getItem(itemId);
 		if (item == null) {
 			return null;
