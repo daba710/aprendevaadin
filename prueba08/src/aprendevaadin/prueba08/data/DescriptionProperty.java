@@ -4,35 +4,35 @@ import aprendevaadin.prueba08.model.IMyData;
 
 import com.vaadin.data.util.AbstractProperty;
 
-public class DescriptionProperty extends AbstractProperty<IMyData> {
+public class DescriptionProperty extends AbstractProperty<String> {
 	
 	private static final long serialVersionUID = -495716644912702429L;
 
-	private IMyData value;
+	private String value;
 	
 	static public DescriptionProperty instantiate(IMyData data) {
 		DescriptionProperty descriptionProperty = new DescriptionProperty();
-		descriptionProperty.value = data;
+		descriptionProperty.value = data.getDescription();
 		descriptionProperty.setReadOnly(true);
 		return descriptionProperty;
 	}
 	
-	static public Class<IMyData> getTypeStatic() {
-		return IMyData.class;
+	static public Class<String> getTypeStatic() {
+		return String.class;
 	}
 
 	@Override
-	public IMyData getValue() {
+	public String getValue() {
 		return value;
 	}
 
 	@Override
-	public void setValue(IMyData data) throws com.vaadin.data.Property.ReadOnlyException {
+	public void setValue(String data) throws ReadOnlyException {
 		 throw new ReadOnlyException();
 	}
 
 	@Override
-	public Class<IMyData> getType() {
+	public Class<String> getType() {
 		return DescriptionProperty.getTypeStatic();
 	}
 

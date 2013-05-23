@@ -19,7 +19,7 @@ public class MyItem implements Item {
 	public final static String IDENTIFIER_ID = "IDENTIFIER";
 	public final static String DESCRIPTION_ID = "DESCRIPTION";
 	
-	final Map<Object,Property<?>> properties = new HashMap<Object, Property<?>>() ;
+	final Map<Object,Property<?>> properties = new HashMap<>() ;
 	
 	static public MyItem instantiate(IMyIdentifier identifier, IMyData data) {
 		MyItem pluginSet = new MyItem();
@@ -68,8 +68,8 @@ public class MyItem implements Item {
 	
 	@Override
 	public String toString() {
-		Property<DescriptionProperty> desccriptionProperty = (Property<DescriptionProperty>) properties.get(DESCRIPTION_ID);
-		return desccriptionProperty.getValue().getValue().getDescription();
+		Property<DescriptionProperty> descriptionProperty = (Property<DescriptionProperty>) properties.get(DESCRIPTION_ID);
+		return descriptionProperty.getValue().toString();
 	}
 
 }
