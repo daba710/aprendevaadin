@@ -24,6 +24,7 @@ public class MyContainer implements Container {
 			IMyData data = myModel.getData(identifier);
 			MyItem myItem = MyItem.instantiate(identifier, data);
 			myContainer.items.put(identifier, myItem);
+			System.out.println("++" + myItem.toString());
 		}
 		return myContainer;
 	}
