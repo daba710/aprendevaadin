@@ -32,6 +32,7 @@ public class Prueba08UI extends UI {
 		comboBox.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
+				
 			}
 		});
 		

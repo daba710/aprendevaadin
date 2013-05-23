@@ -2,8 +2,8 @@ package aprendevaadin.prueba08.data;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import aprendevaadin.prueba08.model.IMyData;
 import aprendevaadin.prueba08.model.IMyIdentifier;
@@ -17,7 +17,7 @@ public class MyContainer implements Container {
 	
 	private static final long serialVersionUID = -7259357335150148384L;
 
-	private Map<IMyIdentifier, MyItem> items = new HashMap<>();
+	private SortedMap<IMyIdentifier, MyItem> items = new TreeMap<>();
 	
 	public static MyContainer instantiate(IMyModel myModel) {
 		
