@@ -29,6 +29,10 @@ public class MyContainer implements Container {
 		}
 		return myContainer;
 	}
+	
+	public IMyIdentifier getDefaultIdentifier() {
+		return items.firstKey();
+	}
 
 	@Override
 	public Item getItem(Object itemId) {
