@@ -2,9 +2,9 @@ package aprendevaadin.prueba08.model.internal;
 
 import aprendevaadin.prueba08.model.IMyIdentifier;
 
-public class MyIdentifier implements IMyIdentifier {
+public class MyIdentifier implements IMyIdentifier, Comparable<MyIdentifier> {
 
-	private long id;
+	private Long id;
 	
 	public MyIdentifier(long id) {
 		this.id = id;
@@ -44,6 +44,15 @@ public class MyIdentifier implements IMyIdentifier {
 	@Override
 	public String toString() {
 		return String.valueOf(id); // SI es null, lo indicara.
+	}
+
+	@Override
+	public int compareTo(MyIdentifier other) {
+		if (other instanceof MyIdentifier) {
+			return this.id.compareTo(other.id);
+		} else {
+			return 0;
+		}
 	}
 	
 }
