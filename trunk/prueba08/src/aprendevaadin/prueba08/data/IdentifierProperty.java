@@ -4,35 +4,35 @@ import aprendevaadin.prueba08.model.IMyIdentifier;
 
 import com.vaadin.data.util.AbstractProperty;
 
-public class IdentifierProperty extends AbstractProperty<IMyIdentifier> {
+public class IdentifierProperty extends AbstractProperty<Long> {
 	
 	private static final long serialVersionUID = -495716644912702429L;
 
-	private IMyIdentifier value;
+	private Long value;
 	
 	static public IdentifierProperty instantiate(IMyIdentifier identifier) {
 		IdentifierProperty identifierProperty = new IdentifierProperty();
-		identifierProperty.value = identifier;
+		identifierProperty.value = identifier.getId();
 		identifierProperty.setReadOnly(true);
 		return identifierProperty;
 	}
 	
-	static public Class<IMyIdentifier> getTypeStatic() {
-		return IMyIdentifier.class;
+	static public Class<Long> getTypeStatic() {
+		return Long.class;
 	}
 
 	@Override
-	public IMyIdentifier getValue() {
+	public Long getValue() {
 		return value;
 	}
 	
 	@Override
-	public void setValue(IMyIdentifier newValue) throws com.vaadin.data.Property.ReadOnlyException {
+	public void setValue(Long newValue) throws ReadOnlyException {
 		 throw new ReadOnlyException();
 	}
 
 	@Override
-	public Class<IMyIdentifier> getType() {
+	public Class<Long> getType() {
 		return IdentifierProperty.getTypeStatic();
 	}
 
