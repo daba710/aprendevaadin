@@ -1,6 +1,7 @@
 package aprendevaadin.prueba08;
 
 import aprendevaadin.prueba08.data.MyContainer;
+import aprendevaadin.prueba08.data.MyItem;
 import aprendevaadin.prueba08.model.MyModel;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -28,6 +29,8 @@ public class Prueba08UI extends UI {
 		
 		MyContainer myContainer = MyContainer.instantiate(MyModel.INSTANCE);
 		comboBox.setContainerDataSource(myContainer);
+		comboBox.setItemCaptionPropertyId(MyItem.DESCRIPTION_ID);
+		comboBox.setValue(myContainer.getDefaultIdentifier());
 		
 		comboBox.addValueChangeListener(new ValueChangeListener() {
 			@Override
