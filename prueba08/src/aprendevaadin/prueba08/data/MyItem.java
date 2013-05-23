@@ -68,7 +68,7 @@ public class MyItem implements Item {
 	
 	@Override
 	public String toString() {
-		Property<DescriptionProperty> descriptionProperty = (Property<DescriptionProperty>) properties.get(DESCRIPTION_ID);
+		Property<?> descriptionProperty = properties.get(DESCRIPTION_ID);
 		return descriptionProperty.getValue().toString();
 	}
 
