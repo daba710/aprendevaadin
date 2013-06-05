@@ -1,11 +1,14 @@
 package aprendevaadin.prueba09.data;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import aprendevaadin.prueba09.model.IMyData;
 import aprendevaadin.prueba09.model.IMyIdentifier;
 import aprendevaadin.prueba09.model.MyModel;
+import aprendevaadin.prueba09.model.internal.MyIdentifier;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -37,7 +40,12 @@ public class MyContainer implements Container {
 
 	@Override
 	public Collection<?> getItemIds() {
-		return Collections.unmodifiableSet(MyModel.INSTANCE.getAllIdentifiers());
+		List<MyIdentifier> ids = new ArrayList<>();
+		for (IMyIdentifier myIdentifier : MyModel.INSTANCE.getAllIdentifiers()) {
+			ids.add((MyIdentifier) myIdentifier);
+		}
+		Collections.sort(ids);
+		return Collections.unmodifiableList(ids);
 	}
 
 	@Override
