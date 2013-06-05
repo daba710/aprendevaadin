@@ -2,12 +2,10 @@ package aprendevaadin.prueba09.data;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import aprendevaadin.prueba09.model.IMyData;
 import aprendevaadin.prueba09.model.IMyIdentifier;
-import aprendevaadin.prueba09.model.IMyModel;
+import aprendevaadin.prueba09.model.MyModel;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -17,28 +15,16 @@ public class MyContainer implements Container {
 	
 	private static final long serialVersionUID = -7259357335150148384L;
 
-	private SortedMap<IMyIdentifier, MyItem> items = new TreeMap<>();
-	
-	public static MyContainer instantiate(IMyModel myModel) {
-		
-		MyContainer myContainer = new MyContainer();
-		for (IMyIdentifier identifier : myModel.getAllIdentifiers()) {
-			IMyData data = myModel.getData(identifier);
-			MyItem myItem = MyItem.instantiate(identifier, data);
-			myContainer.items.put(identifier, myItem);
-		}
-		return myContainer;
-	}
-	
-	public IMyIdentifier getDefaultIdentifier() {
-		return items.firstKey();
-	}
-
 	@Override
 	public Item getItem(Object itemId) {
 		if (itemId instanceof IMyIdentifier) {
 			IMyIdentifier dataIdentifier = (IMyIdentifier) itemId;
-			return items.get(dataIdentifier);
+			IMyData myData = MyModel.INSTANCE.getData(dataIdentifier);
+			if (myData != null) {
+				return MyItem.instantiate(myData);
+			} else {
+				return null;
+			}
 		} else {
 			return null;
 		}
@@ -51,7 +37,7 @@ public class MyContainer implements Container {
 
 	@Override
 	public Collection<?> getItemIds() {
-		return Collections.unmodifiableSet(items.keySet());
+		return Collections.unmodifiableSet(MyModel.INSTANCE.getAllIdentifiers());
 	}
 
 	@Override
@@ -70,14 +56,14 @@ public class MyContainer implements Container {
 
 	@Override
 	public int size() {
-		return items.size();
+		return MyModel.INSTANCE.getAllIdentifiers().size();
 	}
 
 	@Override
 	public boolean containsId(Object itemId) {
 		if (itemId instanceof IMyIdentifier) {
 			IMyIdentifier dataIdentifier = (IMyIdentifier) itemId;
-			return items.containsKey(dataIdentifier);
+			return MyModel.INSTANCE.getData(dataIdentifier) != null;
 		} else {
 			return false;
 		}
