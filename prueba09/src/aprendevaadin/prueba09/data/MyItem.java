@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import aprendevaadin.prueba09.model.IMyData;
-import aprendevaadin.prueba09.model.IMyIdentifier;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -16,15 +15,13 @@ public class MyItem implements Item {
 	
 	private static final long serialVersionUID = -2835207556910271369L;
 
-	public final static String IDENTIFIER_ID = "IDENTIFIER";
 	public final static String VALUE_ID = "VALUE";
 	public final static String DESCRIPTION_ID = "DESCRIPTION";
 	
 	final Map<Object,Property<?>> properties = new HashMap<>() ;
 	
-	static public MyItem instantiate(IMyIdentifier identifier, IMyData data) {
+	static public MyItem instantiate(IMyData data) {
 		MyItem pluginSet = new MyItem();
-		pluginSet.properties.put(IDENTIFIER_ID, IdentifierProperty.instantiate(identifier));
 		pluginSet.properties.put(VALUE_ID, ValueProperty.instantiate(data));
 		pluginSet.properties.put(DESCRIPTION_ID, DescriptionProperty.instantiate(data));
 		return pluginSet;
@@ -32,7 +29,6 @@ public class MyItem implements Item {
 
 	static public Collection<?> getItemPropertyIdsStatic() {
 		ArrayList<Object> ids = new ArrayList<>();
-		ids.add(IDENTIFIER_ID);
 		ids.add(VALUE_ID);
 		ids.add(DESCRIPTION_ID);
 		return Collections.unmodifiableList(ids);
@@ -40,8 +36,6 @@ public class MyItem implements Item {
 	
 	static Class<?> getItemPropertyTypeStatic(Object propertyId) {
 		switch (propertyId.toString()) {
-		case IDENTIFIER_ID:
-			return IdentifierProperty.getTypeStatic();
 		case VALUE_ID:
 			return ValueProperty.getTypeStatic();
 		case DESCRIPTION_ID:
