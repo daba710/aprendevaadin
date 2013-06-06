@@ -14,10 +14,14 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 
-public class MyContainer implements Container {
+public class MyContainer implements Container, Container.ItemSetChangeNotifier, Container.PropertySetChangeNotifier {
 	
 	private static final long serialVersionUID = -7259357335150148384L;
 
+	/////////////////////////////////////////////////////////////
+	// Container
+	/////////////////////////////////////////////////////////////
+	
 	@Override
 	public Item getItem(Object itemId) {
 		if (itemId instanceof IMyIdentifier) {
@@ -107,4 +111,54 @@ public class MyContainer implements Container {
 		throw new UnsupportedOperationException();
 	}
 
+	/////////////////////////////////////////////////////////////
+	// Container.ItemSetChangeNotifier
+	/////////////////////////////////////////////////////////////
+	
+	@Override
+	public void addItemSetChangeListener(ItemSetChangeListener listener) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	@Deprecated
+	public void addListener(ItemSetChangeListener listener) {
+		addItemSetChangeListener(listener);
+	}
+
+	@Override
+	public void removeItemSetChangeListener(ItemSetChangeListener listener) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	@Deprecated
+	public void removeListener(ItemSetChangeListener listener) {
+		removeItemSetChangeListener(listener);	
+	}
+	
+	/////////////////////////////////////////////////////////////
+	// Container.PropertySetChangeNotifier
+	/////////////////////////////////////////////////////////////
+
+	@Override
+	public void addPropertySetChangeListener(PropertySetChangeListener listener) {
+	}
+
+	@Override
+	@Deprecated
+	public void addListener(PropertySetChangeListener listener) {
+		addPropertySetChangeListener(listener);
+	}
+
+	@Override
+	public void removePropertySetChangeListener(PropertySetChangeListener listener) {
+	}
+
+	@Override
+	@Deprecated
+	public void removeListener(PropertySetChangeListener listener) {
+		removePropertySetChangeListener(listener);
+	}
+	
 }
