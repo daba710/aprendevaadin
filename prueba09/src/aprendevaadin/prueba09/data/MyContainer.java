@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import aprendevaadin.prueba09.model.IModelTracker;
 import aprendevaadin.prueba09.model.IMyData;
 import aprendevaadin.prueba09.model.IMyIdentifier;
 import aprendevaadin.prueba09.model.MyModel;
@@ -18,6 +19,26 @@ import com.vaadin.data.Property;
 public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 	
 	private static final long serialVersionUID = -7259357335150148384L;
+	
+	private class ModelTracker implements IModelTracker {
+
+		@Override
+		public void loadInitialModel() {
+		}
+
+		@Override
+		public void changedRow(IMyIdentifier myIdentifier) {
+		}
+
+		@Override
+		public void changedRowCollection() {
+		}
+		
+	}
+	
+	public MyContainer() {
+		MyModel.INSTANCE.addModelTracker(new ModelTracker());
+	}
 
 	/////////////////////////////////////////////////////////////
 	// Container
