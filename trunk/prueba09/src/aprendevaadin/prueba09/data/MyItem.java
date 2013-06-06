@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import aprendevaadin.prueba09.model.IMyData;
@@ -11,7 +13,7 @@ import aprendevaadin.prueba09.model.IMyData;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 
-public class MyItem implements Item {
+public class MyItem implements Item, Item.PropertySetChangeNotifier {
 	
 	private static final long serialVersionUID = -2835207556910271369L;
 
@@ -45,6 +47,10 @@ public class MyItem implements Item {
 		}
 	}
 
+	/////////////////////////////////////////////////////////////
+	// Item
+	/////////////////////////////////////////////////////////////
+	
 	@Override
 	public Collection<?> getItemPropertyIds() {
 		return MyItem.getItemPropertyIdsStatic();
@@ -69,6 +75,60 @@ public class MyItem implements Item {
 	public String toString() {
 		Property<?> descriptionProperty = properties.get(DESCRIPTION_ID);
 		return descriptionProperty.getValue().toString();
+	}
+
+	/////////////////////////////////////////////////////////////
+	// Item.PropertySetChangeNotifier
+	/////////////////////////////////////////////////////////////
+	
+	private List<PropertySetChangeListener> propertySetChangeListeners = new LinkedList<>(); 
+	
+	void firePropertySetChangeEvent() {
+		
+		// Se crea el evento.
+		PropertySetChangeEvent propertySetChangeEvent = new PropertySetChangeEvent() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Item getItem() {
+				return MyItem.this;
+			}
+		};
+		
+		// Se envia el evento a cada listener
+		synchronized (propertySetChangeListeners) {
+			for (PropertySetChangeListener propertySetChangeListener : propertySetChangeListeners) {
+				propertySetChangeListener.itemPropertySetChange(propertySetChangeEvent);
+			}
+		}
+		
+	}
+	
+	@Override
+	public void addPropertySetChangeListener(PropertySetChangeListener listener) {
+		synchronized (propertySetChangeListeners) {
+			propertySetChangeListeners.add(listener);
+		}
+	}
+
+	@Override
+	@Deprecated
+	public void addListener(PropertySetChangeListener listener) {
+		addPropertySetChangeListener(listener);
+	}
+
+	@Override
+	public void removePropertySetChangeListener(PropertySetChangeListener listener) {
+		synchronized (propertySetChangeListeners) {
+			propertySetChangeListeners.remove(listener);
+		}
+	}
+
+	@Override
+	@Deprecated
+	public void removeListener(PropertySetChangeListener listener) {
+		removePropertySetChangeListener(listener);
 	}
 
 }
