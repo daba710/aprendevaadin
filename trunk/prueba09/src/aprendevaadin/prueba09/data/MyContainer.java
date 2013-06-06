@@ -3,6 +3,7 @@ package aprendevaadin.prueba09.data;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import aprendevaadin.prueba09.model.IMyData;
@@ -14,7 +15,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 
-public class MyContainer implements Container, Container.ItemSetChangeNotifier, Container.PropertySetChangeNotifier {
+public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 	
 	private static final long serialVersionUID = -7259357335150148384L;
 
@@ -115,9 +116,30 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier, 
 	// Container.ItemSetChangeNotifier
 	/////////////////////////////////////////////////////////////
 	
+	private List<ItemSetChangeListener> itemSetChangeListeners = new LinkedList<>(); 
+	
+	void fireItemSetChangeEvent() {
+		// Se crea el evento.
+		ItemSetChangeEvent itemSetChangeEvent = new ItemSetChangeEvent() {
+			private static final long serialVersionUID = 2380023876174313182L;
+			@Override
+			public Container getContainer() {
+				return MyContainer.this;
+			}
+		};
+		// Se envia el evento a cada listener
+		synchronized (itemSetChangeListeners) {
+			for (ItemSetChangeListener itemSetChangeListener : itemSetChangeListeners) {
+				itemSetChangeListener.containerItemSetChange(itemSetChangeEvent);
+			}
+		}
+	}
+	
 	@Override
 	public void addItemSetChangeListener(ItemSetChangeListener listener) {
-		// TODO Auto-generated method stub
+		synchronized (itemSetChangeListeners) {
+			itemSetChangeListeners.add(listener);
+		}
 	}
 
 	@Override
@@ -128,37 +150,15 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier, 
 
 	@Override
 	public void removeItemSetChangeListener(ItemSetChangeListener listener) {
-		// TODO Auto-generated method stub
+		synchronized (itemSetChangeListeners) {
+			itemSetChangeListeners.remove(listener);
+		}
 	}
 
 	@Override
 	@Deprecated
 	public void removeListener(ItemSetChangeListener listener) {
 		removeItemSetChangeListener(listener);	
-	}
-	
-	/////////////////////////////////////////////////////////////
-	// Container.PropertySetChangeNotifier
-	/////////////////////////////////////////////////////////////
-
-	@Override
-	public void addPropertySetChangeListener(PropertySetChangeListener listener) {
-	}
-
-	@Override
-	@Deprecated
-	public void addListener(PropertySetChangeListener listener) {
-		addPropertySetChangeListener(listener);
-	}
-
-	@Override
-	public void removePropertySetChangeListener(PropertySetChangeListener listener) {
-	}
-
-	@Override
-	@Deprecated
-	public void removeListener(PropertySetChangeListener listener) {
-		removePropertySetChangeListener(listener);
 	}
 	
 }
