@@ -119,6 +119,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 	private List<ItemSetChangeListener> itemSetChangeListeners = new LinkedList<>(); 
 	
 	void fireItemSetChangeEvent() {
+		
 		// Se crea el evento.
 		ItemSetChangeEvent itemSetChangeEvent = new ItemSetChangeEvent() {
 			private static final long serialVersionUID = 2380023876174313182L;
@@ -127,12 +128,14 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 				return MyContainer.this;
 			}
 		};
+		
 		// Se envia el evento a cada listener
 		synchronized (itemSetChangeListeners) {
 			for (ItemSetChangeListener itemSetChangeListener : itemSetChangeListeners) {
 				itemSetChangeListener.containerItemSetChange(itemSetChangeEvent);
 			}
 		}
+		
 	}
 	
 	@Override
