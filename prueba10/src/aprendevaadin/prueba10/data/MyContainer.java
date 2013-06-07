@@ -35,6 +35,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 //				@Override
 //				public void run() {
 //					fireItemSetChangeEvent();
+//					UI.getCurrent().push();
 //				}
 //			});
 		}
@@ -47,6 +48,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 				public void run() {
 					MyItem myItem = (MyItem) getItem(myIdentifier);
 					myItem.firePropertySetChangeEvent();
+					UI.getCurrent().push();
 				}
 			});
 		}
@@ -58,6 +60,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 				@Override
 				public void run() {
 					fireItemSetChangeEvent();
+					UI.getCurrent().push();
 				}
 			});
 		}

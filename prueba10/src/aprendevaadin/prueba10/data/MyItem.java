@@ -8,6 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import aprendevaadin.prueba10.model.IMyData;
 
 import com.vaadin.data.Item;
@@ -16,6 +19,8 @@ import com.vaadin.data.Property;
 public class MyItem implements Item, Item.PropertySetChangeNotifier {
 	
 	private static final long serialVersionUID = -2835207556910271369L;
+	
+	static public Logger logger = LoggerFactory.getLogger(MyItem.class);
 
 	public final static String VALUE_ID = "VALUE";
 	public final static String DESCRIPTION_ID = "DESCRIPTION";
@@ -86,6 +91,7 @@ public class MyItem implements Item, Item.PropertySetChangeNotifier {
 	void firePropertySetChangeEvent() {
 		
 		// Se crea el evento.
+		logger.debug("Se instancia el evento 'PropertySetChangeEvent'.");
 		PropertySetChangeEvent propertySetChangeEvent = new PropertySetChangeEvent() {
 
 			private static final long serialVersionUID = 1L;
@@ -97,6 +103,7 @@ public class MyItem implements Item, Item.PropertySetChangeNotifier {
 		};
 		
 		// Se envia el evento a cada listener
+		logger.debug(String.format("Se envia el evento a %d listeners 'PropertySetChangeListener'", propertySetChangeListeners.size()));
 		synchronized (propertySetChangeListeners) {
 			for (PropertySetChangeListener propertySetChangeListener : propertySetChangeListeners) {
 				propertySetChangeListener.itemPropertySetChange(propertySetChangeEvent);
