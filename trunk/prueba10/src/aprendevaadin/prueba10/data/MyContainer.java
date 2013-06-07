@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import aprendevaadin.prueba10.model.IModelTracker;
 import aprendevaadin.prueba10.model.IMyData;
 import aprendevaadin.prueba10.model.IMyIdentifier;
@@ -19,13 +22,15 @@ import com.vaadin.ui.UI;
 
 public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 	
+	static public Logger logger = LoggerFactory.getLogger(MyContainer.class);
+	
 	private static final long serialVersionUID = -7259357335150148384L;
 	
 	private class ModelTracker implements IModelTracker {
 
 		@Override
 		public void loadInitialModel() {
-			System.out.println(String.format("loadInitialModel()"));
+			logger.debug(String.format("loadInitialModel()"));
 //			UI.getCurrent().access(new Runnable() {
 //				@Override
 //				public void run() {
@@ -36,25 +41,25 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 
 		@Override
 		public void changedRow(final IMyIdentifier myIdentifier) {
-			System.out.println(String.format("changedRow(%s)", myIdentifier.getId()));
-//			UI.getCurrent().access(new Runnable() {
-//				@Override
-//				public void run() {
-//					MyItem myItem = (MyItem) getItem(myIdentifier);
-//					myItem.firePropertySetChangeEvent();
-//				}
-//			});
+			logger.debug(String.format("changedRow(%s)", myIdentifier.getId()));
+			UI.getCurrent().access(new Runnable() {
+				@Override
+				public void run() {
+					MyItem myItem = (MyItem) getItem(myIdentifier);
+					myItem.firePropertySetChangeEvent();
+				}
+			});
 		}
 
 		@Override
 		public void changedRowCollection() {
-			System.out.println(String.format("changedRowCollection()"));
-//			UI.getCurrent().access(new Runnable() {
-//				@Override
-//				public void run() {
-//					fireItemSetChangeEvent();
-//				}
-//			});
+			logger.debug(String.format("changedRowCollection()"));
+			UI.getCurrent().access(new Runnable() {
+				@Override
+				public void run() {
+					fireItemSetChangeEvent();
+				}
+			});
 		}
 		
 	}
@@ -165,6 +170,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 	void fireItemSetChangeEvent() {
 		
 		// Se crea el evento.
+		logger.debug("Se instancia el evento 'ItemSetChangeEvent'.");
 		ItemSetChangeEvent itemSetChangeEvent = new ItemSetChangeEvent() {
 			private static final long serialVersionUID = 2380023876174313182L;
 			@Override
@@ -174,6 +180,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 		};
 		
 		// Se envia el evento a cada listener
+		logger.debug(String.format("Se envia el evento a %d listeners 'ItemSetChangeListener'", itemSetChangeListeners.size()));
 		synchronized (itemSetChangeListeners) {
 			for (ItemSetChangeListener itemSetChangeListener : itemSetChangeListeners) {
 				itemSetChangeListener.containerItemSetChange(itemSetChangeEvent);
