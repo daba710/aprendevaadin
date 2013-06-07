@@ -15,6 +15,7 @@ import aprendevaadin.prueba09.model.internal.MyIdentifier;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
+import com.vaadin.ui.UI;
 
 public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 	
@@ -24,14 +25,33 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 
 		@Override
 		public void loadInitialModel() {
+			UI.getCurrent().access(new Runnable() {
+				@Override
+				public void run() {
+					fireItemSetChangeEvent();
+				}
+			});
 		}
 
 		@Override
-		public void changedRow(IMyIdentifier myIdentifier) {
+		public void changedRow(final IMyIdentifier myIdentifier) {
+			UI.getCurrent().access(new Runnable() {
+				@Override
+				public void run() {
+					MyItem myItem = (MyItem) getItem(myIdentifier);
+					myItem.firePropertySetChangeEvent();
+				}
+			});
 		}
 
 		@Override
 		public void changedRowCollection() {
+			UI.getCurrent().access(new Runnable() {
+				@Override
+				public void run() {
+					fireItemSetChangeEvent();
+				}
+			});
 		}
 		
 	}
