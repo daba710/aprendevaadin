@@ -46,8 +46,9 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 			UI.getCurrent().access(new Runnable() {
 				@Override
 				public void run() {
-					MyItem myItem = (MyItem) getItem(myIdentifier);
-					myItem.firePropertySetChangeEvent();
+//					MyItem myItem = (MyItem) getItem(myIdentifier);
+//					myItem.firePropertySetChangeEvent();
+					fireItemSetChangeEvent();
 					UI.getCurrent().push();
 				}
 			});
