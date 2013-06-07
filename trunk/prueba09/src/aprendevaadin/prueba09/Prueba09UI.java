@@ -20,6 +20,7 @@ public class Prueba09UI extends UI {
 		setContent(layout);
 
 		Table table = new Table("La tabla", new MyContainer());
+//		Table table = new Table("La tabla");
 		table.setSizeFull();
 		table.setSelectable(true);
 		

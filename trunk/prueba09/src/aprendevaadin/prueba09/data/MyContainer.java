@@ -25,33 +25,33 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 
 		@Override
 		public void loadInitialModel() {
-			UI.getCurrent().access(new Runnable() {
-				@Override
-				public void run() {
-					fireItemSetChangeEvent();
-				}
-			});
+//			UI.getCurrent().access(new Runnable() {
+//				@Override
+//				public void run() {
+//					fireItemSetChangeEvent();
+//				}
+//			});
 		}
 
 		@Override
 		public void changedRow(final IMyIdentifier myIdentifier) {
-			UI.getCurrent().access(new Runnable() {
-				@Override
-				public void run() {
-					MyItem myItem = (MyItem) getItem(myIdentifier);
-					myItem.firePropertySetChangeEvent();
-				}
-			});
+//			UI.getCurrent().access(new Runnable() {
+//				@Override
+//				public void run() {
+//					MyItem myItem = (MyItem) getItem(myIdentifier);
+//					myItem.firePropertySetChangeEvent();
+//				}
+//			});
 		}
 
 		@Override
 		public void changedRowCollection() {
-			UI.getCurrent().access(new Runnable() {
-				@Override
-				public void run() {
-					fireItemSetChangeEvent();
-				}
-			});
+//			UI.getCurrent().access(new Runnable() {
+//				@Override
+//				public void run() {
+//					fireItemSetChangeEvent();
+//				}
+//			});
 		}
 		
 	}
