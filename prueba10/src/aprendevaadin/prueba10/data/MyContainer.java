@@ -31,6 +31,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 		@Override
 		public void loadInitialModel() {
 			logger.debug(String.format("loadInitialModel()"));
+			// Este evento llega demasiado pronto cuando la tabla aun no esta ensamblada asi que no se tiene en cuenta.
 //			UI.getCurrent().access(new Runnable() {
 //				@Override
 //				public void run() {
@@ -46,8 +47,12 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 			UI.getCurrent().access(new Runnable() {
 				@Override
 				public void run() {
+					// El evento de cambios en los valores del Item no tiene efecto sobre la tabla.
+					
 //					MyItem myItem = (MyItem) getItem(myIdentifier);
 //					myItem.firePropertySetChangeEvent();
+					
+					// Asi que lo paso como un cambio en las filas.. 
 					fireItemSetChangeEvent();
 					UI.getCurrent().push();
 				}
@@ -57,6 +62,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 		@Override
 		public void changedRowCollection() {
 			logger.debug(String.format("changedRowCollection()"));
+			// Cambio en el las filas.
 			UI.getCurrent().access(new Runnable() {
 				@Override
 				public void run() {
