@@ -41,11 +41,13 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 				@Override
 				public void run() {
 					
+					// DON'T WORK
 					// El evento de cambios en los valores del Item no tiene efecto sobre la tabla.
 					// FALLO: No se entera la tabla.
 					MyItem myItem = (MyItem) getItem(myIdentifier);
 					myItem.firePropertySetChangeEvent();
 					
+					// WORK
 					// Asi que lo paso como un cambio en las filas.. 
 //					fireItemSetChangeEvent();
 //					UI.getCurrent().push();
