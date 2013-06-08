@@ -43,12 +43,12 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 					
 					// El evento de cambios en los valores del Item no tiene efecto sobre la tabla.
 					// FALLO: No se entera la tabla.
-//					MyItem myItem = (MyItem) getItem(myIdentifier);
-//					myItem.firePropertySetChangeEvent();
+					MyItem myItem = (MyItem) getItem(myIdentifier);
+					myItem.firePropertySetChangeEvent();
 					
 					// Asi que lo paso como un cambio en las filas.. 
-					fireItemSetChangeEvent();
-					UI.getCurrent().push();
+//					fireItemSetChangeEvent();
+//					UI.getCurrent().push();
 				}
 			});
 		}
