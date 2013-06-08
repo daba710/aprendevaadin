@@ -2,9 +2,9 @@ package aprendevaadin.prueba10.data;
 
 import aprendevaadin.prueba10.model.IMyData;
 
-import com.vaadin.data.util.AbstractProperty;
+import com.vaadin.data.Property;
 
-public class ValueProperty extends AbstractProperty<Long> {
+public class ValueProperty implements Property<Long> {
 	
 	private static final long serialVersionUID = -495716644912702429L;
 
@@ -34,6 +34,18 @@ public class ValueProperty extends AbstractProperty<Long> {
 	@Override
 	public Class<Long> getType() {
 		return ValueProperty.getTypeStatic();
+	}
+
+	@Override
+	public boolean isReadOnly() {
+		return true;
+	}
+
+	@Override
+	public void setReadOnly(boolean newStatus) {
+		if (!newStatus) {
+			throw new IllegalStateException("Required ReadOnly");
+		}
 	}
 
 }
