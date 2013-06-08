@@ -1,6 +1,7 @@
 package aprendevaadin.prueba10;
 
 import aprendevaadin.prueba10.data.MyContainer;
+import aprendevaadin.prueba10.model.MyModel;
 
 import com.vaadin.annotations.Push;
 import com.vaadin.server.VaadinRequest;
@@ -22,7 +23,7 @@ public class Prueba10UI extends UI {
 		layout.setMargin(true);
 		setContent(layout);
 
-		Table table = new Table("La tabla", new MyContainer());
+		Table table = new Table("La tabla", new MyContainer(new MyModel()));
 //		Table table = new Table("La tabla");
 		table.setSizeFull();
 		table.setSelectable(true);

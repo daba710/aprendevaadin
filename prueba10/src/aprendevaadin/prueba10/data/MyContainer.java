@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import aprendevaadin.prueba10.model.IModelTracker;
 import aprendevaadin.prueba10.model.IMyData;
 import aprendevaadin.prueba10.model.IMyIdentifier;
-import aprendevaadin.prueba10.model.MyModel;
+import aprendevaadin.prueba10.model.IMyModel;
 import aprendevaadin.prueba10.model.internal.MyIdentifier;
 
 import com.vaadin.data.Container;
@@ -68,8 +68,11 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 		
 	}
 	
-	public MyContainer() {
-		MyModel.INSTANCE.addModelTracker(new ModelTracker());
+	private IMyModel myModel;
+	
+	public MyContainer(IMyModel myModel) {
+		this.myModel = myModel;
+		this.myModel.addModelTracker(new ModelTracker());
 	}
 
 	/////////////////////////////////////////////////////////////
@@ -80,7 +83,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 	public Item getItem(Object itemId) {
 		if (itemId instanceof IMyIdentifier) {
 			IMyIdentifier dataIdentifier = (IMyIdentifier) itemId;
-			IMyData myData = MyModel.INSTANCE.getData(dataIdentifier);
+			IMyData myData = myModel.getData(dataIdentifier);
 			if (myData != null) {
 				return MyItem.instantiate(myData);
 			} else {
@@ -99,7 +102,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 	@Override
 	public Collection<?> getItemIds() {
 		List<MyIdentifier> ids = new ArrayList<>();
-		for (IMyIdentifier myIdentifier : MyModel.INSTANCE.getAllIdentifiers()) {
+		for (IMyIdentifier myIdentifier : myModel.getAllIdentifiers()) {
 			ids.add((MyIdentifier) myIdentifier);
 		}
 		Collections.sort(ids);
@@ -122,14 +125,14 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 
 	@Override
 	public int size() {
-		return MyModel.INSTANCE.getAllIdentifiers().size();
+		return myModel.getAllIdentifiers().size();
 	}
 
 	@Override
 	public boolean containsId(Object itemId) {
 		if (itemId instanceof IMyIdentifier) {
 			IMyIdentifier dataIdentifier = (IMyIdentifier) itemId;
-			return MyModel.INSTANCE.getData(dataIdentifier) != null;
+			return myModel.getData(dataIdentifier) != null;
 		} else {
 			return false;
 		}
