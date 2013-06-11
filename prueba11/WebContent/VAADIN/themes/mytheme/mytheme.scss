@@ -4,10 +4,10 @@
 
 	@include reindeer;
 
-	.status-notification {
+	.v-label-status-notification {
 		text-align:center;
 		color:#0066cc;
-		font-weight:bolder;
+		font: 24px arial,sans-serif;
 	}
 	  
 }
