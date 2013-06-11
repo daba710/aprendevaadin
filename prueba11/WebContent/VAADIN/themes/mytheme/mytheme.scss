@@ -1,0 +1,13 @@
+@import "../reindeer/reindeer.scss";
+
+@mixin mytheme {
+
+	@include reindeer;
+
+	.status-notification {
+		text-align:center;
+		color:#0066cc;
+		font-weight:bolder;
+	}
+	  
+}
