@@ -13,7 +13,6 @@ import aprendevaadin.prueba12.model.IModelTracker;
 import aprendevaadin.prueba12.model.IMyData;
 import aprendevaadin.prueba12.model.IMyIdentifier;
 import aprendevaadin.prueba12.model.IMyModel;
-import aprendevaadin.prueba12.model.impl.MyIdentifier;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -35,6 +34,20 @@ public class MyContainer implements Container, Container.Hierarchical, Container
 		}
 
 		@Override
+		public void changedNode(final IMyIdentifier myIdentifier) {
+			logger.debug(String.format("changedRow(%s)", myIdentifier.getId()));
+			UI.getCurrent().access(new Runnable() {
+				@Override
+				public void run() {
+					MyItem myItem = (MyItem) getItem(myIdentifier);
+					myItem.firePropertySetChangeEvent();
+					
+					UI.getCurrent().push();
+				}
+			});
+		}
+		
+		@Override
 		public void changedModel() {
 			logger.debug(String.format("changedModel()"));
 			// Cambio en el las filas.
@@ -46,7 +59,7 @@ public class MyContainer implements Container, Container.Hierarchical, Container
 				}
 			});
 		}
-		
+
 	}
 	
 	private IMyModel myModel;
