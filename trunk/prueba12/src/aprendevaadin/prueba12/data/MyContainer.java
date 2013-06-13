@@ -20,7 +20,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.ui.UI;
 
-public class MyContainer implements Container, Container.ItemSetChangeNotifier {
+public class MyContainer implements Container, Container.Hierarchical, Container.ItemSetChangeNotifier {
 	
 	static public Logger logger = LoggerFactory.getLogger(MyContainer.class);
 	
@@ -35,29 +35,8 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 		}
 
 		@Override
-		public void changedRow(final IMyIdentifier myIdentifier) {
-			logger.debug(String.format("changedRow(%s)", myIdentifier.getId()));
-			UI.getCurrent().access(new Runnable() {
-				@Override
-				public void run() {
-					
-					// DON'T WORK
-					// El evento de cambios en los valores del Item no tiene efecto sobre la tabla.
-					// FALLO: No se entera la tabla.
-					MyItem myItem = (MyItem) getItem(myIdentifier);
-					myItem.firePropertySetChangeEvent();
-					
-					// WORK
-					// Asi que lo paso como un cambio en las filas.. 
-//					fireItemSetChangeEvent();
-//					UI.getCurrent().push();
-				}
-			});
-		}
-
-		@Override
-		public void changedRowCollection() {
-			logger.debug(String.format("changedRowCollection()"));
+		public void changedModel() {
+			logger.debug(String.format("changedModel()"));
 			// Cambio en el las filas.
 			UI.getCurrent().access(new Runnable() {
 				@Override
@@ -103,12 +82,7 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 
 	@Override
 	public Collection<?> getItemIds() {
-		List<MyIdentifier> ids = new ArrayList<>();
-		for (IMyIdentifier myIdentifier : myModel.getAllIdentifiers()) {
-			ids.add((MyIdentifier) myIdentifier);
-		}
-		Collections.sort(ids);
-		return Collections.unmodifiableList(ids);
+		return new ArrayList<IMyIdentifier>();
 	}
 
 	@Override
@@ -127,14 +101,14 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 
 	@Override
 	public int size() {
-		return myModel.getAllIdentifiers().size();
+		return 0;
 	}
 
 	@Override
 	public boolean containsId(Object itemId) {
 		if (itemId instanceof IMyIdentifier) {
-			IMyIdentifier dataIdentifier = (IMyIdentifier) itemId;
-			return myModel.getData(dataIdentifier) != null;
+			IMyIdentifier myIdentifier = (IMyIdentifier) itemId;
+			return myModel.getData(myIdentifier) != null;
 		} else {
 			return false;
 		}
@@ -170,6 +144,77 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 		throw new UnsupportedOperationException();
 	}
 
+	/////////////////////////////////////////////////////////////
+	// Container.Hierarchical
+	/////////////////////////////////////////////////////////////
+	
+	@Override
+	public Collection<?> getChildren(Object itemId) {
+		if (itemId instanceof IMyIdentifier) {
+			IMyIdentifier myIdentifier = (IMyIdentifier) itemId;
+			return myModel.getChilds(myIdentifier);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public Object getParent(Object itemId) {
+		if (itemId instanceof IMyIdentifier) {
+			IMyIdentifier myIdentifier = (IMyIdentifier) itemId;
+			return myModel.getParent(myIdentifier);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public Collection<?> rootItemIds() {
+		List<IMyIdentifier> ids = new ArrayList<>();
+			IMyIdentifier root = myModel.getRoot();
+			if (root != null) {
+				ids.add(root);
+			}
+//		Collections.sort(ids);
+		return Collections.unmodifiableList(ids);
+	}
+
+	@Override
+	public boolean setParent(Object itemId, Object newParentId) throws UnsupportedOperationException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean areChildrenAllowed(Object itemId) {
+		return true;
+	}
+
+	@Override
+	public boolean setChildrenAllowed(Object itemId, boolean areChildrenAllowed) throws UnsupportedOperationException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isRoot(Object itemId) {
+		if (itemId instanceof IMyIdentifier) {
+			IMyIdentifier myIdentifier = (IMyIdentifier) itemId;
+			IMyIdentifier root = myModel.getRoot();
+			if (root != null) {
+				return myIdentifier.equals(root);
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean hasChildren(Object itemId) {
+		if (itemId instanceof IMyIdentifier) {
+			IMyIdentifier groupIdentifier = (IMyIdentifier) itemId;
+			return myModel.getChilds(groupIdentifier).size() > 0;
+		}
+		return false;
+	}
+	
 	/////////////////////////////////////////////////////////////
 	// Container.ItemSetChangeNotifier
 	/////////////////////////////////////////////////////////////
