@@ -12,6 +12,7 @@ public class MyData implements IMyData {
 	private ArrayList<MyIdentifier> childs = new ArrayList<>();
 	
 	private long value;
+	private int counter = 0;
 	
 	public MyData(MyIdentifier parent, long initialValue) {
 		this.parent = parent;
@@ -20,7 +21,7 @@ public class MyData implements IMyData {
 	
 	@Override
 	public String getName() {
-		return String.format("%d", value);
+		return String.format("%d (updated %d)", value, counter);
 	}
 	
 	public MyIdentifier getParent() {
@@ -37,6 +38,10 @@ public class MyData implements IMyData {
 	
 	public void remove(MyIdentifier child) {
 		childs.remove(child);
+	}
+	
+	public void update() {
+		counter++;
 	}
 	
 }
