@@ -27,6 +27,8 @@ public class MyModel implements IMyModel {
 	public MyModel() {
 		// Se crea el modelo con los valores iniciales.
 		initModel();
+		// Se lanza la tarea que realizara los cambios.
+		startTask();
 	}
 	
 	private void initModel() {
