@@ -39,9 +39,11 @@ public class MyContainer implements Container, Container.Hierarchical, Container
 			UI.getCurrent().access(new Runnable() {
 				@Override
 				public void run() {
-					MyItem myItem = (MyItem) getItem(myIdentifier);
-					myItem.firePropertySetChangeEvent();
-					
+//					MyItem myItem = (MyItem) getItem(myIdentifier);
+//					myItem.firePropertySetChangeEvent();
+
+					fireItemSetChangeEvent();
+
 					UI.getCurrent().push();
 				}
 			});
