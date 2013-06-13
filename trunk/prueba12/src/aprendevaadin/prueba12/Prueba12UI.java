@@ -1,6 +1,7 @@
 package aprendevaadin.prueba12;
 
 import aprendevaadin.prueba12.data.MyContainer;
+import aprendevaadin.prueba12.data.MyItem;
 import aprendevaadin.prueba12.model.MyModel;
 
 import com.vaadin.annotations.Push;
@@ -25,6 +26,7 @@ public class Prueba12UI extends UI {
 
 		Tree tree = new Tree();
 		tree.setContainerDataSource(new MyContainer(new MyModel()));
+		tree.setItemCaptionPropertyId(MyItem.NAME_ID);
 		layout.addComponent(tree);
 	}
 
