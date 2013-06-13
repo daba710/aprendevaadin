@@ -29,8 +29,10 @@ public class MyModel implements IMyModel {
 	
 	private void initModel() {
 		addRoot();
+		MyData myRootData = (MyData) getData(root);
 		for (int i = 0; i < 10; i++) {
 			MyIdentifier myParentIdentifier = addNode(root);
+			myRootData.addChild(myParentIdentifier);
 			MyData myParentData = (MyData) getData(myParentIdentifier);
 			for (int j = 0; j < 3; j++) {
 				myParentData.addChild(addNode(myParentIdentifier));
