@@ -83,11 +83,17 @@ public class MyModel implements IMyModel {
 	private void updateRowCollection() {
 		
 		synchronized (map) {
-			// Primero se borra la mas antigua
 			
+			// Se prepara root
+			MyData myRootData = (MyData) getData(root);
+
+			// Primero se borra la mas antigua
+			MyIdentifier removeIdentifier = myRootData.getChilds().first();
+			if (removeIdentifier != null) {
+				removeNode(removeIdentifier);
+			}
 			
 			// Segundo se incorpora un nodo nuevo
-			MyData myRootData = (MyData) getData(root);
 			MyIdentifier myParentIdentifier = addNode(root);
 			myRootData.addChild(myParentIdentifier);
 			MyData myParentData = (MyData) getData(myParentIdentifier);
@@ -102,6 +108,13 @@ public class MyModel implements IMyModel {
 	}
 	
 	private void removeNode(MyIdentifier myIdentifier) {
+		MyData myData = map.get(myIdentifier);
+		for (MyIdentifier child : myData.getChilds()) {
+			map.remove(child);
+		}
+		map.remove(myIdentifier);
+		MyData myRootData = (MyData) getData(root);
+		myRootData.remove(myIdentifier);
 	}
 	
 	private void addRoot() {
