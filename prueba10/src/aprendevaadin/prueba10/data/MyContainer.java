@@ -50,7 +50,8 @@ public class MyContainer implements Container, Container.ItemSetChangeNotifier {
 					// WORK
 					// Asi que lo paso como un cambio en las filas.. 
 //					fireItemSetChangeEvent();
-//					UI.getCurrent().push();
+					
+					UI.getCurrent().push();
 				}
 			});
 		}
