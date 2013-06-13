@@ -35,7 +35,7 @@ public class MyContainer implements Container, Container.Hierarchical, Container
 
 		@Override
 		public void changedNode(final IMyIdentifier myIdentifier) {
-			logger.debug(String.format("changedRow(%s)", myIdentifier.getId()));
+			logger.debug(String.format("changedNode(%s)", myIdentifier.getId()));
 			UI.getCurrent().access(new Runnable() {
 				@Override
 				public void run() {
