@@ -19,7 +19,9 @@ public class MyModel implements IMyModel {
 	private TreeMap<IMyIdentifier, MyData> map = new TreeMap<>();
 	private MyIdentifier root;
 	private long counter = 0;
-	
+
+	volatile private Thread thread;
+
 	private List<IModelTracker> trackers = new LinkedList<>();
 	
 	public MyModel() {
@@ -38,6 +40,66 @@ public class MyModel implements IMyModel {
 				myParentData.addChild(addNode(myParentIdentifier));
 			}
 		}
+	}
+	
+	private void startTask() {
+		thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int count = 0;
+				while(thread != null) {
+					// Un pausa
+					try {
+						Thread.sleep(REFRESH_ROW_TIMEOUT);
+					} catch (InterruptedException e) {
+					}
+					// Se actualizan los valores de las filas
+					updateRows();
+					// Cada ciertas actualizaciones se elimina la fila mas antigua y se incorpora una nueva.
+					count++;
+					if ((count % REFRESH_ROW_COLLECTION_COUNT) == 0) {
+						updateRowCollection();
+					}
+				}
+				
+			}
+		});
+		thread.start();
+	}
+	
+	private void updateRows() {
+		synchronized (map) {
+			for (IMyIdentifier myIdentifier : map.keySet()) {
+				MyData myData = map.get(myIdentifier);
+				myData.update();
+				// Se notifican los cambios.
+				fireChangedNode(myIdentifier);
+			}
+		}
+	}
+	
+	private void updateRowCollection() {
+		
+		synchronized (map) {
+			// Primero se borra la mas antigua
+			
+			
+			// Segundo se incorpora un nodo nuevo
+			MyData myRootData = (MyData) getData(root);
+			MyIdentifier myParentIdentifier = addNode(root);
+			myRootData.addChild(myParentIdentifier);
+			MyData myParentData = (MyData) getData(myParentIdentifier);
+			for (int j = 0; j < 3; j++) {
+				myParentData.addChild(addNode(myParentIdentifier));
+			}
+			
+			// Se envia el evento
+			fireChangedModel();
+		}
+		
+	}
+	
+	private void removeNode(MyIdentifier myIdentifier) {
 	}
 	
 	private void addRoot() {
@@ -99,6 +161,14 @@ public class MyModel implements IMyModel {
 		synchronized (trackers) {
 			for (IModelTracker modelTracker : trackers) {
 				modelTracker.loadInitialModel();
+			}
+		}
+	}
+
+	private void fireChangedNode(IMyIdentifier myIdentifier) {
+		synchronized (trackers) {
+			for (IModelTracker modelTracker : trackers) {
+				modelTracker.changedNode(myIdentifier);
 			}
 		}
 	}
