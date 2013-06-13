@@ -1,30 +1,42 @@
 package aprendevaadin.prueba12.model.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import aprendevaadin.prueba12.model.IMyData;
 
 public class MyData implements IMyData {
 
+	private MyIdentifier parent;
+	private ArrayList<MyIdentifier> childs = new ArrayList<>();
+	
 	private long value;
-	private long counter;
-	private String description;
 	
-	public MyData(long initialValue) {
+	public MyData(MyIdentifier parent, long initialValue) {
+		this.parent = parent;
 		this.value = initialValue;
-		this.description = String.format("Numero de veces que se actualiza esta valor: %d", counter);
 	}
 	
 	@Override
-	public long getValue() {
-		return value;
-	}
-
-	@Override
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return String.format("%d", value);
 	}
 	
-	public void add(long addValue) {
-		this.description = String.format("Numero de veces que se actualiza esta valor: %d", ++counter);
+	public MyIdentifier getParent() {
+		return parent;
 	}
-
+	
+	public List<MyIdentifier> getChilds() {
+		return Collections.unmodifiableList(childs);
+	}
+	
+	public void addChild(MyIdentifier child) {
+		childs.add(child);
+	}
+	
+	public void remove(MyIdentifier child) {
+		childs.remove(child);
+	}
+	
 }

@@ -12,7 +12,7 @@ public class NameProperty implements Property<String> {
 	
 	static public NameProperty instantiate(IMyData data) {
 		NameProperty nameProperty = new NameProperty();
-		nameProperty.value = data.getDescription();
+		nameProperty.value = data.getName();
 		nameProperty.setReadOnly(true);
 		return nameProperty;
 	}

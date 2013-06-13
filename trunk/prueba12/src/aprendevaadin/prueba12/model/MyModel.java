@@ -5,9 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
-import aprendevaadin.prueba10.model.internal.MyData;
-import aprendevaadin.prueba10.model.internal.MyIdentifier;
+import aprendevaadin.prueba12.model.impl.MyData;
+import aprendevaadin.prueba12.model.impl.MyIdentifier;
 
 public class MyModel implements IMyModel {
 	
@@ -16,110 +17,69 @@ public class MyModel implements IMyModel {
 	static final int REFRESH_ROW_COLLECTION_COUNT = 4;
 	
 	private TreeMap<IMyIdentifier, MyData> map = new TreeMap<>();
+	private MyIdentifier root;
+	private long counter = 0;
+	
 	private List<IModelTracker> trackers = new LinkedList<>();
-	volatile private Thread thread;
 	
 	public MyModel() {
-			
 		// Se crea el modelo con los valores iniciales.
 		initModel();
-		
-		// Se lanza una tarea que actualizara cada cierto tiempo los valores del modelo.
-		startTask();
 	}
 	
 	private void initModel() {
+		addRoot();
 		for (int i = 0; i < 10; i++) {
-			MyIdentifier myDataIdentifier = new MyIdentifier(i);
-			MyData myData = new MyData(myDataIdentifier.getId());
-			map.put(myDataIdentifier, myData);
-		}
-	}
-	
-	private void startTask() {
-		thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				int count = 0;
-				while(thread != null) {
-					// Un pausa
-					try {
-						Thread.sleep(REFRESH_ROW_TIMEOUT);
-					} catch (InterruptedException e) {
-					}
-					// Se actualizan los valores de las filas
-					updateRows();
-					// Cada ciertas actualizaciones se elimina la fila mas antigua y se incorpora una nueva.
-					count++;
-					if ((count % REFRESH_ROW_COLLECTION_COUNT) == 0) {
-						updateRowCollection();
-					}
-				}
-				
-			}
-		});
-		thread.start();
-	}
-	
-	private void updateRows() {
-		synchronized (map) {
-			for (IMyIdentifier myIdentifier : map.keySet()) {
-				MyData myData = map.get(myIdentifier);
-				myData.add(myIdentifier.getId());
-				// Se notifican los cambios.
-				fireChangedRow(myIdentifier);
+			MyIdentifier myParentIdentifier = addNode(root);
+			MyData myParentData = (MyData) getData(myParentIdentifier);
+			for (int j = 0; j < 3; j++) {
+				myParentData.addChild(addNode(myParentIdentifier));
 			}
 		}
 	}
 	
-	private void updateRowCollection() {
-		synchronized (map) {
-			IMyIdentifier firstIdentifier = map.firstKey();
-			IMyIdentifier lastIdentifier = map.lastKey();
-			map.remove(firstIdentifier);
-			MyIdentifier newIdentifier = new MyIdentifier(lastIdentifier.getId() + 1);
-			MyData newData = new MyData(newIdentifier.getId());
-			map.put(newIdentifier, newData);
-			fireChangedRowCollection();
-		}
-	}
-
-	public Set<IMyIdentifier> getAllIdentifiers() {
-		return Collections.unmodifiableSet(map.keySet());
-	}
-
-	public IMyData getData(IMyIdentifier identifier) {
-		return map.get(new MyIdentifier(identifier));
-	}
-
-	public IMyIdentifier buildIdentifier(long id) {
-		return new MyIdentifier(id);
+	private void addRoot() {
+		MyIdentifier myIdentifier = new MyIdentifier(counter++);
+		MyData myData = new MyData(null, myIdentifier.getId());
+		map.put(myIdentifier, myData);
+		root = myIdentifier;
 	}
 	
-	private void fireLoadinitialModel() {
-		synchronized (trackers) {
-			for (IModelTracker modelTracker : trackers) {
-				modelTracker.loadInitialModel();
-			}
-		}
+	private MyIdentifier addNode(MyIdentifier parent) {
+		MyIdentifier myIdentifier = new MyIdentifier(counter++);
+		MyData myData = new MyData(parent, myIdentifier.getId());
+		map.put(myIdentifier, myData);
+		return myIdentifier;
 	}
-
-	private void fireChangedRow(IMyIdentifier myIdentifier) {
-		synchronized (trackers) {
-			for (IModelTracker modelTracker : trackers) {
-				modelTracker.changedRow(myIdentifier);
-			}
-		}
+	
+	public IMyIdentifier getRoot() {
+		return root;
 	}
-
-	private void fireChangedRowCollection() {
-		synchronized (trackers) {
-			for (IModelTracker modelTracker : trackers) {
-				modelTracker.changedRowCollection();
+	
+	public Set<IMyIdentifier> getChilds(IMyIdentifier myIdentifier) {
+		MyData data = map.get(myIdentifier);
+		if (data != null) {
+			Set<IMyIdentifier> ret = new TreeSet<>();
+			for (MyIdentifier tmpIdentifier : data.getChilds()) {
+				ret.add(tmpIdentifier);
 			}
+			return Collections.unmodifiableSet(ret);
 		}
+		return null;
 	}
-
+	
+	public IMyData getData(IMyIdentifier myIdentifier) {
+		return map.get(myIdentifier);
+	}
+	
+	public IMyIdentifier getParent(IMyIdentifier myIdentifier) {
+		MyData data = map.get(myIdentifier);
+		if (data != null) {
+			return data.getParent();
+		}
+		return null;
+	}
+	
 	public void addModelTracker(IModelTracker tracker) {
 		synchronized (trackers) {
 			trackers.add(tracker);
@@ -133,4 +93,20 @@ public class MyModel implements IMyModel {
 		}
 	}
 	
+	private void fireLoadinitialModel() {
+		synchronized (trackers) {
+			for (IModelTracker modelTracker : trackers) {
+				modelTracker.loadInitialModel();
+			}
+		}
+	}
+
+	private void fireChangedModel() {
+		synchronized (trackers) {
+			for (IModelTracker modelTracker : trackers) {
+				modelTracker.changedModel();
+			}
+		}
+	}
+
 }
