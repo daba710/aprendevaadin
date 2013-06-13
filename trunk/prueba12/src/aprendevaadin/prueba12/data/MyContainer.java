@@ -201,7 +201,12 @@ public class MyContainer implements Container, Container.Hierarchical, Container
 
 	@Override
 	public boolean areChildrenAllowed(Object itemId) {
-		return true;
+		if (itemId instanceof IMyIdentifier) {
+			IMyIdentifier myIdentifier = (IMyIdentifier) itemId;
+			return myModel.getChilds(myIdentifier).size() > 0;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
