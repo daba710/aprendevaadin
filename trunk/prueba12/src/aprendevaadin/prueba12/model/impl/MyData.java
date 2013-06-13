@@ -1,15 +1,15 @@
 package aprendevaadin.prueba12.model.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import aprendevaadin.prueba12.model.IMyData;
 
 public class MyData implements IMyData {
 
 	private MyIdentifier parent;
-	private ArrayList<MyIdentifier> childs = new ArrayList<>();
+	private TreeSet<MyIdentifier> childs = new TreeSet<>();
 	
 	private long value;
 	private int counter = 0;
@@ -28,8 +28,8 @@ public class MyData implements IMyData {
 		return parent;
 	}
 	
-	public List<MyIdentifier> getChilds() {
-		return Collections.unmodifiableList(childs);
+	public SortedSet<MyIdentifier> getChilds() {
+		return Collections.unmodifiableSortedSet(childs);
 	}
 	
 	public void addChild(MyIdentifier child) {
