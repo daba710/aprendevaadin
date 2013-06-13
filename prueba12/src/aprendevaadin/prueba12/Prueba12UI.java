@@ -1,9 +1,10 @@
 package aprendevaadin.prueba12;
 
+import aprendevaadin.prueba12.data.MyContainer;
+import aprendevaadin.prueba12.model.MyModel;
+
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.Tree;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -19,13 +20,9 @@ public class Prueba12UI extends UI {
 		layout.setMargin(true);
 		setContent(layout);
 
-		Button button = new Button("Click Me");
-		button.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				layout.addComponent(new Label("Thank you for clicking"));
-			}
-		});
-		layout.addComponent(button);
+		Tree tree = new Tree();
+		tree.setContainerDataSource(new MyContainer(new MyModel()));
+		layout.addComponent(tree);
 	}
 
 }
