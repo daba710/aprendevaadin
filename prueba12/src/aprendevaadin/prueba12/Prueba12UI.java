@@ -3,7 +3,9 @@ package aprendevaadin.prueba12;
 import aprendevaadin.prueba12.data.MyContainer;
 import aprendevaadin.prueba12.model.MyModel;
 
+import com.vaadin.annotations.Push;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -12,6 +14,7 @@ import com.vaadin.ui.VerticalLayout;
  * Main UI class
  */
 @SuppressWarnings("serial")
+@Push(PushMode.MANUAL)
 public class Prueba12UI extends UI {
 
 	@Override
