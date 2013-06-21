@@ -1,6 +1,9 @@
 package aprendevaadin.prueba13.model;
 
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -26,7 +29,11 @@ public class MyModel implements IMyModel {
 			map.put(myDataIdentifier, myData);
 		}
 	}
-	
+
+	//////////////////////////////////////////////////////////////////
+	// Container
+	//////////////////////////////////////////////////////////////////
+
 	public Set<IMyIdentifier> getAllIdentifiers() {
 		return Collections.unmodifiableSet(map.keySet());
 	}
@@ -35,8 +42,77 @@ public class MyModel implements IMyModel {
 		return map.get(new MyIdentifier(identifier));
 	}
 
-	public IMyIdentifier buildIdentifier(long id) {
-		return new MyIdentifier(id);
+	public int getSize() {
+		return map.size();
 	}
 	
+	
+	//////////////////////////////////////////////////////////////////
+	// Container.Ordered
+	//////////////////////////////////////////////////////////////////
+	
+	public IMyIdentifier getFirstIdentifier() {
+		return map.firstKey();
+	}
+	
+	public IMyIdentifier getLastIdentifier() {
+		return map.lastKey();
+	}
+	
+	public IMyIdentifier getNextIdentifier(IMyIdentifier myIdentifier) {
+		// Obtenemos un identificador ascendente
+		Iterator<IMyIdentifier> iterator = map.navigableKeySet().iterator();
+		
+		// Se busca el identificador del parametro
+		while(iterator.hasNext()) {
+			IMyIdentifier currIdentifier = iterator.next();
+			if (currIdentifier != null && currIdentifier.equals(myIdentifier)) {
+				// Si lo encontramos, se retorna el siguiente (aunque sea null).
+				return iterator.next();
+			}
+		}
+		// No se ha encontrado
+		return null;
+	}
+	
+	public IMyIdentifier getPreviousIdentifier(IMyIdentifier myIdentifier) {
+		// Obtenemos un identificador descendente
+		Iterator<IMyIdentifier> iterator = map.navigableKeySet().descendingIterator();
+		
+		// Se busca el identificador del parametro
+		while(iterator.hasNext()) {
+			IMyIdentifier currIdentifier = iterator.next();
+			if (currIdentifier != null && currIdentifier.equals(myIdentifier)) {
+				// Si lo encontramos, se retorna el siguiente (aunque sea null).
+				return iterator.next();
+			}
+		}
+		// No se ha encontrado
+		return null;
+	}
+	
+	public boolean isFirstIdentifier(IMyIdentifier myIdentifier) {
+		return myIdentifier.equals(getFirstIdentifier());
+	}
+	
+	public boolean isLastIdentifier(IMyIdentifier myIdentifier) {
+		return myIdentifier.equals(getLastIdentifier());
+	}
+
+	
+	//////////////////////////////////////////////////////////////////
+	// Container.Indexed
+	//////////////////////////////////////////////////////////////////
+	
+	public int indexOfIdentifier(Object itemId) {
+	}
+	
+	public IMyIdentifier getIdentifierByIndex(int index) {
+		
+	}
+	
+	public List<IMyIdentifier> getIdentifiers(int startIndex, int numberOfItems) {
+		
+	}
+
 }
