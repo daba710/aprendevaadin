@@ -9,9 +9,7 @@ import aprendevaadin.prueba13.model.internal.MyIdentifier;
 
 public class MyModel implements IMyModel {
 	
-	static final int REFRESH_ROW_TIMEOUT = 2000;
-	
-	static final int REFRESH_ROW_COLLECTION_COUNT = 4;
+	static final int ROWS = 1000;
 	
 	private TreeMap<IMyIdentifier, MyData> map = new TreeMap<>();
 	
@@ -22,7 +20,7 @@ public class MyModel implements IMyModel {
 	}
 	
 	private void initModel() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < ROWS; i++) {
 			MyIdentifier myDataIdentifier = new MyIdentifier(i);
 			MyData myData = new MyData(myDataIdentifier.getId());
 			map.put(myDataIdentifier, myData);
