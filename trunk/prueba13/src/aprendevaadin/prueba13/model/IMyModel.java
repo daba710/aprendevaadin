@@ -19,7 +19,7 @@ public interface IMyModel {
 	public boolean isLastIdentifier(IMyIdentifier myIdentifier);
 	
 	// Container.Indexed
-	public int indexOfIdentifier(Object itemId);
+	public int indexOfIdentifier(IMyIdentifier myIdentifier);
 	public IMyIdentifier getIdentifierByIndex(int index);
 	public List<IMyIdentifier> getIdentifiers(int startIndex, int numberOfItems);
 	
