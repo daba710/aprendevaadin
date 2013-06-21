@@ -53,9 +53,6 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 
 	@Override
 	public Collection<?> getContainerPropertyIds() {
-		// Espiamos la interaccion del modelo.
-		logger.debug(String.format("Container.getContainerPropertyIds(): %s", "???"));
-		// Implementacion del modelo
 		return MyItem.getItemPropertyIdsStatic();
 	}
 
@@ -206,7 +203,7 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	@Override
 	public int indexOfId(Object itemId) {
 		// Espiamos la interaccion del modelo.
-		logger.debug(String.format("Container.Ordered.indexOfId(%s): %s", itemId.toString(), "???"));
+		logger.debug(String.format("Container.Indexed.indexOfId(%s): %s", itemId.toString(), "???"));
 		// Implementacion del modelo
 		return myModel.indexOfIdentifier((MyIdentifier) itemId);
 	}
@@ -214,7 +211,7 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	@Override
 	public Object getIdByIndex(int index) {
 		// Espiamos la interaccion del modelo.
-		logger.debug(String.format("Container.Ordered.getIdByIndex(%d): %s", index, "???"));
+		logger.debug(String.format("Container.Indexed.getIdByIndex(%d): %s", index, "???"));
 		// Implementacion del modelo
 		return myModel.getIdentifierByIndex(index);
 	}
@@ -222,7 +219,7 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	@Override
 	public List<?> getItemIds(int startIndex, int numberOfItems) {
 		// Espiamos la interaccion del modelo.
-		logger.debug(String.format("Container.Ordered.getItemIds(%d, %d): %s", startIndex, numberOfItems, "???"));
+		logger.debug(String.format("Container.Indexed.getItemIds(%d, %d): %s", startIndex, numberOfItems, "???"));
 		// Implementacion del modelo
 		return myModel.getIdentifiers(startIndex, numberOfItems);
 	}
