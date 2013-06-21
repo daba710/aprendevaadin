@@ -17,7 +17,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 
-public class MyContainer implements Container {
+public class MyContainer implements Container, Container.Ordered, Container.Indexed {
 	
 	static public Logger logger = LoggerFactory.getLogger(MyContainer.class);
 	
@@ -119,6 +119,88 @@ public class MyContainer implements Container {
 
 	@Override
 	public boolean removeAllItems() throws UnsupportedOperationException {
+		throw new UnsupportedOperationException();
+	}
+
+	/////////////////////////////////////////////////////////////
+	// Container.Ordered
+	/////////////////////////////////////////////////////////////
+
+	@Override
+	public Object nextItemId(Object itemId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object prevItemId(Object itemId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object firstItemId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object lastItemId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isFirstId(Object itemId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isLastId(Object itemId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object addItemAfter(Object previousItemId) throws UnsupportedOperationException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Item addItemAfter(Object previousItemId, Object newItemId) throws UnsupportedOperationException {
+		throw new UnsupportedOperationException();
+	}
+
+	/////////////////////////////////////////////////////////////
+	// Container.Indexed
+	/////////////////////////////////////////////////////////////
+
+	@Override
+	public int indexOfId(Object itemId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Object getIdByIndex(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<?> getItemIds(int startIndex, int numberOfItems) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object addItemAt(int index) throws UnsupportedOperationException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Item addItemAt(int index, Object newItemId) throws UnsupportedOperationException {
 		throw new UnsupportedOperationException();
 	}
 
