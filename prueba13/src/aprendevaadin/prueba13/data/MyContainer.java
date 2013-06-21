@@ -35,6 +35,9 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	
 	@Override
 	public Item getItem(Object itemId) {
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.getItem(%s): %s", itemId.toString(), "???"));
+		// Implementacion del modelo
 		if (itemId instanceof IMyIdentifier) {
 			IMyIdentifier dataIdentifier = (IMyIdentifier) itemId;
 			IMyData myData = myModel.getData(dataIdentifier);
@@ -50,11 +53,17 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 
 	@Override
 	public Collection<?> getContainerPropertyIds() {
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.getContainerPropertyIds(): %s", "???"));
+		// Implementacion del modelo
 		return MyItem.getItemPropertyIdsStatic();
 	}
 
 	@Override
 	public Collection<?> getItemIds() {
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.getItemIds(): %s", "???"));
+		// Implementacion del modelo
 		List<MyIdentifier> ids = new ArrayList<>();
 		for (IMyIdentifier myIdentifier : myModel.getAllIdentifiers()) {
 			ids.add((MyIdentifier) myIdentifier);
@@ -79,11 +88,17 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 
 	@Override
 	public int size() {
-		return myModel.getAllIdentifiers().size();
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.size(): %d", myModel.getAllIdentifiers().size()));
+		// Implementacion del modelo
+		return myModel.getSize();
 	}
 
 	@Override
 	public boolean containsId(Object itemId) {
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.containsId(%s): %s", itemId.toString(), "???"));
+		// Implementacion del modelo
 		if (itemId instanceof IMyIdentifier) {
 			IMyIdentifier dataIdentifier = (IMyIdentifier) itemId;
 			return myModel.getData(dataIdentifier) != null;
@@ -127,39 +142,51 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	/////////////////////////////////////////////////////////////
 
 	@Override
-	public Object nextItemId(Object itemId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object prevItemId(Object itemId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Object firstItemId() {
-		// TODO Auto-generated method stub
-		return null;
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.firstItemId(): %s", "???"));
+		// Implementacion del modelo
+		return myModel.getFirstIdentifier();
 	}
 
 	@Override
 	public Object lastItemId() {
-		// TODO Auto-generated method stub
-		return null;
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.lastItemId(): %s", "???"));
+		// Implementacion del modelo
+		return myModel.getLastIdentifier();
+	}
+
+	@Override
+	public Object nextItemId(Object itemId) {
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.nextItemId(%s): %s", itemId.toString(), "???"));
+		// Implementacion del modelo
+		return myModel.getNextIdentifier((MyIdentifier) itemId);
+	}
+
+	@Override
+	public Object prevItemId(Object itemId) {
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.prevItemId(%s): %s", itemId.toString(), "???"));
+		// Implementacion del modelo
+		return myModel.getPreviousIdentifier((MyIdentifier) itemId);
 	}
 
 	@Override
 	public boolean isFirstId(Object itemId) {
-		// TODO Auto-generated method stub
-		return false;
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.isFirstId(%s): %s", itemId.toString(), "???"));
+		// Implementacion del modelo
+		return myModel.isFirstIdentifier((MyIdentifier) itemId);
 	}
 
 	@Override
 	public boolean isLastId(Object itemId) {
-		// TODO Auto-generated method stub
-		return false;
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.prevItemId(%s): %s", itemId.toString(), "???"));
+		// Implementacion del modelo
+		return myModel.isLastIdentifier((MyIdentifier) itemId);
 	}
 
 	@Override
@@ -178,20 +205,26 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 
 	@Override
 	public int indexOfId(Object itemId) {
-		// TODO Auto-generated method stub
-		return 0;
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.indexOfId(%s): %s", itemId.toString(), "???"));
+		// Implementacion del modelo
+		return myModel.indexOfIdentifier((MyIdentifier) itemId);
 	}
 
 	@Override
 	public Object getIdByIndex(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.getIdByIndex(%d): %s", index, "???"));
+		// Implementacion del modelo
+		return myModel.getIdentifierByIndex(index);
 	}
 
 	@Override
 	public List<?> getItemIds(int startIndex, int numberOfItems) {
-		// TODO Auto-generated method stub
-		return null;
+		// Espiamos la interaccion del modelo.
+		logger.debug(String.format("Container.Ordered.getItemIds(%d, %d): %s", startIndex, numberOfItems, "???"));
+		// Implementacion del modelo
+		return myModel.getIdentifiers(startIndex, numberOfItems);
 	}
 
 	@Override
