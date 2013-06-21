@@ -10,8 +10,6 @@ public interface IMyModel {
 	public IMyData getData(IMyIdentifier identifier);
 	public int getSize();
 	
-	public IMyIdentifier buildIdentifier(long identifier);
-	
 	// Container.Ordered
 	public IMyIdentifier getFirstIdentifier();
 	public IMyIdentifier getLastIdentifier();
