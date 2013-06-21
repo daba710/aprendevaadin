@@ -1,9 +1,9 @@
 package aprendevaadin.prueba13.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -104,15 +104,65 @@ public class MyModel implements IMyModel {
 	// Container.Indexed
 	//////////////////////////////////////////////////////////////////
 	
-	public int indexOfIdentifier(Object itemId) {
+	public int indexOfIdentifier(IMyIdentifier myIdentifier) {
+		// Obtenemos un identificador ascendente
+		Iterator<IMyIdentifier> iterator = map.navigableKeySet().iterator();
+		
+		// Se busca el identificador del parametro
+		int idx = 0;
+		while(iterator.hasNext()) {
+			IMyIdentifier currIdentifier = iterator.next();
+			if (currIdentifier != null && currIdentifier.equals(myIdentifier)) {
+				return idx;
+			}
+			idx++;
+		}
+		// No se ha encontrado
+		return -1;
 	}
 	
 	public IMyIdentifier getIdentifierByIndex(int index) {
+		// Obtenemos un identificador ascendente
+		Iterator<IMyIdentifier> iterator = map.navigableKeySet().iterator();
 		
+		// Se busca el identificador del parametro
+		int idx = 0;
+		while(iterator.hasNext()) {
+			IMyIdentifier currIdentifier = iterator.next();
+			if (idx == index) {
+				return currIdentifier;
+			}
+			idx++;
+		}
+		// No se ha encontrado
+		return null;
 	}
 	
 	public List<IMyIdentifier> getIdentifiers(int startIndex, int numberOfItems) {
+		// Obtenemos un identificador ascendente
+		Iterator<IMyIdentifier> iterator = map.navigableKeySet().iterator();
 		
+		// Se prepara la lista que contendra el resultado
+		ArrayList<IMyIdentifier> result = new ArrayList<>();
+		int lastIndex = startIndex + numberOfItems - 1;
+		
+		// Se busca el identificador del parametro
+		int idx = 0;
+		while(iterator.hasNext()) {
+			// Se carga el identificador actual.
+			IMyIdentifier currIdentifier = iterator.next();
+			// Si el indice supera el maximo terminamos.
+			if (idx > lastIndex) {
+				return result;
+			}
+			// Si el indice es igual o supera el minimo lo incluimos en la lista.
+			if (idx >= startIndex) {
+				result.add(currIdentifier);
+			}
+			idx++;
+		}
+		// No se ha encontrado
+		return result;
 	}
 
 }
