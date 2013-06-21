@@ -34,6 +34,9 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	/////////////////////////////////////////////////////////////
 	
 	@Override
+	/*
+	 * SI SE UTILIZA
+	 */
 	public Item getItem(Object itemId) {
 		// Espiamos la interaccion del modelo.
 		logger.debug(String.format("Container.getItem(%s): %s", itemId.toString(), "???"));
@@ -84,6 +87,9 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	}
 
 	@Override
+	/*
+	 * SI SE UTILIZA
+	 */
 	public int size() {
 		// Espiamos la interaccion del modelo.
 		logger.debug(String.format("Container.size(): %d", myModel.getAllIdentifiers().size()));
@@ -209,6 +215,9 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	}
 
 	@Override
+	/*
+	 * SI SE UTILIZA
+	 */
 	public Object getIdByIndex(int index) {
 		// Espiamos la interaccion del modelo.
 		logger.debug(String.format("Container.Indexed.getIdByIndex(%d): %s", index, "???"));
@@ -217,6 +226,9 @@ public class MyContainer implements Container, Container.Ordered, Container.Inde
 	}
 
 	@Override
+	/*
+	 * SI SE UTILIZA
+	 */
 	public List<?> getItemIds(int startIndex, int numberOfItems) {
 		// Espiamos la interaccion del modelo.
 		logger.debug(String.format("Container.Indexed.getItemIds(%d, %d): %s", startIndex, numberOfItems, "???"));
