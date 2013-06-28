@@ -24,7 +24,7 @@ public class MyModel implements IMyModel {
 	
 	private void initModel() {
 		for (int i = 0; i < ROWS; i++) {
-			MyIdentifier myDataIdentifier = new MyIdentifier(i);
+			MyIdentifier myDataIdentifier = new MyIdentifier(i + 10000); // Para que no coincida el ID con el idx.
 			MyData myData = new MyData(myDataIdentifier.getId());
 			map.put(myDataIdentifier, myData);
 		}
